@@ -434,8 +434,24 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
 }
 
 /* Back button for mobile project navigation */
-.mob-back{
+.mob-dash-back{
   display:none;
+  align-items:center;
+  gap:6px;
+  background:none;
+  border:none;
+  color:var(--purple);
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:700;
+  font-size:13px;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  cursor:pointer;
+  padding:0 0 14px 0;
+}
+@media(max-width:768px){
+  .mob-dash-back{display:flex;}
+}
   align-items:center;
   gap:6px;
   background:none;
@@ -594,6 +610,8 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
 
 <!-- ADMIN VIEW -->
 <div id="view-admin" class="view">
+  <button class="mob-dash-back" onclick="showView('dashboard')">← Dashboard</button>
+  
   <div class="sec-hdr-row" style="margin-bottom:20px">
     <div class="sec-hdr-label">Admin Panel</div>
     <div style="font-size:11px;color:var(--text3)">Accessible to Chloe and Callum only</div>
@@ -636,6 +654,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
 
 <!-- CALENDAR -->
 <div id="view-calendar" class="view">
+  <button class="mob-dash-back" onclick="showView('dashboard')">← Dashboard</button>
   <div class="cal-wrap">
     <div class="cal-header">
       <button class="cal-nav" onclick="calPrev()">←</button>
@@ -700,6 +719,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
 
 <!-- SUBCONTRACTORS -->
 <div id="view-subcontractors" class="view">
+  <button class="mob-dash-back" onclick="showView('dashboard')">← Dashboard</button>
   <div class="search-row">
     <input class="search-input" type="text" placeholder="Search subs…" oninput="renderSubs()">
     <button class="btn btn-primary btn-sm" onclick="openAddSub()" style="margin-left:auto">+ Subcontractor</button>
