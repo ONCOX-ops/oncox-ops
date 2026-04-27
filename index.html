@@ -1901,7 +1901,13 @@ async function renderPresenceBar(){
 function showAdminBtn(){
   if(!APP.currentUser)APP.currentUser=sessionStorage.getItem('oncox_user')||'';
   const btn=document.getElementById('admin-btn');
-  if(btn)btn.style.display=isAdmin(APP.currentUser)?'inline-flex':'none';
+  if(!btn)return;
+  const show=isAdmin(APP.currentUser);
+  btn.style.display=show?'inline-flex':'none';
+  // If no user yet, keep trying every 500ms until data loads
+  if(!show&&!APP.loaded){
+    setTimeout(showAdminBtn,500);
+  }
 }
 
 // ── Activity logging ──────────────────────────────────────────────────────────
@@ -1942,15 +1948,16 @@ function updTask(id,sec,i,field,val){
 
 // ── Admin panel renderer ──────────────────────────────────────────────────────
 async function renderAdminPanel(){
-  // Re-check currentUser in case it was set after page load
-  if(!APP.currentUser){
-    APP.currentUser=sessionStorage.getItem('oncox_user')||'';
-  }
-  if(!isAdmin(APP.currentUser)){
+  // Always re-read from sessionStorage in case APP state was set after this call
+  const storedUser=sessionStorage.getItem('oncox_user')||'';
+  if(storedUser&&!APP.currentUser)APP.currentUser=storedUser;
+  const adminUser=APP.currentUser||storedUser;
+  if(!isAdmin(adminUser)){
     document.getElementById('view-admin').innerHTML=`<div class="empty-state"><div class="empty-ico">🔒</div><div class="empty-title">Admin access only</div></div>`;
     return;
   }
 
+  APP.currentUser=adminUser; // ensure it's set for rest of function
   // Render member PIN management
   const members=['Chloe','Callum','Lily','Adam','Ryan'];
   let pinsHtml='';
