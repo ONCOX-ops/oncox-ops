@@ -657,9 +657,10 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
   <button class="mob-dash-back" onclick="showView('dashboard')">← Dashboard</button>
   <div class="cal-wrap">
     <div class="cal-header">
-      <button class="cal-nav" onclick="calPrev()">←</button>
+      <button class="cal-nav" onclick="calPrev()" id="cal-prev-btn">←</button>
       <div class="cal-month" id="cal-lbl"></div>
-      <button class="cal-nav" onclick="calNext()">→</button>
+      <button class="cal-nav" onclick="calNext()" id="cal-next-btn">→</button>
+      <button onclick="toggleCalView()" id="cal-view-btn" style="margin-left:8px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;padding:0 12px;height:30px;border-radius:4px;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:.08em;text-transform:uppercase">Year View</button>
       <div class="legend">
         <div class="legend-item"><div class="legend-dot" style="background:var(--purple)"></div>Show</div>
         <div class="legend-item"><div class="legend-dot" style="background:var(--blue)"></div>Stand</div>
@@ -2087,7 +2088,7 @@ async function renderActivityPreview(){
       <div>
         <div style="font-weight:600;font-size:13px;margin-bottom:3px">${name}</div>
         <div style="font-size:11px;color:var(--text3)">
-          Last login: ${lastLogin?new Date(lastLogin.notes||lastLogin.deadline).toLocaleString('en-GB',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}):'Never'}
+          Last login: ${lastLogin&&lastLogin.ts?new Date(lastLogin.ts).toLocaleString('en-GB',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}):'Never'}
         </div>
         <div style="font-size:11px;color:var(--text3);margin-top:1px">
           Tasks updated: <span style="color:var(--purple);font-weight:700">${todayUpdates.length} today</span> · ${weekUpdates.length} this week
@@ -2357,6 +2358,19 @@ function recCard(r){
 }
 
 // ── CALENDAR ─────────────────────────────────────────────────────────────────
+let calViewMode='month'; // 'month' or 'year'
+
+function toggleCalView(){
+  calViewMode=calViewMode==='month'?'year':'month';
+  const btn=document.getElementById('cal-view-btn');
+  if(btn)btn.textContent=calViewMode==='month'?'Year View':'Month View';
+  const prevBtn=document.getElementById('cal-prev-btn');
+  const nextBtn=document.getElementById('cal-next-btn');
+  if(prevBtn)prevBtn.style.visibility=calViewMode==='year'?'hidden':'visible';
+  if(nextBtn)nextBtn.style.visibility=calViewMode==='year'?'hidden':'visible';
+  renderCal();
+}
+
 function calPrev(){calM--;if(calM<0){calM=11;calY--;}renderCal();}
 function calNext(){calM++;if(calM>11){calM=0;calY++;}renderCal();}
 function toggleF(type){
@@ -2368,7 +2382,47 @@ function toggleF(type){
   document.getElementById('ft-elecs').className='filter-toggle'+(calSE?' on-elec':'');
   renderCal();
 }
+function renderYearCal(){
+  const lbl=document.getElementById('cal-lbl');
+  if(lbl)lbl.textContent=String(calY);
+  const recs=getAllRecs().filter(r=>!r.archived&&(calSH||r.type!=='show')&&(calSS||r.type!=='stand')&&(calSE||r.type!=='elec'));
+  const scroll=document.getElementById('cal-scroll');
+  const today=new Date();today.setHours(0,0,0,0);
+  let html='<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:16px">';
+  for(let m=0;m<12;m++){
+    const dim=new Date(calY,m+1,0).getDate();
+    const firstDow=(new Date(calY,m,1).getDay()+6)%7;
+    html+=`<div style="background:rgba(255,255,255,.06);border-radius:6px;padding:10px">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:#fff;margin-bottom:6px">${MONTHS[m]}</div>
+      <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:1px">
+        ${['M','T','W','T','F','S','S'].map(d=>`<div style="font-size:8px;color:rgba(255,255,255,.3);text-align:center;padding:1px 0">${d}</div>`).join('')}
+        ${Array(firstDow).fill('<div></div>').join('')}
+        ${Array.from({length:dim},(_,i)=>{
+          const d=i+1;
+          const dt=new Date(calY,m,d);dt.setHours(0,0,0,0);
+          const isToday=dt.getTime()===today.getTime();
+          // Find if any record has activity on this day
+          let bgCol='';
+          for(const r of recs){
+            const t=dayType(r,dt);
+            if(t){
+              const cols={travel:'#69246F',unload:'#9b6aa0',build:'#eab308',nightbuild:'#1A2441',open:'#16a34a',openrip:'#ea580c',rip:'#dc2626'};
+              bgCol=cols[t]||'#69246F';
+              break;
+            }
+          }
+          const style=bgCol?`background:${bgCol};color:#fff;border-radius:2px;`:(isToday?'background:rgba(255,255,255,.2);color:#fff;border-radius:2px;':'color:rgba(255,255,255,.35);');
+          return`<div style="font-size:9px;text-align:center;padding:2px 1px;${style}">${d}</div>`;
+        }).join('')}
+      </div>
+    </div>`;
+  }
+  html+='</div>';
+  if(scroll)scroll.innerHTML=html;
+}
+
 function renderCal(){
+  if(calViewMode==='year'){renderYearCal();return;}
   document.getElementById('cal-lbl').textContent=`${MONTHS[calM]} ${calY}`;
   const allR=[...getRecs(),...getElecs()].filter(r=>!r.archived);
   const recs=allR.filter(r=>(r.type==='show'&&calSH)||(r.type==='stand'&&calSS)||(r.type==='elec'&&calSE));
