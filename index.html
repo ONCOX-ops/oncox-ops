@@ -1949,17 +1949,16 @@ async function renderAdminPanel(){
   const pinsHtml=members.map(name=>{
     const col=MEMBER_COLOURS_MAP[name]||'#69246F';
     const isAdminUser=isAdmin(name);
-    return`<div class="admin-member-row">
-      <div class="admin-avatar" style="background:${col}">${name[0]}</div>
-      <div>
-        <div style="font-weight:600;font-size:13px">${name}${isAdminUser?` <span style="font-size:9px;background:var(--purple-dim);color:var(--purple);padding:1px 5px;border-radius:3px;font-weight:700;text-transform:uppercase">Admin</span>`:''}</div>
+    const currentPin=getPinForUser(name);
+    return`<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)">
+      <div class="admin-avatar" style="background:${col};width:32px;height:32px;font-size:13px;flex-shrink:0">${name[0]}</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-weight:600;font-size:13px">${name}${isAdminUser?` <span style="font-size:9px;background:var(--purple-dim);color:var(--purple);padding:1px 5px;border-radius:3px;font-weight:700;text-transform:uppercase;margin-left:4px">Admin</span>`:''}</div>
+        <div style="font-size:10px;color:var(--text3);font-family:'JetBrains Mono',monospace">Current PIN: ${'●'.repeat(currentPin.length)}</div>
       </div>
-      <div class="admin-pin-col">
-        <input type="password" maxlength="4" inputmode="numeric" placeholder="New PIN"
-          id="pin-input-${name}" style="width:90px;padding:5px 8px;border:1.5px solid var(--border);border-radius:5px;font-family:'JetBrains Mono',monospace;font-size:13px;text-align:center">
-      </div>
-      <div class="admin-lastactive" id="last-active-${name}" style="font-size:10px;color:var(--text3)">—</div>
-      <button class="btn btn-ghost btn-sm" onclick="adminSavePin('${name}')">Save</button>
+      <input type="password" maxlength="4" inputmode="numeric" placeholder="New PIN"
+        id="pin-input-${name}" style="width:90px;padding:6px 8px;border:1.5px solid var(--border);border-radius:5px;font-family:'JetBrains Mono',monospace;font-size:13px;text-align:center;flex-shrink:0">
+      <button class="btn btn-ghost btn-sm" onclick="adminSavePin('${name}')" style="flex-shrink:0">Save</button>
     </div>`;
   }).join('');
 
