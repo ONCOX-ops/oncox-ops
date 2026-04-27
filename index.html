@@ -266,6 +266,27 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
 ::-webkit-scrollbar-thumb{background:var(--lilac);border-radius:3px;}
 ::-webkit-scrollbar-thumb:hover{background:var(--purple);}
 
+/* ── PRESENCE INDICATORS ────────────────────────────────────────── */
+.presence-bar{display:flex;align-items:center;gap:5px;margin-right:4px;}
+.presence-dot{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;color:#fff;cursor:default;border:2px solid rgba(255,255,255,.2);transition:transform .15s;position:relative;flex-shrink:0;}
+.presence-dot:hover{transform:scale(1.15);}
+.presence-dot .presence-tooltip{position:absolute;bottom:-28px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.8);color:#fff;font-size:10px;padding:3px 7px;border-radius:4px;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .15s;z-index:100;}
+.presence-dot:hover .presence-tooltip{opacity:1;}
+
+/* ── ADMIN PANEL ─────────────────────────────────────────────────── */
+.admin-section{background:var(--white);border:1.5px solid var(--border);border-radius:8px;padding:18px 20px;margin-bottom:16px;}
+.admin-section-title{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--navy);margin-bottom:14px;padding-bottom:8px;border-bottom:1.5px solid var(--border);}
+.admin-member-row{display:grid;grid-template-columns:32px 1fr 120px 120px auto;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);}
+.admin-member-row:last-child{border-bottom:none;}
+.admin-avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:12px;color:#fff;}
+.activity-bar{background:var(--surface2);border-radius:8px;padding:14px 16px;margin-bottom:10px;display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:start;}
+.activity-stat{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;}
+@media(max-width:768px){
+  .admin-member-row{grid-template-columns:28px 1fr auto;gap:8px;}
+  .admin-member-row .admin-pin-col{display:none;}
+  .admin-member-row .admin-lastactive{display:none;}
+}
+
 /* ── TEAM TODO ───────────────────────────────────────────────── */
 .todo-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:22px;}
 .todo-card{background:var(--white);border:1.5px solid var(--border);border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(26,36,65,.06);}
@@ -548,7 +569,9 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
     <button class="btn btn-primary" onclick="openAdd('show')">+ Show</button>
     <button class="btn btn-blue" onclick="openAdd('stand')">+ Stand</button>
     <button class="btn" style="background:var(--elec);color:#fff;" onclick="openAdd('elec')">+ Electrics</button>
-    <button class="btn btn-ghost btn-sm" onclick="exportAllData()" style="margin-left:8px;border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.6)" title="Download full data backup">⬇ Backup</button>
+    <div class="presence-bar" id="presence-bar"></div>
+    <button class="btn btn-ghost btn-sm" id="admin-btn" onclick="showView('admin')" style="display:none;border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.6)" title="Admin Panel">⚙️ Admin</button>
+    <button class="btn btn-ghost btn-sm" onclick="exportAllData()" style="border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.6)" title="Download full data backup">⬇ Backup</button>
     <button class="btn btn-ghost btn-sm" onclick="openFieldSettings()" style="border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.6)" title="Field View Settings">👷 Field</button>
     <button class="btn btn-ghost btn-sm" onclick="lockApp()" style="border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.6)" title="Lock">🔒</button>
   </div>
@@ -566,6 +589,48 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
     <div style="font-size:11px;color:var(--text3)">Tasks assigned with deadlines in the next 14 days or overdue</div>
   </div>
   <div class="todo-grid" id="dash-todo"></div>
+</div>
+
+<!-- ADMIN VIEW -->
+<div id="view-admin" class="view">
+  <div class="sec-hdr-row" style="margin-bottom:20px">
+    <div class="sec-hdr-label">Admin Panel</div>
+    <div style="font-size:11px;color:var(--text3)">Accessible to Chloe and Callum only</div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start">
+    <div>
+      <div class="admin-section">
+        <div class="admin-section-title">Team PINs</div>
+        <div id="admin-pins-list"></div>
+      </div>
+      <div class="admin-section">
+        <div class="admin-section-title">Field View Settings</div>
+        <div class="form-grid">
+          <div class="form-group form-full">
+            <label class="form-label">Field View Subcontractor</label>
+            <select class="form-select" id="admin-field-sub"></select>
+          </div>
+          <div class="form-group form-full">
+            <label class="form-label">Field PIN (4 digits)</label>
+            <input class="form-input" id="admin-field-pin" type="password" maxlength="4" inputmode="numeric" placeholder="e.g. 5678">
+          </div>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="adminSaveFieldSettings()" style="margin-top:8px">Save Field Settings</button>
+      </div>
+    </div>
+    <div>
+      <div class="admin-section">
+        <div class="admin-section-title">Activity Report</div>
+        <p style="font-size:12px;color:var(--text3);margin-bottom:14px;line-height:1.6">Shows login history and task activity for each team member. Download as a CSV to share or save.</p>
+        <div id="admin-activity-preview"></div>
+        <button class="btn btn-primary btn-sm" onclick="downloadActivityReport()" style="margin-top:12px">⬇ Download Activity Report</button>
+      </div>
+      <div class="admin-section">
+        <div class="admin-section-title">Currently Active</div>
+        <div id="admin-presence-list"></div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- CALENDAR -->
@@ -987,7 +1052,14 @@ const sbDel=(t,id)=>sbQ(t+'?id=eq.'+encodeURIComponent(id),'DELETE',null,'');
 const sbDelWhere=(t,c,v)=>sbQ(t+'?'+c+'=eq.'+encodeURIComponent(v),'DELETE',null,'');
 
 // In-memory app state
-let APP={records:[],elecs:[],tasks:{},elecTasks:{},upgrades:[],subs:[],allocs:[],pin:'1701',loaded:false};
+let APP={records:[],elecs:[],tasks:{},elecTasks:{},upgrades:[],subs:[],allocs:[],pin:'1701',loaded:false,currentUser:'',userPins:{}};
+
+// ── MULTI-USER PIN SYSTEM ─────────────────────────────────────────────────────
+const TEAM_PINS={Chloe:'1701',Callum:'2106',Lily:'2709',Adam:'0309',Ryan:'0604'};
+const ADMINS=['Chloe','Callum'];
+function getPinForUser(name){return(APP.userPins&&APP.userPins[name])||TEAM_PINS[name]||'';}
+function getUserForPin(pin){return Object.keys(TEAM_PINS).find(m=>getPinForUser(m)===pin)||null;}
+function isAdmin(name){return ADMINS.includes(name);}
 
 // DB ↔ app object converters
 function dbToRec(r){return{id:r.id,type:r.type,jobNum:r.job_num||'',name:r.name||'',status:r.status||'confirmed',contractType:r.contract_type||'direct',venue:r.venue||'',organiser:r.organiser||'',stands:r.stands||'',hall:r.hall||'',notes:r.notes||'',archived:r.archived||false,travel:r.travel||'',unload:r.unload||'',build:r.build||'',nightBuild:r.night_build||'',open:r.open||'',openRip:r.open_rip||'',rip:r.rip||'',services:r.services||[],spec:r.spec||{}};}
@@ -1277,8 +1349,8 @@ let pinEntry='';
 // getPin/setPin handled by Supabase layer above
 
 function initPin(){
-  // Check if session is already unlocked
   if(sessionStorage.getItem('oncox_unlocked')==='1'){
+    APP.currentUser=sessionStorage.getItem('oncox_user')||'';
     document.getElementById('pin-screen').style.display='none';
     return;
   }
@@ -1531,6 +1603,11 @@ async function init(){
     const fsi=allSettings.find(x=>x.key==='field_sub_id');
     if(fp)APP.fieldPin=fp.value;
     if(fsi&&fsi.value)APP.fieldSubId=fsi.value;
+    APP.userPins={};
+    ['Chloe','Callum','Lily','Adam','Ryan'].forEach(name=>{
+      const s=allSettings.find(x=>x.key==='pin_'+name.toLowerCase());
+      if(s)APP.userPins[name]=s.value;
+    });
   }catch(e){}
   // Run migrations to ensure task definitions match current code
   await migrateTaskSections();
@@ -1540,6 +1617,8 @@ async function init(){
     FIELD_UNLOCKED=true;FIELD_SUB_ID=APP.fieldSubId||null;
     enterFieldView();startRealtime();
   } else {
+    APP.currentUser=sessionStorage.getItem('oncox_user')||'';
+    if(APP.currentUser){showAdminBtn();renderPresenceBar();startPresencePing();}
     renderDash();startRealtime();
   }
 }
@@ -1778,7 +1857,294 @@ async function applyFieldSettings(){
   }catch(e){alert('Save failed: '+e.message);}
 }
 
-// ── LIVE SYNC (polling every 5 seconds) ──────────────────────────────────────
+
+// ══════════════════════════════════════════════════════════════════════════════
+// PRESENCE, ADMIN PANEL & ACTIVITY REPORT
+// ══════════════════════════════════════════════════════════════════════════════
+
+const MEMBER_COLOURS_MAP={Chloe:'#69246F',Callum:'#0891b2',Lily:'#16a34a',Adam:'#d97706',Ryan:'#2563eb'};
+
+// ── Presence ─────────────────────────────────────────────────────────────────
+let _presencePing=null;
+
+async function updatePresence(name){
+  if(!name)return;
+  try{
+    await sbUpsert('settings',{key:'presence_'+name.toLowerCase(),value:new Date().toISOString()});
+  }catch(e){}
+}
+async function clearPresence(name){
+  if(!name)return;
+  try{ await sbDel('settings','presence_'+name.toLowerCase()); }catch(e){}
+}
+function startPresencePing(){
+  if(_presencePing)clearInterval(_presencePing);
+  _presencePing=setInterval(()=>{
+    if(APP.currentUser)updatePresence(APP.currentUser);
+  },30000);
+  // Also clear presence on page unload
+  window.addEventListener('beforeunload',()=>{
+    if(APP.currentUser)clearPresence(APP.currentUser);
+  },{once:true});
+}
+async function getActivePresence(){
+  try{
+    const all=await sbGet('settings','key=like.presence_%');
+    const now=Date.now();
+    return all.filter(s=>{
+      const t=new Date(s.value).getTime();
+      return now-t<120000; // active within 2 minutes
+    }).map(s=>s.key.replace('presence_',''))
+      .map(k=>['chloe','callum','lily','adam','ryan'].find(n=>n===k))
+      .filter(Boolean)
+      .map(k=>k.charAt(0).toUpperCase()+k.slice(1));
+  }catch(e){return[];}
+}
+async function renderPresenceBar(){
+  const active=await getActivePresence();
+  const bar=document.getElementById('presence-bar');
+  if(!bar)return;
+  bar.innerHTML=active.map(name=>{
+    const col=MEMBER_COLOURS_MAP[name]||'#69246F';
+    const isMe=name===APP.currentUser;
+    return`<div class="presence-dot" style="background:${col};${isMe?'border-color:rgba(255,255,255,.6)':''}" title="${name}${isMe?' (you)':''}">
+      ${name[0]}
+      <div class="presence-tooltip">${name}${isMe?' (you)':''}</div>
+    </div>`;
+  }).join('');
+}
+
+// ── Admin button visibility ───────────────────────────────────────────────────
+function showAdminBtn(){
+  const btn=document.getElementById('admin-btn');
+  if(btn)btn.style.display=isAdmin(APP.currentUser)?'inline-flex':'none';
+}
+
+// ── Activity logging ──────────────────────────────────────────────────────────
+async function logActivity(user,type,detail){
+  if(!user)return;
+  try{
+    const entry={
+      id:'act_'+Date.now()+'_'+Math.random().toString(36).slice(2,6),
+      record_id:'__activity__',
+      section_id:type,
+      task_name:detail,
+      owner:user,
+      status:'log',
+      deadline:new Date().toISOString().slice(0,10),
+      notes:new Date().toISOString(),
+      sort_order:Date.now()
+    };
+    await sbPost('tasks',[entry]);
+  }catch(e){}
+}
+
+// Hook into task updates to log activity
+const _origUpdTask=window.updTask;
+function updTask(id,sec,i,field,val){
+  if(field==='status'&&APP.currentUser){
+    const rec=getAllRecs().find(r=>r.id===id);
+    const taskName=(APP.tasks[id]?.[sec]?.[i]?.name)||sec;
+    logActivity(APP.currentUser,'task_update',`${val}: ${taskName} on ${rec?.name||id}`);
+  }
+  // call original
+  const tasks=getTasksFor(id);
+  const t=tasks[sec]?.find((x,idx)=>idx===i)||tasks[sec]?.[i];
+  if(!t)return;
+  t[field]=val;
+  _patchTask(id,sec,t.name,t).catch(console.error);
+  refreshOverall(id,getRecs().find(r=>r.id===id)?.services||[]);
+}
+
+// ── Admin panel renderer ──────────────────────────────────────────────────────
+async function renderAdminPanel(){
+  if(!isAdmin(APP.currentUser)){
+    document.getElementById('view-admin').innerHTML=`<div class="empty-state"><div class="empty-ico">🔒</div><div class="empty-title">Admin access only</div></div>`;
+    return;
+  }
+
+  // Render member PIN management
+  const members=['Chloe','Callum','Lily','Adam','Ryan'];
+  const pinsHtml=members.map(name=>{
+    const col=MEMBER_COLOURS_MAP[name]||'#69246F';
+    const isAdminUser=isAdmin(name);
+    return`<div class="admin-member-row">
+      <div class="admin-avatar" style="background:${col}">${name[0]}</div>
+      <div>
+        <div style="font-weight:600;font-size:13px">${name}${isAdminUser?` <span style="font-size:9px;background:var(--purple-dim);color:var(--purple);padding:1px 5px;border-radius:3px;font-weight:700;text-transform:uppercase">Admin</span>`:''}</div>
+      </div>
+      <div class="admin-pin-col">
+        <input type="password" maxlength="4" inputmode="numeric" placeholder="New PIN"
+          id="pin-input-${name}" style="width:90px;padding:5px 8px;border:1.5px solid var(--border);border-radius:5px;font-family:'JetBrains Mono',monospace;font-size:13px;text-align:center">
+      </div>
+      <div class="admin-lastactive" id="last-active-${name}" style="font-size:10px;color:var(--text3)">—</div>
+      <button class="btn btn-ghost btn-sm" onclick="adminSavePin('${name}')">Save</button>
+    </div>`;
+  }).join('');
+
+  document.getElementById('admin-pins-list').innerHTML=pinsHtml;
+
+  // Field settings
+  const fieldSel=document.getElementById('admin-field-sub');
+  if(fieldSel){
+    fieldSel.innerHTML='<option value="">— Select —</option>'+
+      APP.subs.map(s=>`<option value="${s.id}"${s.id===APP.fieldSubId?'selected':''}>${s.name}</option>`).join('');
+  }
+  const fieldPinEl=document.getElementById('admin-field-pin');
+  if(fieldPinEl)fieldPinEl.value=APP.fieldPin||'';
+
+  // Active now
+  const active=await getActivePresence();
+  const presEl=document.getElementById('admin-presence-list');
+  if(presEl){
+    presEl.innerHTML=active.length
+      ?active.map(name=>`<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border)">
+          <div class="admin-avatar" style="background:${MEMBER_COLOURS_MAP[name]||'#69246F'};width:24px;height:24px;font-size:10px">${name[0]}</div>
+          <span style="font-size:13px;font-weight:600">${name}</span>
+          <span style="margin-left:auto;font-size:10px;color:#16a34a;font-weight:700">● Online</span>
+        </div>`).join('')
+      :`<div style="font-size:12px;color:var(--text3);padding:10px 0">No one currently active</div>`;
+  }
+
+  // Activity preview
+  await renderActivityPreview();
+}
+
+async function adminSavePin(name){
+  const el=document.getElementById('pin-input-'+name);
+  if(!el)return;
+  const pin=el.value.trim();
+  if(!pin||!/^\d{4}$/.test(pin)){alert('PIN must be exactly 4 digits');return;}
+  // Check not same as another user
+  const others=Object.keys(TEAM_PINS).filter(n=>n!==name);
+  if(others.some(n=>getPinForUser(n)===pin)){alert('That PIN is already used by another team member');return;}
+  try{
+    await sbUpsert('settings',{key:'pin_'+name.toLowerCase(),value:pin});
+    if(!APP.userPins)APP.userPins={};
+    APP.userPins[name]=pin;
+    el.value='';
+    el.placeholder='Saved ✓';
+    setTimeout(()=>{el.placeholder='New PIN';},2000);
+  }catch(e){alert('Save failed: '+e.message);}
+}
+
+async function adminSaveFieldSettings(){
+  const subId=document.getElementById('admin-field-sub')?.value;
+  const pin=document.getElementById('admin-field-pin')?.value.trim();
+  if(!pin||!/^\d{4}$/.test(pin)){alert('Field PIN must be exactly 4 digits');return;}
+  try{
+    await saveFieldSettings(pin,subId);
+    alert('Field settings saved ✓');
+  }catch(e){alert('Save failed: '+e.message);}
+}
+
+// ── Activity Report ───────────────────────────────────────────────────────────
+async function getActivityData(){
+  try{
+    // Fetch activity log entries from tasks table where record_id='__activity__'
+    const logs=await sbGet('tasks','record_id=eq.__activity__&order=sort_order.desc&limit=500');
+    return logs;
+  }catch(e){return[];}
+}
+
+async function renderActivityPreview(){
+  const el=document.getElementById('admin-activity-preview');
+  if(!el)return;
+  const logs=await getActivityData();
+  const members=['Chloe','Callum','Lily','Adam','Ryan'];
+  const today=new Date();today.setHours(0,0,0,0);
+  const week=new Date(today);week.setDate(today.getDate()-7);
+
+  const html=members.map(name=>{
+    const myLogs=logs.filter(l=>l.owner===name);
+    const lastLogin=myLogs.filter(l=>l.section_id==='login').sort((a,b)=>b.sort_order-a.sort_order)[0];
+    const taskUpdates=myLogs.filter(l=>l.section_id==='task_update');
+    const todayUpdates=taskUpdates.filter(l=>new Date(l.notes||l.deadline)>=today);
+    const weekUpdates=taskUpdates.filter(l=>new Date(l.notes||l.deadline)>=week);
+    const lastActive=myLogs.sort((a,b)=>b.sort_order-a.sort_order)[0];
+    const lastActiveTime=lastActive?new Date(lastActive.notes||lastActive.deadline):null;
+    const col=MEMBER_COLOURS_MAP[name]||'#69246F';
+
+    return`<div class="activity-bar">
+      <div class="admin-avatar" style="background:${col};width:28px;height:28px;font-size:12px">${name[0]}</div>
+      <div>
+        <div style="font-weight:600;font-size:13px;margin-bottom:3px">${name}</div>
+        <div style="font-size:11px;color:var(--text3)">
+          Last login: ${lastLogin?new Date(lastLogin.notes||lastLogin.deadline).toLocaleString('en-GB',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}):'Never'}
+        </div>
+        <div style="font-size:11px;color:var(--text3);margin-top:1px">
+          Tasks updated: <span style="color:var(--purple);font-weight:700">${todayUpdates.length} today</span> · ${weekUpdates.length} this week
+        </div>
+      </div>
+      <div style="text-align:right">
+        ${lastActiveTime?`<div style="font-size:10px;color:var(--text3)">${timeAgo(lastActiveTime)}</div>`:''}
+      </div>
+    </div>`;
+  }).join('');
+
+  el.innerHTML=html;
+}
+
+function timeAgo(date){
+  const diff=Date.now()-date.getTime();
+  const mins=Math.floor(diff/60000);
+  if(mins<1)return'Just now';
+  if(mins<60)return`${mins}m ago`;
+  const hrs=Math.floor(mins/60);
+  if(hrs<24)return`${hrs}h ago`;
+  return`${Math.floor(hrs/24)}d ago`;
+}
+
+async function downloadActivityReport(){
+  const logs=await getActivityData();
+  const members=['Chloe','Callum','Lily','Adam','Ryan'];
+  const today=new Date();today.setHours(0,0,0,0);
+  const week=new Date(today);week.setDate(today.getDate()-7);
+
+  const rows=[
+    ['ONCO X — Activity Report'],
+    [`Generated: ${new Date().toLocaleString('en-GB')}`],
+    [],
+    ['Name','Last Login','Last Active','Tasks Updated Today','Tasks Updated This Week','Recent Activity (last 10)'],
+  ];
+
+  members.forEach(name=>{
+    const myLogs=logs.filter(l=>l.owner===name);
+    const lastLogin=myLogs.filter(l=>l.section_id==='login').sort((a,b)=>b.sort_order-a.sort_order)[0];
+    const taskUpdates=myLogs.filter(l=>l.section_id==='task_update').sort((a,b)=>b.sort_order-a.sort_order);
+    const todayCount=taskUpdates.filter(l=>new Date(l.notes||l.deadline)>=today).length;
+    const weekCount=taskUpdates.filter(l=>new Date(l.notes||l.deadline)>=week).length;
+    const lastAny=myLogs.sort((a,b)=>b.sort_order-a.sort_order)[0];
+    const recent=taskUpdates.slice(0,10).map(l=>l.task_name).join(' | ');
+    rows.push([
+      name,
+      lastLogin?new Date(lastLogin.notes||lastLogin.deadline).toLocaleString('en-GB'):'Never',
+      lastAny?new Date(lastAny.notes||lastAny.deadline).toLocaleString('en-GB'):'Never',
+      todayCount,weekCount,recent
+    ]);
+  });
+
+  rows.push([]);
+  rows.push(['— Full Activity Log —']);
+  rows.push(['Timestamp','Person','Type','Detail']);
+  logs.slice(0,200).forEach(l=>{
+    rows.push([
+      new Date(l.notes||l.deadline).toLocaleString('en-GB'),
+      l.owner,l.section_id,l.task_name
+    ]);
+  });
+
+  const csv=rows.map(r=>r.map(c=>{const v=String(c??'');return v.includes(',')||v.includes('"')?`"${v.replace(/"/g,'""')}"`:v;}).join(',')).join('\n');
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'}));
+  a.download=`ONCOX_Activity_Report_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();URL.revokeObjectURL(a.href);
+}
+
+// Refresh presence bar every 60s
+setInterval(()=>{if(APP.currentUser)renderPresenceBar();},60000);
+
+
 // Checks Supabase for changes and re-renders if anything has changed.
 // Simple, reliable, works on all devices and networks.
 let _lastSync='';
