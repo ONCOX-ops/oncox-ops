@@ -1199,7 +1199,7 @@ async function loadAllData(){
     try{const s=await sbGet('settings','');const ps=s.find(x=>x.key==='pin');if(ps)APP.pin=ps.value;}catch(e){}
 
     setLoaderPct(100,'Ready!');APP.loaded=true;
-    setTimeout(()=>{hideLoader();if(CV==='dashboard')renderDash();},350);
+    setTimeout(()=>{hideLoader();showAdminBtn();renderPresenceBar();if(CV==='dashboard')renderDash();},350);
   }catch(err){
     console.error(err);hideLoader();
     document.body.insertAdjacentHTML('beforeend',`<div style="position:fixed;inset:0;background:#fff;z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;font-family:Barlow,sans-serif">
@@ -1352,6 +1352,8 @@ function initPin(){
   if(sessionStorage.getItem('oncox_unlocked')==='1'){
     APP.currentUser=sessionStorage.getItem('oncox_user')||'';
     document.getElementById('pin-screen').style.display='none';
+    // Restore admin button immediately — data will load shortly
+    setTimeout(showAdminBtn, 100);
     return;
   }
   document.getElementById('pin-screen').style.display='flex';
@@ -1897,6 +1899,7 @@ async function renderPresenceBar(){
 
 // ── Admin button visibility ───────────────────────────────────────────────────
 function showAdminBtn(){
+  if(!APP.currentUser)APP.currentUser=sessionStorage.getItem('oncox_user')||'';
   const btn=document.getElementById('admin-btn');
   if(btn)btn.style.display=isAdmin(APP.currentUser)?'inline-flex':'none';
 }
@@ -1939,6 +1942,10 @@ function updTask(id,sec,i,field,val){
 
 // ── Admin panel renderer ──────────────────────────────────────────────────────
 async function renderAdminPanel(){
+  // Re-check currentUser in case it was set after page load
+  if(!APP.currentUser){
+    APP.currentUser=sessionStorage.getItem('oncox_user')||'';
+  }
   if(!isAdmin(APP.currentUser)){
     document.getElementById('view-admin').innerHTML=`<div class="empty-state"><div class="empty-ico">🔒</div><div class="empty-title">Admin access only</div></div>`;
     return;
