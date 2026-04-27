@@ -10,6 +10,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1A2441">
 <title>ONCO X — Operations Hub</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2369246F'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Arial Black,sans-serif' font-weight='900' font-size='18' fill='white'%3EX%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2369246F'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Arial Black,sans-serif' font-weight='900' font-size='18' fill='white'%3EX%3C/text%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Barlow:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -681,7 +683,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
       <button class="filter-toggle on-stand" id="ft-stands" onclick="toggleF('stands')">Stands</button>
       <button class="filter-toggle on-elec" id="ft-elecs" onclick="toggleF('elecs')">Electrics</button>
     </div>
-    <div class="cal-scroll"><table class="cal-table" id="cal-table"></table></div>
+    <div class="cal-scroll" id="cal-scroll"><table class="cal-table" id="cal-table"></table></div>
   </div>
 </div>
 
@@ -2386,6 +2388,9 @@ function renderYearCal(){
   const lbl=document.getElementById('cal-lbl');
   if(lbl)lbl.textContent=String(calY);
   const recs=getAllRecs().filter(r=>!r.archived&&(calSH||r.type!=='show')&&(calSS||r.type!=='stand')&&(calSE||r.type!=='elec'));
+  // Hide the gantt table, use scroll container for year grid
+  const tbl=document.getElementById('cal-table');
+  if(tbl)tbl.style.display='none';
   const scroll=document.getElementById('cal-scroll');
   const today=new Date();today.setHours(0,0,0,0);
   let html='<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:16px">';
@@ -2418,11 +2423,24 @@ function renderYearCal(){
     </div>`;
   }
   html+='</div>';
-  if(scroll)scroll.innerHTML=html;
+  // Insert year grid as sibling of table, not replacing the table
+  let ygrid=document.getElementById('cal-year-grid');
+  if(!ygrid){
+    ygrid=document.createElement('div');
+    ygrid.id='cal-year-grid';
+    if(scroll)scroll.appendChild(ygrid);
+  }
+  ygrid.style.display='block';
+  ygrid.innerHTML=html;
 }
 
 function renderCal(){
   if(calViewMode==='year'){renderYearCal();return;}
+  // Ensure month table visible, year grid hidden
+  const tbl=document.getElementById('cal-table');
+  if(tbl)tbl.style.display='';
+  const ygrid=document.getElementById('cal-year-grid');
+  if(ygrid)ygrid.style.display='none';
   document.getElementById('cal-lbl').textContent=`${MONTHS[calM]} ${calY}`;
   const allR=[...getRecs(),...getElecs()].filter(r=>!r.archived);
   const recs=allR.filter(r=>(r.type==='show'&&calSH)||(r.type==='stand'&&calSS)||(r.type==='elec'&&calSE));
