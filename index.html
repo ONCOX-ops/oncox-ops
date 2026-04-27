@@ -1363,37 +1363,6 @@ function initPin(){
   });
 }
 
-function pinPress(val){
-  if(val===''||val===undefined)return;
-  const err=document.getElementById('pin-error');
-  if(val==='back'){
-    pinEntry=pinEntry.slice(0,-1);
-  } else {
-    if(pinEntry.length>=4)return;
-    pinEntry+=val;
-  }
-  // Update dots
-  for(let i=0;i<4;i++){
-    const dot=document.getElementById('pd-'+i);
-    if(dot)dot.style.background=i<pinEntry.length?'#fff':'transparent';
-  }
-  err.textContent='';
-  if(pinEntry.length===4){
-    if(pinEntry===getPin()){
-      sessionStorage.setItem('oncox_unlocked','1');
-      document.getElementById('pin-screen').style.display='none';
-      pinEntry='';
-    } else {
-      err.textContent='Incorrect PIN — try again';
-      pinEntry='';
-      for(let i=0;i<4;i++){const dot=document.getElementById('pd-'+i);if(dot)dot.style.background='transparent';}
-      // Shake effect
-      const pad=document.getElementById('pin-pad');
-      if(pad){pad.style.transform='translateX(-8px)';setTimeout(()=>{pad.style.transform='translateX(8px)';setTimeout(()=>{pad.style.transform='';},80);},80);}
-    }
-  }
-}
-
 function changePinPrompt(){
   const cur=prompt('Enter current PIN:');
   if(cur!==getPin()){alert('Incorrect current PIN');return;}
@@ -1405,7 +1374,10 @@ function changePinPrompt(){
 }
 
 function lockApp(){
+  if(APP.currentUser)clearPresence(APP.currentUser);
+  APP.currentUser='';
   sessionStorage.removeItem('oncox_unlocked');
+  sessionStorage.removeItem('oncox_user');
   pinEntry='';
   for(let i=0;i<4;i++){const dot=document.getElementById('pd-'+i);if(dot)dot.style.background='transparent';}
   document.getElementById('pin-error').textContent='';
@@ -1643,9 +1615,18 @@ function pinPress(val){
   for(let i=0;i<4;i++){const dot=document.getElementById('pd-'+i);if(dot)dot.style.background=i<pinEntry.length?'#fff':'transparent';}
   err.textContent='';
   if(pinEntry.length===4){
-    if(pinEntry===getPin()){
-      sessionStorage.setItem('oncox_unlocked','1');sessionStorage.removeItem('oncox_field_unlocked');
-      document.getElementById('pin-screen').style.display='none';FIELD_UNLOCKED=false;pinEntry='';
+    const _matchedUser=getUserForPin(pinEntry);
+    if(_matchedUser){
+      sessionStorage.setItem('oncox_unlocked','1');
+      sessionStorage.setItem('oncox_user',_matchedUser);
+      sessionStorage.removeItem('oncox_field_unlocked');
+      document.getElementById('pin-screen').style.display='none';
+      FIELD_UNLOCKED=false;pinEntry='';
+      APP.currentUser=_matchedUser;
+      logActivity(_matchedUser,'login','Logged in');
+      updatePresence(_matchedUser);startPresencePing();
+      showAdminBtn();renderPresenceBar();
+      if(CV==='dashboard')renderDash();
     } else if(pinEntry===getFieldPin()){
       sessionStorage.setItem('oncox_field_unlocked','1');
       document.getElementById('pin-screen').style.display='none';
