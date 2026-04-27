@@ -1306,14 +1306,18 @@ function svcChips(svcs){
 function dayType(r,dt){
   const ts=dt.getTime();
   const phases=[
-    {key:'travel',   type:'travel'},
-    {key:'unload',   type:'unload'},
-    {key:'build',    type:'build'},
+    {key:'travel',    type:'travel'},
+    {key:'unload',    type:'unload'},
+    {key:'build',     type:'build'},
     {key:'nightBuild',type:'nightbuild'},
-    {key:'open',     type:'open'},
-    {key:'openRip',  type:'openrip'},
-    {key:'rip',      type:'rip'},
+    {key:'open',      type:'open'},
+    {key:'openRip',   type:'openrip'},
+    {key:'rip',       type:'rip'},
   ].filter(p=>r[p.key]).map(p=>{const d=new Date(r[p.key]);d.setHours(0,0,0,0);return{...p,ms:d.getTime()};});
+  // First check for exact date match — always wins over range fill
+  const exact=phases.find(p=>p.ms===ts);
+  if(exact)return exact.type;
+  // Then use range fill for days between phases
   for(let i=0;i<phases.length;i++){
     const start=phases[i].ms;
     const end=i+1<phases.length?phases[i+1].ms:start+86400000;
