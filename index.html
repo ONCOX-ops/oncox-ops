@@ -2393,7 +2393,7 @@ function renderYearCal(){
   if(tbl)tbl.style.display='none';
   const scroll=document.getElementById('cal-scroll');
   const today=new Date();today.setHours(0,0,0,0);
-  let html='<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:16px">';
+  let html='<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:16px;background:var(--navy);border-radius:6px">';
   for(let m=0;m<12;m++){
     const dim=new Date(calY,m+1,0).getDate();
     const firstDow=(new Date(calY,m,1).getDay()+6)%7;
@@ -2406,7 +2406,6 @@ function renderYearCal(){
           const d=i+1;
           const dt=new Date(calY,m,d);dt.setHours(0,0,0,0);
           const isToday=dt.getTime()===today.getTime();
-          // Find if any record has activity on this day
           let bgCol='';
           for(const r of recs){
             const t=dayType(r,dt);
@@ -2416,7 +2415,11 @@ function renderYearCal(){
               break;
             }
           }
-          const style=bgCol?`background:${bgCol};color:#fff;border-radius:2px;`:(isToday?'background:rgba(255,255,255,.2);color:#fff;border-radius:2px;':'color:rgba(255,255,255,.35);');
+          const style=bgCol
+            ?`background:${bgCol};color:#fff;border-radius:2px;font-weight:700;`
+            :isToday
+              ?`background:rgba(255,255,255,.25);color:#fff;border-radius:2px;font-weight:700;`
+              :`color:rgba(255,255,255,.5);`;
           return`<div style="font-size:9px;text-align:center;padding:2px 1px;${style}">${d}</div>`;
         }).join('')}
       </div>
