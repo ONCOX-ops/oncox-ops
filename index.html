@@ -1192,27 +1192,31 @@ async function _pushTasks(recId,isElec){
   try{await sbDelWhere('tasks','record_id',recId);if(rows.length)await sbPost('tasks',rows);}catch(e){console.error('_pushTasks',e);}
 }
 async function _patchTask(recId,secId,taskName,data){
-  // Use upsert (POST with merge-duplicates) so it works whether the row exists or not
   try{
-    await sbUpsert('tasks',{
-      record_id:recId,section_id:secId,task_name:taskName,
+    // PATCH the existing row directly using the unique constraint columns
+    const path='tasks?record_id=eq.'+encodeURIComponent(recId)
+      +'&section_id=eq.'+encodeURIComponent(secId)
+      +'&task_name=eq.'+encodeURIComponent(taskName);
+    await sbQ(path,'PATCH',{
       status:data.status||'Not Started',
       owner:data.owner||'',
       notes:data.notes||'',
       deadline:data.deadline||null
-    });
+    },'');
   }catch(e){
     console.error('_patchTask failed:',e);
     // Retry once after 1 second
     setTimeout(async()=>{
       try{
-        await sbUpsert('tasks',{
-          record_id:recId,section_id:secId,task_name:taskName,
+        const path='tasks?record_id=eq.'+encodeURIComponent(recId)
+          +'&section_id=eq.'+encodeURIComponent(secId)
+          +'&task_name=eq.'+encodeURIComponent(taskName);
+        await sbQ(path,'PATCH',{
           status:data.status||'Not Started',
           owner:data.owner||'',
           notes:data.notes||'',
           deadline:data.deadline||null
-        });
+        },'');
       }catch(e2){console.error('_patchTask retry failed:',e2);}
     },1000);
   }
