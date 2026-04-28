@@ -1699,11 +1699,11 @@ async function init(){
   // Check if field session was active
   if(sessionStorage.getItem('oncox_field_unlocked')==='1'){
     FIELD_UNLOCKED=true;FIELD_SUB_ID=APP.fieldSubId||null;
-    enterFieldView();startRealtime();
+    enterFieldView();
   } else {
     APP.currentUser=sessionStorage.getItem('oncox_user')||'';
     if(APP.currentUser){showAdminBtn();renderPresenceBar();startPresencePing();}
-    renderDash();startRealtime();
+    renderDash();
   }
 }
 init();
@@ -2268,91 +2268,11 @@ setInterval(()=>{if(APP.currentUser)renderPresenceBar();},60000);
 
 // Checks Supabase for changes and re-renders if anything has changed.
 // Simple, reliable, works on all devices and networks.
-let _lastSync='';
-let _lastSyncTasks='';
-let _lastSyncSubs='';
-let _syncPaused=false;
-
-function startRealtime(){
-  setInterval(async()=>{
-    if(document.hidden)return;
-    if(document.querySelector('.modal-overlay.open'))return;
-    try{
-      // Fetch lightweight snapshots of all three tables
-      // For tasks: get count + sample of statuses across all tasks (not just latest ID)
-      const [recSnap, taskSnap, subSnap] = await Promise.all([
-        sbGet('records','select=id,updated_at&order=updated_at.desc&limit=100'),
-        sbGet('tasks','select=id,status,owner,notes&order=sort_order.asc&limit=200'),
-        sbGet('subcontractors','select=id,sla_signed,ins_status&order=name.asc'),
-      ]);
-      const recStr=JSON.stringify(recSnap.map(r=>r.id+'|'+(r.updated_at||'')));
-      const taskStr=JSON.stringify(taskSnap.map(t=>t.id+'|'+t.status+'|'+(t.owner||'')+'|'+(t.notes||'').slice(0,10)));
-      const subStr=JSON.stringify(subSnap.map(s=>s.id+'|'+(s.sla_signed||'')+'|'+(s.ins_status||'')));
-      const changed=recStr!==_lastSync||taskStr!==_lastSyncTasks||subStr!==_lastSyncSubs;
-      if(!changed)return;
-      _lastSync=recStr;
-      _lastSyncTasks=taskStr;
-      _lastSyncSubs=subStr;
-      await _reloadAllData();
-    }catch(e){/* silent */}
-  },3000);
-}
-
-async function _reloadAllData(){
-  try{
-    showSyncIndicator();
-    const recs=await sbGet('records','order=build.asc.nullslast,night_build.asc.nullslast');
-    APP.records=recs.filter(r=>r.type!=='elec').map(dbToRec);
-    APP.elecs=recs.filter(r=>r.type==='elec').map(dbToRec);
-
-    // NEVER reload tasks during sync — it wipes inputs the user is editing.
-    // Tasks are only reloaded on full page load and when navigating into a project.
-    if(CV!=='projects'){
-      const tasks=await sbGet('tasks','order=sort_order.asc');
-      APP.tasks={};APP.elecTasks={};
-      const recMap=Object.fromEntries(recs.map(r=>[r.id,r.type]));
-      tasks.forEach(t=>{
-        const isElec=recMap[t.record_id]==='elec';
-        const store=isElec?APP.elecTasks:APP.tasks;
-        if(!store[t.record_id])store[t.record_id]={};
-        if(!store[t.record_id][t.section_id])store[t.record_id][t.section_id]=[];
-        store[t.record_id][t.section_id].push({name:t.task_name,status:t.status||'Not Started',owner:t.owner||'',notes:t.notes||'',deadline:t.deadline||''});
-      });
-    }
-
-    APP.upgrades=(await sbGet('upgrades','order=created_at.asc')).map(u=>({id:u.id,recId:u.record_id,exhibitor:u.exhibitor||'',standNum:u.stand_num||'',contactName:u.contact_name||'',contactEmail:u.contact_email||'',invoiceRef:u.invoice_ref||'',value:u.value||'',invoicePaid:u.invoice_paid||false,services:u.services||[],notes:u.notes||''}));
-    APP.subs=(await sbGet('subcontractors','order=name.asc')).map(s=>({id:s.id,name:s.name,trade:s.trade||'',dayRate:s.day_rate||'',phone:s.phone||'',email:s.email||'',notes:s.notes||'',slaSigned:s.sla_signed||'',slaDate:s.sla_date||'',slaExpiry:s.sla_expiry||'',insStatus:s.ins_status||'',insFrom:s.ins_from||'',insExpiry:s.ins_expiry||''}));
-    APP.allocs=(await sbGet('allocations','order=created_at.asc')).map(a=>({id:a.id,subId:a.sub_id,recId:a.record_id,role:a.role||'',days:a.days||[],notes:a.notes||'',labourReq:a.labour_req||'',labourConf:a.labour_conf||''}));
-
-    // Re-render — never touch the project detail during sync
-    if(CV==='dashboard')renderDash();
-    else if(CV==='calendar')renderCal();
-    else if(CV==='projects')renderProjects(); // sidebar only — never renderProjDetail during sync
-    else if(CV==='subcontractors')renderSubs();
-
-    setTimeout(hideSyncIndicator,600);
-  }catch(e){
-    console.error('Sync reload failed:',e);
-    hideSyncIndicator();
-  }
-}
-
-// Subtle sync indicator in the corner
-function showSyncIndicator(){
-  let el=document.getElementById('sync-dot');
-  if(!el){
-    el=document.createElement('div');
-    el.id='sync-dot';
-    el.style.cssText='position:fixed;bottom:16px;right:16px;background:var(--purple);color:#fff;font-family:"Barlow Condensed",sans-serif;font-size:11px;font-weight:700;padding:5px 10px;border-radius:20px;z-index:9990;opacity:0;transition:opacity .2s;letter-spacing:.06em;text-transform:uppercase';
-    el.textContent='↻ Syncing…';
-    document.body.appendChild(el);
-  }
-  el.style.opacity='1';
-}
-function hideSyncIndicator(){
-  const el=document.getElementById('sync-dot');
-  if(el)el.style.opacity='0';
-}
+// ── AUTO-SYNC REMOVED ────────────────────────────────────────────────────────
+// All changes are manual save. No background polling. No interference with inputs.
+function startRealtime(){} // no-op
+function showSyncIndicator(){}
+function hideSyncIndicator(){}
 
 // ── DASHBOARD ────────────────────────────────────────────────────────────────
 const TEAM_MEMBERS = ['Callum','Chloe','Lily','Adam','Ryan'];
@@ -3047,7 +2967,6 @@ function updElecTask(id,sec,i,field,val){
   t[field]=val;
   _lastUserEdit=Date.now();
   _patchTask(id,sec,t.name,t);
-  _lastSyncTasks=''; // force next poll to re-check
   if(field==='status'&&APP.currentUser){
     const rec=getAllRecs().find(r=>r.id===id);
     logActivity(APP.currentUser,'task_update',`${val}: ${t.name} on ${rec?.name||id}`);
@@ -3074,8 +2993,7 @@ async function saveAllTasks(id,isElec){
       });
     });
     if(rows.length)await sbPost('tasks',rows);
-    _lastSyncTasks=''; // force sync to pick up new state
-    if(btn){btn.disabled=false;btn.textContent='💾 Save Changes';}
+      if(btn){btn.disabled=false;btn.textContent='💾 Save Changes';}
     if(msg){msg.style.display='inline';setTimeout(()=>{msg.style.display='none';},3000);}
   }catch(e){
     if(btn){btn.disabled=false;btn.textContent='💾 Save Changes';}
@@ -3093,7 +3011,6 @@ function updTask(id,sec,i,field,val){
   t[field]=val;
   _lastUserEdit=Date.now();
   _patchTask(id,sec,t.name,t);
-  _lastSyncTasks=''; // force next poll to re-check
   if(field==='status'&&APP.currentUser){
     const rec=getAllRecs().find(r=>r.id===id);
     logActivity(APP.currentUser,'task_update',`${val}: ${t.name} on ${rec?.name||id}`);
