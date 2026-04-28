@@ -1148,7 +1148,7 @@ function getSubs(){return APP.subs;}
 function saveSubs(s){APP.subs=s;}
 function getAllocs(){return APP.allocs;}
 function saveAllocs(a){APP.allocs=a;}
-function getAllRecs(){return[...APP.records,...APP.elecs];}
+// getAllRecs defined below
 function getUpgrades(recId){return APP.upgrades.filter(u=>u.recId===recId);}
 function getPin(){return APP.pin;}
 function setPin(p){APP.pin=p;sbUpsert('settings',{key:'pin',value:p}).catch(console.error);}
@@ -1509,15 +1509,7 @@ const ELEC_TASK_SECTIONS=[
 
 // getElecTasks/saveElecTasks handled by Supabase layer above
 
-function getElecTasksFor(id){
-  const all=getElecTasks();
-  if(!all[id]){
-    all[id]={};
-    ELEC_TASK_SECTIONS.forEach(s=>{all[id][s.id]=s.tasks.map(t=>({name:t,status:'Not Started',owner:'',notes:'',deadline:''}));});
-    saveElecTasks(all);
-  }
-  return all[id];
-}
+// getElecTasksFor defined above
 
 function calcElecPct(id){
   const tasks=getElecTasksFor(id);
@@ -1649,16 +1641,7 @@ function openEditAlloc(allocId){
 
 // Override saveAlloc to handle edits
 const _origSaveAlloc=saveAlloc;
-async function saveAlloc(){
-  const subId=document.getElementById('a-sub').value,recId=document.getElementById('a-rec').value;
-  if(!subId||!recId)return;
-  const selectedDays=getSelectedAllocDays();
-  const alloc=EAllocId
-    ?{...APP.allocs.find(x=>x.id===EAllocId)||{},id:EAllocId,subId,recId,role:document.getElementById('a-role').value.trim(),days:selectedDays,notes:document.getElementById('a-notes').value.trim(),labourReq:document.getElementById('a-labour-req')?.value||'',labourConf:document.getElementById('a-labour-conf')?.value||''}
-    :{id:'al_'+Date.now(),subId,recId,role:document.getElementById('a-role').value.trim(),days:selectedDays,notes:document.getElementById('a-notes').value.trim(),labourReq:document.getElementById('a-labour-req')?.value||'',labourConf:document.getElementById('a-labour-conf')?.value||''};
-  EAllocId=null;closeModal('modal-alloc');
-  try{await syncAlloc(alloc);if(CV==='projects'&&CPid)renderProjDetail(CPid);else renderSubs();}catch(e){alert('Save failed: '+e.message);}
-}
+// saveAlloc defined below
 
 // ── ARCHIVE ────────────────────────────────────────────────────────────────────
 async function archiveRecord(id){
@@ -1781,6 +1764,13 @@ function renderFieldView(){
   const jobs=getFieldJobs();
   const today=new Date();today.setHours(0,0,0,0);
   // Build date→jobs map
+  // Month calendar — use dayType() for range fill, same as main calendar
+  const dim=new Date(fieldCalY,fieldCalM+1,0).getDate();
+  const firstDow=new Date(fieldCalY,fieldCalM,1).getDay();
+  const startOff=(firstDow+6)%7;
+  const dayCols={travel:'var(--purple)',unload:'#9b6aa0',build:'#eab308',nightbuild:'var(--navy)',open:'#16a34a',openrip:'#ea580c',rip:'#dc2626'};
+
+  // Build exact-date map for click handling (which jobs are on this day)
   const djMap={};
   jobs.forEach(job=>{
     ['travel','unload','build','nightBuild','open','openRip','rip'].forEach(f=>{
@@ -1790,11 +1780,23 @@ function renderFieldView(){
       if(!djMap[k])djMap[k]=[];
       if(!djMap[k].find(j=>j.id===job.id))djMap[k].push(job);
     });
+    // Also fill range days
+    const phases=['travel','unload','build','nightBuild','open','openRip','rip'].filter(f=>job[f]);
+    phases.forEach((f,i)=>{
+      const start=new Date(job[f]);start.setHours(0,0,0,0);
+      const nextF=phases[i+1];
+      const end=nextF?new Date(job[nextF]):new Date(start.getTime()+86400000);
+      end.setHours(0,0,0,0);
+      const cur=new Date(start);
+      while(cur<end){
+        const k=cur.toISOString().slice(0,10);
+        if(!djMap[k])djMap[k]=[];
+        if(!djMap[k].find(j=>j.id===job.id))djMap[k].push(job);
+        cur.setDate(cur.getDate()+1);
+      }
+    });
   });
-  // Month calendar
-  const dim=new Date(fieldCalY,fieldCalM+1,0).getDate();
-  const firstDow=new Date(fieldCalY,fieldCalM,1).getDay();
-  const startOff=(firstDow+6)%7;
+
   let cal=`<div class="field-month-hdr">
     <button class="field-cal-nav" onclick="fieldCalPrev()">←</button>
     <span>${MONTHS[fieldCalM]} ${fieldCalY}</span>
@@ -1808,8 +1810,16 @@ function renderFieldView(){
     const k=dt.toISOString().slice(0,10);
     const dayJobs=djMap[k]||[];
     const isToday=dt.getTime()===today.getTime();
-    const dots=dayJobs.slice(0,3).map(j=>`<div class="field-cal-dot" style="background:${j.type==='elec'?'var(--elec)':j.type==='stand'?'var(--blue)':'var(--purple)'}"></div>`).join('');
-    cal+=`<div class="field-cal-day ${dayJobs.length?'has-job':''} ${isToday?'today-day':''}" ${dayJobs.length?`onclick="fieldShowDate('${k}')"`:''}>${d}${dots?`<div class="dot-row">${dots}</div>`:''}</div>`;
+    // Get day type for colour (use first job's dayType)
+    let bgStyle='';
+    if(dayJobs.length){
+      const t=dayType(dayJobs[0],dt);
+      const col=t?(dayCols[t]||'var(--purple)'):'var(--purple)';
+      bgStyle=`background:${col};color:#fff;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.2);`;
+    }
+    const todayStyle=isToday?'outline:2px solid rgba(255,255,255,.5);outline-offset:-2px;':'';
+    const dots=dayJobs.length>1?`<div class="dot-row">${dayJobs.slice(0,3).map(()=>'<div class="field-cal-dot" style="background:rgba(255,255,255,.7)"></div>').join('')}</div>`:'';
+    cal+=`<div class="field-cal-day" style="font-size:13px;font-weight:700;text-align:center;padding:2px 1px;border-radius:6px;${bgStyle}${todayStyle}${!dayJobs.length?'color:rgba(255,255,255,.35);':''}" ${dayJobs.length?`onclick="fieldShowDate('${k}')"`:''}>${d}${dots}</div>`;
   }
   cal+=`</div>`;
   // Job list
@@ -2290,11 +2300,15 @@ async function _reloadAllData(){
     else if(CV==='projects'){
       renderProjects();
       if(CPid){
-        // Re-render detail but preserve scroll position
-        const det=document.getElementById('proj-detail');
-        const scrollY=det?det.scrollTop:0;
-        renderProjDetail(CPid);
-        if(det)setTimeout(()=>{det.scrollTop=scrollY;},50);
+        // Don't re-render if user is actively editing a date/text input in the task table
+        const activeEl=document.activeElement;
+        const isEditing=activeEl&&(activeEl.tagName==='INPUT'||activeEl.tagName==='TEXTAREA'||activeEl.tagName==='SELECT');
+        if(!isEditing){
+          const det=document.getElementById('proj-detail');
+          const scrollY=det?det.scrollTop:0;
+          renderProjDetail(CPid);
+          if(det)setTimeout(()=>{det.scrollTop=scrollY;},50);
+        }
       }
     }
     else if(CV==='subcontractors')renderSubs();
@@ -2862,7 +2876,7 @@ function renderTaskSecs(id,services){
           ${STATUSES.map(s=>`<option value="${s}"${t.status===s?' selected':''}>${s}</option>`).join('')}</select></td>
         <td><select class="owner-sel" onchange="updTask('${id}','${secId}',${i},'owner',this.value)">
           <option value="">—</option>${OWNERS.map(o=>`<option value="${o}"${t.owner===o?' selected':''}>${o}</option>`).join('')}</select></td>
-        <td><input type="date" class="deadline-input${isOverdue?' overdue':''}" value="${t.deadline||''}" onchange="updTask('${id}','${secId}',${i},'deadline',this.value)"></td>
+        <td><input type="date" class="deadline-input${isOverdue?' overdue':''}" value="${t.deadline||''}" onchange="updTask('${id}','${secId}',${i},'deadline',this.value)" onblur="updTask('${id}','${secId}',${i},'deadline',this.value)"></td>
         <td><input class="inline-note" value="${t.notes||''}" placeholder="notes…" onchange="updTask('${id}','${secId}',${i},'notes',this.value)"></td>
       </tr>`;
     }).join('');
@@ -2984,7 +2998,7 @@ function renderElecTaskSecs(id){
           ${STATUSES.map(s=>`<option value="${s}"${t.status===s?' selected':''}>${s}</option>`).join('')}</select></td>
         <td><select class="owner-sel" onchange="updElecTask('${id}','${sec.id}',${i},'owner',this.value)">
           <option value="">—</option>${OWNERS.map(o=>`<option value="${o}"${t.owner===o?' selected':''}>${o}</option>`).join('')}</select></td>
-        <td><input type="date" class="deadline-input${isOverdue?' overdue':''}" value="${t.deadline||''}" onchange="updElecTask('${id}','${sec.id}',${i},'deadline',this.value)"></td>
+        <td><input type="date" class="deadline-input${isOverdue?' overdue':''}" value="${t.deadline||''}" onchange="updElecTask('${id}','${sec.id}',${i},'deadline',this.value)" onblur="updElecTask('${id}','${sec.id}',${i},'deadline',this.value)"></td>
         <td><input class="inline-note" value="${t.notes||''}" placeholder="notes…" onchange="updElecTask('${id}','${sec.id}',${i},'notes',this.value)"></td>
       </tr>`;
     }).join('');
@@ -3289,23 +3303,7 @@ function selectContract(type){
   document.getElementById('ct-sub').className='ct-option'+(type==='subcontract'?' selected-sub':'');
 }
 
-function openAdd(type){
-  EID=null;ETYPE=type;ECONTRACT='direct';ESERVICES=[];
-  const isS=type==='stand';
-  document.getElementById('modal-rec-title').textContent=`Add ${isS?'Stand':'Show'}`;
-  document.getElementById('modal-rec-title').className=`modal-title${isS?' blue-title':''}`;
-  document.getElementById('modal-rec-inner').className=`modal${isS?' stand-modal':''}`;
-  document.getElementById('btn-save-rec').className=`btn ${isS?'btn-blue':'btn-primary'}`;
-  document.getElementById('btn-del-rec').style.display='none';
-  document.getElementById('f-show-extra').style.display=type==='show'?'block':'none';
-  ['job','name','venue','org','bays','notes'].forEach(f=>document.getElementById('f-'+f).value='');
-  ['travel','unload','build','nbuild','open','openrip','rip'].forEach(f=>document.getElementById('f-'+f).value='');
-  clearSpecFields();
-  document.getElementById('f-status').value='confirmed';
-  selectContract('direct');
-  renderServicesGrid(type,[]);
-  openModal('modal-rec');
-}
+// openAdd defined above
 
 function editRec(id){
   const r=getRecs().find(x=>x.id===id);if(!r)return;
