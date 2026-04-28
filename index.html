@@ -2985,9 +2985,13 @@ function renderSubs(){
   document.getElementById('clash-banners').innerHTML=clashes.map(c=>`<div class="clash-alert">⚠️ <strong>${c.subName}</strong> is double-booked: ${c.shows.join(' & ')}</div>`).join('');
   document.getElementById('sub-roster').innerHTML=subs.length?subs.map(s=>{
     const sa=allocs.filter(a=>a.subId===s.id),hc=clashes.some(c=>c.subId===s.id);
+    const _now=new Date();
+    const _slaBadge=s.slaSigned==='yes'?(s.slaExpiry&&new Date(s.slaExpiry)<_now?'<span style="font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px;background:#fee2e2;color:#dc2626;font-family:'Barlow Condensed',sans-serif">SLA Expired</span>':'<span style="font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px;background:#dcfce7;color:#16a34a;font-family:'Barlow Condensed',sans-serif">SLA ✓</span>'):s.slaSigned==='no'?'<span style="font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px;background:#fee2e2;color:#dc2626;font-family:'Barlow Condensed',sans-serif">No SLA</span>':'';
+    const _insBadge=s.insStatus==='yes'?(s.insExpiry&&new Date(s.insExpiry)<_now?'<span style="font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px;background:#fee2e2;color:#dc2626;font-family:'Barlow Condensed',sans-serif">Ins Expired</span>':'<span style="font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px;background:#dcfce7;color:#16a34a;font-family:'Barlow Condensed',sans-serif">Ins ✓</span>'):s.insStatus==='no'?'<span style="font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px;background:#fef3c7;color:#d97706;font-family:'Barlow Condensed',sans-serif">No Ins</span>':s.insStatus==='expired'?'<span style="font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px;background:#fee2e2;color:#dc2626;font-family:'Barlow Condensed',sans-serif">Ins Expired</span>':'';
     return`<div class="sub-card" style="${hc?'border-color:#fca5a5;':''}">
       <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:4px">
-        <div><div class="sub-name">${s.name}</div><div class="sub-trade">${s.trade||''}</div></div>
+        <div><div class="sub-name">${s.name}</div><div class="sub-trade">${s.trade||''}</div>
+        ${_slaBadge||_insBadge?`<div style="display:flex;gap:4px;margin-top:5px">${_slaBadge}${_insBadge}</div>`:''}</div>
         <div style="display:flex;gap:6px">
           <button class="btn btn-ghost btn-sm" onclick="openEditSub('${s.id}')">Edit</button>
           <button class="btn btn-danger btn-sm" onclick="delSub('${s.id}')">✕</button>
