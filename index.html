@@ -3080,8 +3080,8 @@ function refreshOverall(id){
       }
     });
   });
-  // update sidebar pct
-  renderProjects();renderProjDetail(id);
+  // update sidebar pct only - do NOT call renderProjDetail here as it destroys active inputs
+  renderProjects();
 }
 
 function dayChipsForAlloc(a,rec){
