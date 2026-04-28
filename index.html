@@ -2301,39 +2301,29 @@ async function _reloadAllData(){
     APP.records=recs.filter(r=>r.type!=='elec').map(dbToRec);
     APP.elecs=recs.filter(r=>r.type==='elec').map(dbToRec);
 
-    const tasks=await sbGet('tasks','order=sort_order.asc');
-    APP.tasks={};APP.elecTasks={};
-    const recMap=Object.fromEntries(recs.map(r=>[r.id,r.type]));
-    tasks.forEach(t=>{
-      const isElec=recMap[t.record_id]==='elec';
-      const store=isElec?APP.elecTasks:APP.tasks;
-      if(!store[t.record_id])store[t.record_id]={};
-      if(!store[t.record_id][t.section_id])store[t.record_id][t.section_id]=[];
-      store[t.record_id][t.section_id].push({name:t.task_name,status:t.status||'Not Started',owner:t.owner||'',notes:t.notes||'',deadline:t.deadline||''});
-    });
+    // NEVER reload tasks during sync — it wipes inputs the user is editing.
+    // Tasks are only reloaded on full page load and when navigating into a project.
+    if(CV!=='projects'){
+      const tasks=await sbGet('tasks','order=sort_order.asc');
+      APP.tasks={};APP.elecTasks={};
+      const recMap=Object.fromEntries(recs.map(r=>[r.id,r.type]));
+      tasks.forEach(t=>{
+        const isElec=recMap[t.record_id]==='elec';
+        const store=isElec?APP.elecTasks:APP.tasks;
+        if(!store[t.record_id])store[t.record_id]={};
+        if(!store[t.record_id][t.section_id])store[t.record_id][t.section_id]=[];
+        store[t.record_id][t.section_id].push({name:t.task_name,status:t.status||'Not Started',owner:t.owner||'',notes:t.notes||'',deadline:t.deadline||''});
+      });
+    }
 
     APP.upgrades=(await sbGet('upgrades','order=created_at.asc')).map(u=>({id:u.id,recId:u.record_id,exhibitor:u.exhibitor||'',standNum:u.stand_num||'',contactName:u.contact_name||'',contactEmail:u.contact_email||'',invoiceRef:u.invoice_ref||'',value:u.value||'',invoicePaid:u.invoice_paid||false,services:u.services||[],notes:u.notes||''}));
     APP.subs=(await sbGet('subcontractors','order=name.asc')).map(s=>({id:s.id,name:s.name,trade:s.trade||'',dayRate:s.day_rate||'',phone:s.phone||'',email:s.email||'',notes:s.notes||'',slaSigned:s.sla_signed||'',slaDate:s.sla_date||'',slaExpiry:s.sla_expiry||'',insStatus:s.ins_status||'',insFrom:s.ins_from||'',insExpiry:s.ins_expiry||''}));
     APP.allocs=(await sbGet('allocations','order=created_at.asc')).map(a=>({id:a.id,subId:a.sub_id,recId:a.record_id,role:a.role||'',days:a.days||[],notes:a.notes||'',labourReq:a.labour_req||'',labourConf:a.labour_conf||''}));
 
-    // Re-render current view
+    // Re-render — never touch the project detail during sync
     if(CV==='dashboard')renderDash();
     else if(CV==='calendar')renderCal();
-    else if(CV==='projects'){
-      renderProjects();
-      if(CPid){
-        // Don't re-render if user is actively editing, or edited in the last 10 seconds
-        const activeEl=document.activeElement;
-        const isEditing=activeEl&&(activeEl.tagName==='INPUT'||activeEl.tagName==='TEXTAREA'||activeEl.tagName==='SELECT');
-        const recentEdit=Date.now()-_lastUserEdit<10000;
-        if(!isEditing&&!recentEdit){
-          const det=document.getElementById('proj-detail');
-          const scrollY=det?det.scrollTop:0;
-          renderProjDetail(CPid);
-          if(det)setTimeout(()=>{det.scrollTop=scrollY;},50);
-        }
-      }
-    }
+    else if(CV==='projects')renderProjects(); // sidebar only — never renderProjDetail during sync
     else if(CV==='subcontractors')renderSubs();
 
     setTimeout(hideSyncIndicator,600);
