@@ -1188,10 +1188,30 @@ async function _pushTasks(recId,isElec){
   try{await sbDelWhere('tasks','record_id',recId);if(rows.length)await sbPost('tasks',rows);}catch(e){console.error('_pushTasks',e);}
 }
 async function _patchTask(recId,secId,taskName,data){
+  // Use upsert (POST with merge-duplicates) so it works whether the row exists or not
   try{
-    const path='tasks?record_id=eq.'+encodeURIComponent(recId)+'&section_id=eq.'+encodeURIComponent(secId)+'&task_name=eq.'+encodeURIComponent(taskName);
-    await sbQ(path,'PATCH',{status:data.status,owner:data.owner,notes:data.notes,deadline:data.deadline||null},'');
-  }catch(e){console.error('_patchTask',e);}
+    await sbUpsert('tasks',{
+      record_id:recId,section_id:secId,task_name:taskName,
+      status:data.status||'Not Started',
+      owner:data.owner||'',
+      notes:data.notes||'',
+      deadline:data.deadline||null
+    });
+  }catch(e){
+    console.error('_patchTask failed:',e);
+    // Retry once after 1 second
+    setTimeout(async()=>{
+      try{
+        await sbUpsert('tasks',{
+          record_id:recId,section_id:secId,task_name:taskName,
+          status:data.status||'Not Started',
+          owner:data.owner||'',
+          notes:data.notes||'',
+          deadline:data.deadline||null
+        });
+      }catch(e2){console.error('_patchTask retry failed:',e2);}
+    },1000);
+  }
 }
 
 // Sync functions — upsert to Supabase + update APP cache
@@ -2006,20 +2026,7 @@ async function logActivity(user,type,detail){
 
 // Hook into task updates to log activity
 const _origUpdTask=window.updTask;
-function updTask(id,sec,i,field,val){
-  if(field==='status'&&APP.currentUser){
-    const rec=getAllRecs().find(r=>r.id===id);
-    const taskName=(APP.tasks[id]?.[sec]?.[i]?.name)||sec;
-    logActivity(APP.currentUser,'task_update',`${val}: ${taskName} on ${rec?.name||id}`);
-  }
-  // call original
-  const tasks=getTasksFor(id);
-  const t=tasks[sec]?.find((x,idx)=>idx===i)||tasks[sec]?.[i];
-  if(!t)return;
-  t[field]=val;
-  _patchTask(id,sec,t.name,t).catch(console.error);
-  refreshOverall(id,getRecs().find(r=>r.id===id)?.services||[]);
-}
+// updTask defined below — activity logging merged in
 
 // ── Admin panel renderer ──────────────────────────────────────────────────────
 async function renderAdminPanel(){
@@ -2993,7 +3000,12 @@ function updElecTask(id,sec,i,field,val){
   const all=APP.elecTasks;if(!all[id]||!all[id][sec])return;
   const t=all[id][sec][i];if(!t)return;
   t[field]=val;
-  _patchTask(id,sec,t.name,t).catch(console.error);
+  _patchTask(id,sec,t.name,t);
+  _lastSyncTasks=''; // force next poll to re-check
+  if(field==='status'&&APP.currentUser){
+    const rec=getAllRecs().find(r=>r.id===id);
+    logActivity(APP.currentUser,'task_update',`${val}: ${t.name} on ${rec?.name||id}`);
+  }
   setTimeout(()=>{if(CPid===id)refreshOverall(id);},150);
 }
 
@@ -3003,7 +3015,12 @@ function updTask(id,sec,i,field,val){
   const all=APP.tasks;if(!all[id]||!all[id][sec])return;
   const t=all[id][sec][i];if(!t)return;
   t[field]=val;
-  _patchTask(id,sec,t.name,t).catch(console.error);
+  _patchTask(id,sec,t.name,t);
+  _lastSyncTasks=''; // force next poll to re-check
+  if(field==='status'&&APP.currentUser){
+    const rec=getAllRecs().find(r=>r.id===id);
+    logActivity(APP.currentUser,'task_update',`${val}: ${t.name} on ${rec?.name||id}`);
+  }
   setTimeout(()=>{if(CPid===id)refreshOverall(id);},150);
 }
 
