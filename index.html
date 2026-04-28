@@ -1081,8 +1081,16 @@ let APP={records:[],elecs:[],tasks:{},elecTasks:{},upgrades:[],subs:[],allocs:[]
 // ── MULTI-USER PIN SYSTEM ─────────────────────────────────────────────────────
 const TEAM_PINS={Chloe:'1701',Callum:'2106',Lily:'2709',Adam:'0309',Ryan:'0604'};
 const ADMINS=['Chloe','Callum'];
-function getPinForUser(name){return(APP.userPins&&APP.userPins[name])||TEAM_PINS[name]||'';}
-function getUserForPin(pin){return Object.keys(TEAM_PINS).find(m=>getPinForUser(m)===pin)||null;}
+function getPinForUser(name){
+  // Check Supabase-stored override first, then fall back to hardcoded defaults
+  return(APP.userPins&&APP.userPins[name])||TEAM_PINS[name]||'';
+}
+function getUserForPin(pin){
+  // Always check hardcoded TEAM_PINS — works even before Supabase loads
+  // Then check any overrides stored in APP.userPins
+  const members=Object.keys(TEAM_PINS);
+  return members.find(m=>getPinForUser(m)===pin)||null;
+}
 function isAdmin(name){return ADMINS.includes(name);}
 
 // DB ↔ app object converters
@@ -1636,8 +1644,7 @@ let FIELD_UNLOCKED=false,fieldCalY=new Date().getFullYear(),fieldCalM=new Date()
 
 function getFieldPin(){return APP.fieldPin||'0000';}
 
-// Override pinPress to detect field PIN
-const _origPinPress=window.pinPress;
+// PIN entry — handles team PINs and field PIN
 function pinPress(val){
   if(val===''||val===undefined)return;
   const err=document.getElementById('pin-error');
