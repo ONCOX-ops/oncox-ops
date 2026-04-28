@@ -1688,6 +1688,10 @@ async function init(){
       const s=allSettings.find(x=>x.key==='pin_'+name.toLowerCase());
       if(s)APP.userPins[name]=s.value;
     });
+    // Load authorised double-bookings
+    APP.authorisedClashes=new Set(
+      allSettings.filter(s=>s.key.startsWith('auth_clash_')).map(s=>s.key.replace('auth_clash_',''))
+    );
   }catch(e){}
   // Run migrations to ensure task definitions match current code
   await migrateTaskSections();
@@ -2848,7 +2852,15 @@ function renderProjDetail(id){
       <button class="tab-btn ${CPtab==='subs'?'active':''}" onclick="swTab('subs')">Subcontractors (${allocs.length})</button>
       <button class="tab-btn ${CPtab==='notes'?'active':''}" onclick="swTab('notes')">Notes</button>
     </div>
-    <div id="pt-tasks" class="tab-panel ${CPtab==='tasks'?'active':''}">${isElec?renderElecTaskSecs(id):renderTaskSecs(id,services)}</div>
+    <div id="pt-tasks" class="tab-panel ${CPtab==='tasks'?'active':''}">
+      <div style="display:flex;justify-content:flex-end;margin-bottom:12px">
+        <button class="btn btn-primary btn-sm" id="save-tasks-btn-${id}" onclick="saveAllTasks('${id}',${isElec})">
+          💾 Save Changes
+        </button>
+        <span id="save-tasks-msg-${id}" style="font-size:11px;color:#16a34a;margin-left:10px;align-self:center;display:none">Saved ✓</span>
+      </div>
+      ${isElec?renderElecTaskSecs(id):renderTaskSecs(id,services)}
+    </div>
     ${isShow?`<div id="pt-upgrades" class="tab-panel ${CPtab==='upgrades'?'active':''}">${renderUpgradesPanel(id)}</div>`:''}
     <div id="pt-subs" class="tab-panel ${CPtab==='subs'?'active':''}">
       <div style="margin-bottom:11px"><button class="btn btn-primary btn-sm" onclick="openAllocModal('${id}')">+ Allocate Sub</button></div>
@@ -3041,6 +3053,34 @@ function updElecTask(id,sec,i,field,val){
     logActivity(APP.currentUser,'task_update',`${val}: ${t.name} on ${rec?.name||id}`);
   }
   setTimeout(()=>{if(CPid===id)refreshOverall(id);},150);
+}
+
+async function saveAllTasks(id,isElec){
+  const btn=document.getElementById('save-tasks-btn-'+id);
+  const msg=document.getElementById('save-tasks-msg-'+id);
+  if(btn){btn.disabled=true;btn.textContent='Saving…';}
+  try{
+    const secs=isElec?ELEC_TASK_SECTIONS:TASK_SECTIONS;
+    const store=isElec?APP.elecTasks:APP.tasks;
+    if(!store[id]){if(btn){btn.disabled=false;btn.textContent='💾 Save Changes';}return;}
+    // Delete and rewrite all tasks for this record
+    await sbQ('tasks?record_id=eq.'+encodeURIComponent(id),'DELETE',null,'');
+    const rows=[];let order=0;
+    secs.forEach(sec=>{
+      (store[id][sec.id]||[]).forEach(t=>{
+        rows.push({record_id:id,section_id:sec.id,task_name:t.name,
+          status:t.status||'Not Started',owner:t.owner||'',
+          notes:t.notes||'',deadline:t.deadline||null,sort_order:order++});
+      });
+    });
+    if(rows.length)await sbPost('tasks',rows);
+    _lastSyncTasks=''; // force sync to pick up new state
+    if(btn){btn.disabled=false;btn.textContent='💾 Save Changes';}
+    if(msg){msg.style.display='inline';setTimeout(()=>{msg.style.display='none';},3000);}
+  }catch(e){
+    if(btn){btn.disabled=false;btn.textContent='💾 Save Changes';}
+    alert('Save failed: '+e.message);
+  }
 }
 
 function togSec(h){const b=h.parentElement.querySelector('.sec-body');const a=h.querySelector('span');if(b.style.display==='none'){b.style.display='block';a.textContent='▾';}else{b.style.display='none';a.textContent='▸';}}
@@ -3239,9 +3279,19 @@ function renderSubs(){
   const search=(document.querySelector('#view-subcontractors .search-input')?.value||'').toLowerCase();
   const subs=getSubs().filter(s=>!search||(s.name.toLowerCase().includes(search)||(s.trade||'').toLowerCase().includes(search)));
   const allocs=getAllocs(),recs=getAllRecs(),clashes=detectClashes(allocs,recs,getSubs());
-  document.getElementById('clash-banners').innerHTML=clashes.map(c=>`<div class="clash-alert">⚠️ <strong>${c.subName}</strong> is double-booked: ${c.shows.join(' & ')}</div>`).join('');
+  const authorised=APP.authorisedClashes||new Set();
+  document.getElementById('clash-banners').innerHTML=clashes
+    .filter(c=>!authorised.has(c.allocIds.slice().sort().join('_')))
+    .map(c=>{
+      const key=c.allocIds.slice().sort().join('_');
+      return`<div class="clash-alert">⚠️ <strong>${c.subName}</strong> is double-booked: ${c.shows.join(' & ')}
+        <button onclick="authoriseClash('${key}')" style="margin-left:auto;padding:3px 10px;background:#fff;border:1.5px solid #dc2626;color:#dc2626;border-radius:4px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10px;letter-spacing:.06em;cursor:pointer;white-space:nowrap">Authorise ✓</button>
+      </div>`;
+    }).join('');
   document.getElementById('sub-roster').innerHTML=subs.length?subs.map(s=>{
-    const sa=allocs.filter(a=>a.subId===s.id),hc=clashes.some(c=>c.subId===s.id);
+    const sa=allocs.filter(a=>a.subId===s.id);
+    const _auth=APP.authorisedClashes||new Set();
+    const hc=clashes.some(c=>c.subId===s.id&&!_auth.has(c.allocIds.slice().sort().join('_')));
     const _now=new Date();
     const _slaBadge=s.slaSigned==='yes'?(s.slaExpiry&&new Date(s.slaExpiry)<_now?'<span style="font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px;background:#fee2e2;color:#dc2626">SLA Expired</span>':'<span style="font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px;background:#dcfce7;color:#16a34a">SLA ✓</span>'):s.slaSigned==='no'?'<span style="font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px;background:#fee2e2;color:#dc2626">No SLA</span>':'';
     const _insBadge=s.insStatus==='yes'?(s.insExpiry&&new Date(s.insExpiry)<_now?'<span style="font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px;background:#fee2e2;color:#dc2626">Ins Expired</span>':'<span style="font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px;background:#dcfce7;color:#16a34a">Ins ✓</span>'):s.insStatus==='no'?'<span style="font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px;background:#fef3c7;color:#d97706">No Ins</span>':s.insStatus==='expired'?'<span style="font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px;background:#fee2e2;color:#dc2626">Ins Expired</span>':'';
@@ -3260,6 +3310,22 @@ function renderSubs(){
     </div>`;
   }).join(''):`<div class="empty-state"><div class="empty-ico">👷</div><div class="empty-title">No subs yet</div></div>`;
   renderAllocTable(allocs,getSubs(),recs);
+}
+
+async function authoriseClash(key){
+  if(!APP.authorisedClashes)APP.authorisedClashes=new Set();
+  APP.authorisedClashes.add(key);
+  try{await sbUpsert('settings',{key:'auth_clash_'+key,value:'1'});}catch(e){}
+  renderSubs();
+}
+
+async function loadAuthorisedClashes(){
+  try{
+    const all=await sbGet('settings','');
+    APP.authorisedClashes=new Set(
+      all.filter(s=>s.key.startsWith('auth_clash_')).map(s=>s.key.replace('auth_clash_',''))
+    );
+  }catch(e){APP.authorisedClashes=new Set();}
 }
 
 function detectClashes(allocs,recs,subs){
