@@ -2229,15 +2229,16 @@ function startRealtime(){
     if(document.hidden)return;
     if(document.querySelector('.modal-overlay.open'))return;
     try{
-      // Check records, tasks AND subcontractors for changes
+      // Fetch lightweight snapshots of all three tables
+      // For tasks: get count + sample of statuses across all tasks (not just latest ID)
       const [recSnap, taskSnap, subSnap] = await Promise.all([
         sbGet('records','select=id,updated_at&order=updated_at.desc&limit=100'),
-        sbGet('tasks','select=id,status,owner&order=id.desc&limit=1'),
-        sbGet('subcontractors','select=id&order=id.desc&limit=20'),
+        sbGet('tasks','select=id,status,owner,notes&order=sort_order.asc&limit=200'),
+        sbGet('subcontractors','select=id,sla_signed,ins_status&order=name.asc'),
       ]);
       const recStr=JSON.stringify(recSnap.map(r=>r.id+'|'+(r.updated_at||'')));
-      const taskStr=JSON.stringify(taskSnap.map(t=>t.id+'|'+t.status+'|'+t.owner));
-      const subStr=JSON.stringify(subSnap.map(s=>s.id));
+      const taskStr=JSON.stringify(taskSnap.map(t=>t.id+'|'+t.status+'|'+(t.owner||'')+'|'+(t.notes||'').slice(0,10)));
+      const subStr=JSON.stringify(subSnap.map(s=>s.id+'|'+(s.sla_signed||'')+'|'+(s.ins_status||'')));
       const changed=recStr!==_lastSync||taskStr!==_lastSyncTasks||subStr!==_lastSyncSubs;
       if(!changed)return;
       _lastSync=recStr;
@@ -2273,7 +2274,16 @@ async function _reloadAllData(){
     // Re-render current view
     if(CV==='dashboard')renderDash();
     else if(CV==='calendar')renderCal();
-    else if(CV==='projects'){renderProjects();if(CPid)renderProjDetail(CPid);}
+    else if(CV==='projects'){
+      renderProjects();
+      if(CPid){
+        // Re-render detail but preserve scroll position
+        const det=document.getElementById('proj-detail');
+        const scrollY=det?det.scrollTop:0;
+        renderProjDetail(CPid);
+        if(det)setTimeout(()=>{det.scrollTop=scrollY;},50);
+      }
+    }
     else if(CV==='subcontractors')renderSubs();
 
     setTimeout(hideSyncIndicator,600);
