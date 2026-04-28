@@ -1017,6 +1017,10 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
     <div class="form-grid">
       <div class="form-group"><label class="form-label">Role</label><input class="form-input" id="a-role" placeholder="e.g. Lead Electrician"></div>
       <div class="form-group"><label class="form-label">Notes</label><input class="form-input" id="a-notes" placeholder="Any notes…"></div>
+      <div class="form-group"><label class="form-label">Labour Requested <span style="font-size:10px;color:var(--text3);font-weight:400;text-transform:none;letter-spacing:0">(if booking via gang leader)</span></label>
+        <input class="form-input" id="a-labour-req" type="number" min="0" placeholder="e.g. 4" style="width:100px"></div>
+      <div class="form-group"><label class="form-label">Labour Confirmed</label>
+        <input class="form-input" id="a-labour-conf" type="number" min="0" placeholder="e.g. 3" style="width:100px"></div>
     </div>
     <div style="display:flex;gap:8px;justify-content:flex-end">
       <button class="btn btn-ghost" onclick="closeModal('modal-alloc')">Cancel</button>
@@ -1237,7 +1241,7 @@ async function deleteSub(id){
   await sbDel('subcontractors',id);APP.subs=APP.subs.filter(s=>s.id!==id);APP.allocs=APP.allocs.filter(a=>a.subId!==id);
 }
 async function syncAlloc(alloc){
-  await sbUpsert('allocations',{id:alloc.id,sub_id:alloc.subId,record_id:alloc.recId,role:alloc.role||null,days:alloc.days||[],notes:alloc.notes||null});
+  await sbUpsert('allocations',{id:alloc.id,sub_id:alloc.subId,record_id:alloc.recId,role:alloc.role||null,days:alloc.days||[],notes:alloc.notes||null,labour_req:alloc.labourReq||null,labour_conf:alloc.labourConf||null});
   const i=APP.allocs.findIndex(a=>a.id===alloc.id);if(i>=0)APP.allocs[i]=alloc;else APP.allocs.push(alloc);
 }
 async function deleteAlloc(id){
@@ -1629,6 +1633,8 @@ function openEditAlloc(allocId){
   const subs=getSubs(),recs=getAllRecs();
   if(!subs.length){alert('No subcontractors');return;}
   document.getElementById('a-sub').innerHTML=subs.map(s=>`<option value="${s.id}"${s.id===a.subId?' selected':''}>${s.name} (${s.trade||'—'})</option>`).join('');
+  const _lrEl=document.getElementById('a-labour-req');if(_lrEl)_lrEl.value=a.labourReq||'';
+  const _lcEl=document.getElementById('a-labour-conf');if(_lcEl)_lcEl.value=a.labourConf||'';
   document.getElementById('a-rec').innerHTML=recs.map(r=>`<option value="${r.id}"${r.id===a.recId?' selected':''}>${r.jobNum||''} ${r.name} [${r.type}]</option>`).join('');
   document.getElementById('a-role').value=a.role||'';
   document.getElementById('a-notes').value=a.notes||'';
@@ -1648,8 +1654,8 @@ async function saveAlloc(){
   if(!subId||!recId)return;
   const selectedDays=getSelectedAllocDays();
   const alloc=EAllocId
-    ?{...APP.allocs.find(x=>x.id===EAllocId)||{},id:EAllocId,subId,recId,role:document.getElementById('a-role').value.trim(),days:selectedDays,notes:document.getElementById('a-notes').value.trim()}
-    :{id:'al_'+Date.now(),subId,recId,role:document.getElementById('a-role').value.trim(),days:selectedDays,notes:document.getElementById('a-notes').value.trim()};
+    ?{...APP.allocs.find(x=>x.id===EAllocId)||{},id:EAllocId,subId,recId,role:document.getElementById('a-role').value.trim(),days:selectedDays,notes:document.getElementById('a-notes').value.trim(),labourReq:document.getElementById('a-labour-req')?.value||'',labourConf:document.getElementById('a-labour-conf')?.value||''}
+    :{id:'al_'+Date.now(),subId,recId,role:document.getElementById('a-role').value.trim(),days:selectedDays,notes:document.getElementById('a-notes').value.trim(),labourReq:document.getElementById('a-labour-req')?.value||'',labourConf:document.getElementById('a-labour-conf')?.value||''};
   EAllocId=null;closeModal('modal-alloc');
   try{await syncAlloc(alloc);if(CV==='projects'&&CPid)renderProjDetail(CPid);else renderSubs();}catch(e){alert('Save failed: '+e.message);}
 }
@@ -2276,7 +2282,7 @@ async function _reloadAllData(){
 
     APP.upgrades=(await sbGet('upgrades','order=created_at.asc')).map(u=>({id:u.id,recId:u.record_id,exhibitor:u.exhibitor||'',standNum:u.stand_num||'',contactName:u.contact_name||'',contactEmail:u.contact_email||'',invoiceRef:u.invoice_ref||'',value:u.value||'',invoicePaid:u.invoice_paid||false,services:u.services||[],notes:u.notes||''}));
     APP.subs=(await sbGet('subcontractors','order=name.asc')).map(s=>({id:s.id,name:s.name,trade:s.trade||'',dayRate:s.day_rate||'',phone:s.phone||'',email:s.email||'',notes:s.notes||'',slaSigned:s.sla_signed||'',slaDate:s.sla_date||'',slaExpiry:s.sla_expiry||'',insStatus:s.ins_status||'',insFrom:s.ins_from||'',insExpiry:s.ins_expiry||''}));
-    APP.allocs=(await sbGet('allocations','order=created_at.asc')).map(a=>({id:a.id,subId:a.sub_id,recId:a.record_id,role:a.role||'',days:a.days||[],notes:a.notes||''}));
+    APP.allocs=(await sbGet('allocations','order=created_at.asc')).map(a=>({id:a.id,subId:a.sub_id,recId:a.record_id,role:a.role||'',days:a.days||[],notes:a.notes||'',labourReq:a.labour_req||'',labourConf:a.labour_conf||''}));
 
     // Re-render current view
     if(CV==='dashboard')renderDash();
@@ -3061,14 +3067,15 @@ function renderAllocDet(allocs,subs,id){
   if(!allocs.length)return`<div class="empty-state"><div class="empty-ico">👷</div><div class="empty-title">No subs allocated</div></div>`;
   const recs=getRecs();
   return`<div style="background:var(--white);border:1.5px solid var(--border);border-radius:8px;overflow:hidden"><table class="alloc-table">
-    <thead><tr><th>Sub</th><th>Trade</th><th>Role</th><th>Days Working</th><th>Notes</th><th></th></tr></thead>
+    <thead><tr><th>Sub</th><th>Trade</th><th>Role</th><th>Labour</th><th>Days Working</th><th>Notes</th><th></th></tr></thead>
     <tbody>${allocs.map(a=>{
       const sub=subs.find(s=>s.id===a.subId);
       const rec=recs.find(r=>r.id===a.recId);
-      return`<tr>
+      const labourHtml=a.labourReq?`<span style="font-size:11px;font-weight:700;color:var(--navy)">${a.labourConf||'?'}/${a.labourReq}</span><span style="font-size:10px;color:var(--text3)"> men</span>${!a.labourConf?'<span style="font-size:9px;background:#fef3c7;color:#d97706;padding:1px 5px;border-radius:3px;margin-left:4px;font-weight:700">TBC</span>':a.labourConf===a.labourReq?'<span style="font-size:9px;background:#dcfce7;color:#16a34a;padding:1px 5px;border-radius:3px;margin-left:4px;font-weight:700">✓</span>':'<span style="font-size:9px;background:#fee2e2;color:#dc2626;padding:1px 5px;border-radius:3px;margin-left:4px;font-weight:700">!</span>'}`:'';      return`<tr>
         <td style="font-weight:600">${sub?.name||'?'}</td>
         <td style="color:var(--purple);font-size:11px;font-weight:600">${sub?.trade||''}</td>
         <td>${a.role||'—'}</td>
+        <td>${labourHtml||'—'}</td>
         <td>${dayChipsForAlloc(a,rec)||'—'}</td>
         <td style="color:var(--text3);font-size:11px">${a.notes||''}</td>
         <td style="display:flex;gap:4px">
@@ -3811,7 +3818,7 @@ function openAllocModal(recId=null){
   if(!recs.length){alert('Add shows/stands/electrics first');return;}
   document.getElementById('a-sub').innerHTML=subs.map(s=>`<option value="${s.id}">${s.name} (${s.trade||'—'})</option>`).join('');
   document.getElementById('a-rec').innerHTML=recs.map(r=>`<option value="${r.id}"${r.id===recId?' selected':''}>${r.jobNum||''} ${r.name} [${r.type}]</option>`).join('');
-  ['role','notes'].forEach(f=>document.getElementById('a-'+f).value='');
+  ['role','notes','labour-req','labour-conf'].forEach(f=>{const el=document.getElementById('a-'+f);if(el)el.value='';});
   setTimeout(()=>populateAllocDays(),10);
   openModal('modal-alloc');
 }
@@ -3824,7 +3831,9 @@ async function saveAlloc(){
     id:EAllocId||('al_'+Date.now()),subId,recId,
     role:document.getElementById('a-role').value.trim(),
     days:selectedDays,
-    notes:document.getElementById('a-notes').value.trim()
+    notes:document.getElementById('a-notes').value.trim(),
+    labourReq:document.getElementById('a-labour-req')?.value||'',
+    labourConf:document.getElementById('a-labour-conf')?.value||''
   };
   EAllocId=null;closeModal('modal-alloc');
   try{await syncAlloc(alloc);if(CV==='projects'&&CPid)renderProjDetail(CPid);else renderSubs();}
