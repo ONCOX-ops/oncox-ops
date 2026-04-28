@@ -2713,10 +2713,24 @@ function renderProjects(){
   if(CPid)renderProjDetail(CPid);
 }
 
-function openProj(id){
+async function openProj(id){
   CPid=id;CPtab='tasks';
   if(CV!=='projects'){showView('projects');}
-  else{renderProjects();renderProjDetail(id);}
+  else{renderProjects();}
+  // Always reload tasks fresh from Supabase when opening a project
+  // so we always see the latest saved data from any team member
+  try{
+    const tasks=await sbGet('tasks','record_id=eq.'+encodeURIComponent(id)+'&order=sort_order.asc');
+    const rec=getAllRecs().find(r=>r.id===id);
+    const isElec=rec&&rec.type==='elec';
+    const store=isElec?APP.elecTasks:APP.tasks;
+    store[id]={};
+    tasks.forEach(t=>{
+      if(!store[id][t.section_id])store[id][t.section_id]=[];
+      store[id][t.section_id].push({name:t.task_name,status:t.status||'Not Started',owner:t.owner||'',notes:t.notes||'',deadline:t.deadline||''});
+    });
+  }catch(e){console.error('Failed to reload tasks for project:',e);}
+  renderProjDetail(id);
   // On mobile: hide sidebar, show detail panel
   if(window.innerWidth<=768){
     const sb=document.getElementById('proj-sidebar');
