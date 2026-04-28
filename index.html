@@ -1193,19 +1193,30 @@ async function _pushTasks(recId,isElec){
 }
 async function _patchTask(recId,secId,taskName,data){
   try{
-    // PATCH the existing row directly using the unique constraint columns
     const path='tasks?record_id=eq.'+encodeURIComponent(recId)
       +'&section_id=eq.'+encodeURIComponent(secId)
       +'&task_name=eq.'+encodeURIComponent(taskName);
-    await sbQ(path,'PATCH',{
+    // Use PATCH with return=representation so we can check if a row was actually updated
+    const result=await sbQ(path,'PATCH',{
       status:data.status||'Not Started',
       owner:data.owner||'',
       notes:data.notes||'',
       deadline:data.deadline||null
-    },'');
+    },'return=representation');
+    // If PATCH returned empty array, the row doesn't exist yet — insert it
+    if(Array.isArray(result)&&result.length===0){
+      await sbPost('tasks',[{
+        record_id:recId,section_id:secId,task_name:taskName,
+        status:data.status||'Not Started',
+        owner:data.owner||'',
+        notes:data.notes||'',
+        deadline:data.deadline||null,
+        sort_order:0
+      }]);
+    }
   }catch(e){
     console.error('_patchTask failed:',e);
-    // Retry once after 1 second
+    // On error, try inserting as fallback
     setTimeout(async()=>{
       try{
         const path='tasks?record_id=eq.'+encodeURIComponent(recId)
@@ -2888,7 +2899,7 @@ function renderTaskSecs(id,services){
           ${STATUSES.map(s=>`<option value="${s}"${t.status===s?' selected':''}>${s}</option>`).join('')}</select></td>
         <td><select class="owner-sel" onchange="updTask('${id}','${secId}',${i},'owner',this.value)">
           <option value="">—</option>${OWNERS.map(o=>`<option value="${o}"${t.owner===o?' selected':''}>${o}</option>`).join('')}</select></td>
-        <td><input type="date" class="deadline-input${isOverdue?' overdue':''}" value="${t.deadline||''}" onchange="updTask('${id}','${secId}',${i},'deadline',this.value)" onblur="updTask('${id}','${secId}',${i},'deadline',this.value)"></td>
+        <td><input type="date" class="deadline-input${isOverdue?' overdue':''}" value="${t.deadline||''}" onchange="updTask('${id}','${secId}',${i},'deadline',this.value)"></td>
         <td><input class="inline-note" value="${t.notes||''}" placeholder="notes…" onchange="updTask('${id}','${secId}',${i},'notes',this.value)"></td>
       </tr>`;
     }).join('');
@@ -3010,7 +3021,7 @@ function renderElecTaskSecs(id){
           ${STATUSES.map(s=>`<option value="${s}"${t.status===s?' selected':''}>${s}</option>`).join('')}</select></td>
         <td><select class="owner-sel" onchange="updElecTask('${id}','${sec.id}',${i},'owner',this.value)">
           <option value="">—</option>${OWNERS.map(o=>`<option value="${o}"${t.owner===o?' selected':''}>${o}</option>`).join('')}</select></td>
-        <td><input type="date" class="deadline-input${isOverdue?' overdue':''}" value="${t.deadline||''}" onchange="updElecTask('${id}','${sec.id}',${i},'deadline',this.value)" onblur="updElecTask('${id}','${sec.id}',${i},'deadline',this.value)"></td>
+        <td><input type="date" class="deadline-input${isOverdue?' overdue':''}" value="${t.deadline||''}" onchange="updElecTask('${id}','${sec.id}',${i},'deadline',this.value)"></td>
         <td><input class="inline-note" value="${t.notes||''}" placeholder="notes…" onchange="updElecTask('${id}','${sec.id}',${i},'notes',this.value)"></td>
       </tr>`;
     }).join('');
