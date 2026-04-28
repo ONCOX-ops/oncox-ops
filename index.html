@@ -2216,24 +2216,32 @@ setInterval(()=>{if(APP.currentUser)renderPresenceBar();},60000);
 // Checks Supabase for changes and re-renders if anything has changed.
 // Simple, reliable, works on all devices and networks.
 let _lastSync='';
+let _lastSyncTasks='';
+let _lastSyncSubs='';
 let _syncPaused=false;
 
 function startRealtime(){
   setInterval(async()=>{
-    // Don't poll when tab is hidden (saves battery/bandwidth)
     if(document.hidden)return;
-    // Don't poll while user has a modal open (they may be mid-edit)
     if(document.querySelector('.modal-overlay.open'))return;
     try{
-      // Lightweight check — just fetch record IDs and updated_at timestamps
-      const snap=await sbGet('records','select=id,updated_at&order=updated_at.desc&limit=50');
-      const snapStr=JSON.stringify(snap.map(r=>r.id+'|'+(r.updated_at||'')));
-      if(snapStr===_lastSync)return; // nothing changed
-      _lastSync=snapStr;
-      // Something changed — do a full reload
+      // Check records, tasks AND subcontractors for changes
+      const [recSnap, taskSnap, subSnap] = await Promise.all([
+        sbGet('records','select=id,updated_at&order=updated_at.desc&limit=100'),
+        sbGet('tasks','select=id,status,owner&order=id.desc&limit=1'),
+        sbGet('subcontractors','select=id&order=id.desc&limit=20'),
+      ]);
+      const recStr=JSON.stringify(recSnap.map(r=>r.id+'|'+(r.updated_at||'')));
+      const taskStr=JSON.stringify(taskSnap.map(t=>t.id+'|'+t.status+'|'+t.owner));
+      const subStr=JSON.stringify(subSnap.map(s=>s.id));
+      const changed=recStr!==_lastSync||taskStr!==_lastSyncTasks||subStr!==_lastSyncSubs;
+      if(!changed)return;
+      _lastSync=recStr;
+      _lastSyncTasks=taskStr;
+      _lastSyncSubs=subStr;
       await _reloadAllData();
-    }catch(e){/* silent — network blip */}
-  },5000);
+    }catch(e){/* silent */}
+  },3000);
 }
 
 async function _reloadAllData(){
