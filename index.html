@@ -1153,12 +1153,16 @@ const getElecTasks=()=>APP.elecTasks;
 const saveElecTasks=d=>{APP.elecTasks=d;};
 
 // Task accessors — serve from APP cache, init from TASK_SECTIONS if missing
+// IMPORTANT: never call _pushTasks here — it deletes existing Supabase data.
+// _pushTasks is only called when a brand new record is saved (in saveRec/saveElec).
 function getTasksFor(id,services=[]){
   if(!APP.tasks[id]){
+    // Tasks not in cache — initialise in memory but do NOT push to Supabase
+    // (they may already exist in Supabase and just haven't loaded yet)
     APP.tasks[id]={};
     TASK_SECTIONS.forEach(s=>{APP.tasks[id][s.id]=s.tasks.map(t=>({name:t,status:'Not Started',owner:'',notes:'',deadline:''}));});
-    _pushTasks(id,false);
   } else {
+    // Ensure any new task sections added in code get added to existing records
     TASK_SECTIONS.forEach(s=>{
       if(!APP.tasks[id][s.id])APP.tasks[id][s.id]=s.tasks.map(t=>({name:t,status:'Not Started',owner:'',notes:'',deadline:''}));
       APP.tasks[id][s.id].forEach(t=>{if(t.deadline===undefined)t.deadline='';});
@@ -1168,9 +1172,9 @@ function getTasksFor(id,services=[]){
 }
 function getElecTasksFor(id){
   if(!APP.elecTasks[id]){
+    // Same — init in memory only, do NOT push to Supabase
     APP.elecTasks[id]={};
     ELEC_TASK_SECTIONS.forEach(s=>{APP.elecTasks[id][s.id]=s.tasks.map(t=>({name:t,status:'Not Started',owner:'',notes:'',deadline:''}));});
-    _pushTasks(id,true);
   }
   return APP.elecTasks[id];
 }
@@ -4026,15 +4030,10 @@ async function migrateTaskSections(){
 }
 
 async function migrateElecTaskSections(){
-  // For every elec project, ensure stored tasks match current ELEC_TASK_SECTIONS definition
-  const uniqueIds=[...new Set([...Object.keys(APP.elecTasks),...APP.elecs.map(r=>r.id)])];
+  // Only migrate records that ARE already in APP.elecTasks (loaded from Supabase)
+  // Never push blank tasks for records not in cache — they may have data in Supabase
+  const uniqueIds=Object.keys(APP.elecTasks);
   for(const recId of uniqueIds){
-    if(!APP.elecTasks[recId]){
-      APP.elecTasks[recId]={};
-      ELEC_TASK_SECTIONS.forEach(s=>{APP.elecTasks[recId][s.id]=s.tasks.map(t=>({name:t,status:'Not Started',owner:'',notes:'',deadline:''}));});
-      await _pushTasks(recId,true).catch(console.error);
-      continue;
-    }
     let changed=false;
     ELEC_TASK_SECTIONS.forEach(sec=>{
       const stored=APP.elecTasks[recId][sec.id];
