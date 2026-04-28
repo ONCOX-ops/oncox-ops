@@ -2200,36 +2200,43 @@ async function downloadActivityReport(){
   const today=new Date();today.setHours(0,0,0,0);
   const week=new Date(today);week.setDate(today.getDate()-7);
 
+  // Build task ownership list for context
+  const allTasks2=[];
+  Object.values(APP.tasks).forEach(rec=>Object.values(rec).forEach(sec=>sec.forEach(t=>{if(t.owner)allTasks2.push(t);})));
+  Object.values(APP.elecTasks).forEach(rec=>Object.values(rec).forEach(sec=>sec.forEach(t=>{if(t.owner)allTasks2.push(t);})));
+
   const rows=[
     ['ONCO X — Activity Report'],
     [`Generated: ${new Date().toLocaleString('en-GB')}`],
     [],
-    ['Name','Last Login','Last Active','Tasks Updated Today','Tasks Updated This Week','Recent Activity (last 10)'],
+    ['Name','Last Login','Last Active','Tasks Logged Today','Tasks Logged This Week','Tasks Owned (Total / Completed)'],
   ];
 
   members.forEach(name=>{
-    const myLogs=logs.filter(l=>l.owner===name);
+    const myLogs=logs.filter(l=>l.user===name);
     const lastLogin=myLogs.filter(l=>l.type==='login').sort((a,b)=>new Date(b.ts)-new Date(a.ts))[0];
     const taskUpdates=myLogs.filter(l=>l.type==='task_update').sort((a,b)=>new Date(b.ts)-new Date(a.ts));
     const todayCount=taskUpdates.filter(l=>new Date(l.ts)>=today).length;
     const weekCount=taskUpdates.filter(l=>new Date(l.ts)>=week).length;
     const lastAny=myLogs.sort((a,b)=>new Date(b.ts)-new Date(a.ts))[0];
     const recent=taskUpdates.slice(0,10).map(l=>l.detail).join(' | ');
+    const ownedTasks=allTasks2.filter(t=>t.owner===name);
+    const completedOwned=ownedTasks.filter(t=>t.status==='Completed').length;
     rows.push([
       name,
-      lastLogin?new Date(lastLogin.notes||lastLogin.deadline).toLocaleString('en-GB'):'Never',
-      lastAny?new Date(lastAny.notes||lastAny.deadline).toLocaleString('en-GB'):'Never',
-      todayCount,weekCount,recent
+      lastLogin&&lastLogin.ts&&!isNaN(new Date(lastLogin.ts))?new Date(lastLogin.ts).toLocaleString('en-GB'):'Never',
+      lastAny&&lastAny.ts&&!isNaN(new Date(lastAny.ts))?new Date(lastAny.ts).toLocaleString('en-GB'):'Never',
+      todayCount,weekCount,`${ownedTasks.length} owned, ${completedOwned} completed. Recent: ${recent}`
     ]);
   });
 
   rows.push([]);
   rows.push(['— Full Activity Log —']);
   rows.push(['Timestamp','Person','Type','Detail']);
-  logs.slice(0,200).forEach(l=>{
+  logs.filter(l=>l.ts&&!isNaN(new Date(l.ts))).slice(0,200).forEach(l=>{
     rows.push([
-      new Date(l.notes||l.deadline).toLocaleString('en-GB'),
-      l.owner,l.section_id,l.task_name
+      new Date(l.ts).toLocaleString('en-GB'),
+      l.user||'',l.type||'',l.detail||''
     ]);
   });
 
@@ -2304,10 +2311,11 @@ async function _reloadAllData(){
     else if(CV==='projects'){
       renderProjects();
       if(CPid){
-        // Don't re-render if user is actively editing a date/text input in the task table
+        // Don't re-render if user is actively editing, or edited in the last 10 seconds
         const activeEl=document.activeElement;
         const isEditing=activeEl&&(activeEl.tagName==='INPUT'||activeEl.tagName==='TEXTAREA'||activeEl.tagName==='SELECT');
-        if(!isEditing){
+        const recentEdit=Date.now()-_lastUserEdit<10000;
+        if(!isEditing&&!recentEdit){
           const det=document.getElementById('proj-detail');
           const scrollY=det?det.scrollTop:0;
           renderProjDetail(CPid);
@@ -3024,6 +3032,7 @@ function updElecTask(id,sec,i,field,val){
   const all=APP.elecTasks;if(!all[id]||!all[id][sec])return;
   const t=all[id][sec][i];if(!t)return;
   t[field]=val;
+  _lastUserEdit=Date.now();
   _patchTask(id,sec,t.name,t);
   _lastSyncTasks=''; // force next poll to re-check
   if(field==='status'&&APP.currentUser){
@@ -3035,10 +3044,13 @@ function updElecTask(id,sec,i,field,val){
 
 function togSec(h){const b=h.parentElement.querySelector('.sec-body');const a=h.querySelector('span');if(b.style.display==='none'){b.style.display='block';a.textContent='▾';}else{b.style.display='none';a.textContent='▸';}}
 
+let _lastUserEdit=0; // timestamp of last user edit action
+
 function updTask(id,sec,i,field,val){
   const all=APP.tasks;if(!all[id]||!all[id][sec])return;
   const t=all[id][sec][i];if(!t)return;
   t[field]=val;
+  _lastUserEdit=Date.now();
   _patchTask(id,sec,t.name,t);
   _lastSyncTasks=''; // force next poll to re-check
   if(field==='status'&&APP.currentUser){
