@@ -32,16 +32,16 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
 /* TOP BAR */
 .topbar{display:flex;align-items:center;height:56px;background:var(--navy);border-bottom:3px solid var(--purple);position:sticky;top:0;z-index:200;box-shadow:0 2px 12px rgba(26,36,65,0.18);}
 .logo-block{display:flex;align-items:center;justify-content:center;width:124px;height:56px;background:var(--purple);flex-shrink:0;}
-.logo-text{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:23px;letter-spacing:.05em;color:#fff;text-transform:uppercase;}
-.logo-x{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:23px;color:var(--purple);background:#fff;padding:0 4px;margin-left:3px;line-height:1;}
+.logo-text{font-weight:900;font-size:23px;letter-spacing:.05em;color:#fff;text-transform:uppercase;}
+.logo-x{font-weight:900;font-size:23px;color:var(--purple);background:#fff;padding:0 4px;margin-left:3px;line-height:1;}
 .nav{display:flex;padding:0 14px;flex:1;}
-.nav-btn{background:none;border:none;border-bottom:3px solid transparent;color:rgba(255,255,255,.55);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:.08em;text-transform:uppercase;padding:0 14px;height:56px;cursor:pointer;transition:all .15s;margin-bottom:-3px;}
+.nav-btn{background:none;border:none;border-bottom:3px solid transparent;color:rgba(255,255,255,.55);font-weight:700;font-size:13px;letter-spacing:.08em;text-transform:uppercase;padding:0 14px;height:56px;cursor:pointer;transition:all .15s;margin-bottom:-3px;}
 .nav-btn:hover{color:rgba(255,255,255,.85);}
 .nav-btn.active{color:#fff;border-bottom-color:var(--lilac);}
 .topbar-right{margin-left:auto;display:flex;align-items:center;gap:8px;padding-right:18px;}
 
 /* BUTTONS */
-.btn{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;padding:7px 16px;border-radius:4px;cursor:pointer;border:none;transition:all .15s;}
+.btn{font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;padding:7px 16px;border-radius:4px;cursor:pointer;border:none;transition:all .15s;}
 .btn-primary{background:var(--purple);color:#fff;}.btn-primary:hover{background:var(--purple-lt);}
 .btn-blue{background:var(--blue);color:var(--navy);}.btn-blue:hover{opacity:.85;}
 .btn-ghost{background:none;border:1.5px solid var(--border2);color:var(--text2);}.btn-ghost:hover{border-color:var(--purple);color:var(--purple);}
@@ -55,8 +55,8 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
 .dash-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:22px;}
 .stat-card{background:var(--white);border:1.5px solid var(--border);border-radius:8px;padding:16px 18px;position:relative;overflow:hidden;box-shadow:0 1px 4px rgba(26,36,65,.06);}
 .stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--purple);}
-.stat-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:8px;}
-.stat-value{font-family:'Barlow Condensed',sans-serif;font-size:40px;font-weight:900;color:var(--navy);line-height:1;}
+.stat-label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:8px;}
+.stat-value{font-size:40px;font-weight:900;color:var(--navy);line-height:1;}
 .stat-value.purple{color:var(--purple);}.stat-value.green{color:#16a34a;}.stat-value.blue{color:var(--blue);}
 .stat-sub{font-size:11px;color:var(--text3);margin-top:4px;}
 
@@ -69,52 +69,52 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
 .card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:7px;gap:8px;}
 .card-meta{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-bottom:3px;}
 .job-id{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--purple);font-weight:600;}
-.card-name{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;line-height:1.2;color:var(--navy);}
+.card-name{font-size:16px;font-weight:700;line-height:1.2;color:var(--navy);}
 .card-venue{font-size:11px;color:var(--text3);margin-top:2px;}
 
 /* DATE CHIPS */
 .date-chips{display:flex;gap:4px;flex-wrap:wrap;margin-top:9px;}
-.date-chip{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 6px;border-radius:3px;color:#fff;}
+.date-chip{font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 6px;border-radius:3px;color:#fff;}
 .chip-travel{background:var(--purple);}.chip-unload{background:var(--unload);}.chip-build{background:var(--build);}
 .chip-nightbuild{background:var(--navy);}.chip-open{background:var(--open);}.chip-openrip{background:var(--openrip);}.chip-rip{background:var(--rip);}
 
 /* TYPE PILL, STATUS BADGE, CONTRACT BADGE */
-.type-pill{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:3px;}
+.type-pill{font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:3px;}
 .type-show{background:var(--purple-dim);color:var(--purple);border:1px solid var(--purple-mid);}
 .type-stand{background:var(--blue-dim);color:#2563eb;border:1px solid rgba(114,168,219,.4);}
 .type-elec{background:var(--elec-dim);color:var(--elec);border:1px solid var(--elec-mid);}
-.status-badge{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:3px;}
+.status-badge{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:3px;}
 .badge-confirmed{background:#dcfce7;color:#15803d;border:1px solid #bbf7d0;}
 .badge-quoted{background:#fef9c3;color:#a16207;border:1px solid #fde68a;}
 .badge-tbc{background:var(--blue-dim);color:#2563eb;border:1px solid rgba(114,168,219,.4);}
 .badge-complete{background:var(--surface3);color:var(--text3);border:1px solid var(--border2);}
 .badge-archived{background:#fef3c7;color:#92400e;border:1px solid #fde68a;}
 .record-card.archived{opacity:0.55;filter:grayscale(30%);}
-.contract-badge{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:3px;}
+.contract-badge{font-size:9px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:3px;}
 .cb-direct{background:#e8f5e9;color:#2e7d32;border:1px solid #a5d6a7;}
 .cb-sub{background:#fff3e0;color:#e65100;border:1px solid #ffcc80;}
 
 /* SERVICE CHIPS */
-.svc-chip{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:3px;background:var(--purple-dim);color:var(--purple);border:1px solid var(--purple-mid);display:inline-block;margin:2px 2px 0 0;}
+.svc-chip{font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:3px;background:var(--purple-dim);color:var(--purple);border:1px solid var(--purple-mid);display:inline-block;margin:2px 2px 0 0;}
 
 /* CALENDAR */
 .cal-wrap{background:var(--white);border:1.5px solid var(--border);border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(26,36,65,.06);}
 .cal-header{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1.5px solid var(--border);background:var(--navy);flex-wrap:wrap;}
 .cal-nav{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;width:30px;height:30px;border-radius:4px;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;transition:all .12s;}
 .cal-nav:hover{background:rgba(255,255,255,.22);}
-.cal-month{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;min-width:155px;color:#fff;}
+.cal-month{font-size:20px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;min-width:155px;color:#fff;}
 .legend{display:flex;gap:9px;flex-wrap:wrap;margin-left:auto;align-items:center;}
-.legend-item{display:flex;align-items:center;gap:4px;font-size:10px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.65);}
+.legend-item{display:flex;align-items:center;gap:4px;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.65);}
 .legend-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0;}
 .legend-sep{width:1px;height:12px;background:rgba(255,255,255,.2);}
 .cal-filters{display:flex;gap:7px;padding:10px 18px;border-bottom:1.5px solid var(--border);background:var(--surface2);align-items:center;}
-.filter-toggle{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 13px;border-radius:4px;cursor:pointer;border:1.5px solid var(--border2);background:var(--white);color:var(--text3);transition:all .12s;}
+.filter-toggle{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 13px;border-radius:4px;cursor:pointer;border:1.5px solid var(--border2);background:var(--white);color:var(--text3);transition:all .12s;}
 .filter-toggle.on-show{border-color:var(--purple);color:var(--purple);background:var(--purple-dim);}
 .filter-toggle.on-stand{border-color:var(--blue);color:#2563eb;background:var(--blue-dim);}
 .filter-toggle.on-elec{border-color:var(--elec);color:var(--elec);background:var(--elec-dim);}
 .cal-scroll{overflow-x:auto;}
 .cal-table{width:100%;min-width:800px;border-collapse:collapse;}
-.cal-table th{background:var(--surface2);font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text3);padding:8px 3px;border-right:1px solid var(--border);border-bottom:1.5px solid var(--border);text-align:center;white-space:nowrap;}
+.cal-table th{background:var(--surface2);font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text3);padding:8px 3px;border-right:1px solid var(--border);border-bottom:1.5px solid var(--border);text-align:center;white-space:nowrap;}
 .cal-table th.col-name{text-align:left;padding-left:14px;min-width:170px;position:sticky;left:0;z-index:2;background:var(--surface2);}
 .cal-table th.col-venue{min-width:120px;text-align:left;padding-left:10px;position:sticky;left:170px;z-index:2;background:var(--surface2);}
 .cal-table th.col-type{width:62px;background:var(--surface2);}
@@ -133,7 +133,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
 .day-cell.travel{background:var(--purple);}.day-cell.unload{background:var(--unload);}.day-cell.build{background:var(--build);}
 .day-cell.nightbuild{background:var(--navy);}.day-cell.open{background:var(--open);}.day-cell.openrip{background:var(--openrip);}.day-cell.rip{background:var(--rip);}
 .sec-divider{background:var(--surface3);border-top:1.5px solid var(--border);border-bottom:1.5px solid var(--border);}
-.sec-divider td{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:5px 14px !important;border:none !important;height:auto !important;}
+.sec-divider td{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:5px 14px !important;border:none !important;height:auto !important;}
 
 /* PROJECTS */
 .proj-layout{display:grid;grid-template-columns:240px 1fr;gap:14px;align-items:start;}
@@ -144,7 +144,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
 .proj-item.sel{background:var(--purple-dim);border-left:3px solid var(--purple);}
 .proj-item.sel.stand-item{background:var(--blue-dim);border-left-color:var(--blue);}
 .proj-item.sel.elec-item{background:var(--elec-dim);border-left-color:var(--elec);}
-.proj-item-name{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--navy);}
+.proj-item-name{font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--navy);}
 .proj-item-id{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text3);margin-top:2px;}
 
 /* PROJECT DETAIL */
@@ -152,19 +152,19 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
 .proj-banner.stand-b{border-left-color:var(--blue);}
 .proj-banner.elec-b{border-left-color:var(--elec);}
 .proj-id-big{font-family:'JetBrains Mono',monospace;font-size:20px;color:var(--purple);font-weight:500;}
-.proj-name-big{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;text-transform:uppercase;letter-spacing:.02em;line-height:1;color:var(--navy);}
+.proj-name-big{font-size:26px;font-weight:900;text-transform:uppercase;letter-spacing:.02em;line-height:1;color:var(--navy);}
 .proj-sub{font-size:12px;color:var(--text3);margin-top:3px;}
 
 /* OVERALL PROGRESS BAR */
 .overall-prog{background:var(--white);border:1.5px solid var(--border);border-radius:8px;padding:14px 18px;margin-bottom:14px;box-shadow:0 1px 3px rgba(26,36,65,.04);}
-.overall-prog-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;}
-.overall-prog-pct{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:var(--purple);}
+.overall-prog-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;}
+.overall-prog-pct{font-size:22px;font-weight:900;color:var(--purple);}
 .overall-bar{height:10px;background:var(--surface3);border-radius:5px;overflow:hidden;}
 .overall-fill{height:100%;background:linear-gradient(90deg,var(--purple),var(--lilac));border-radius:5px;transition:width .4s ease;}
 
 /* TABS */
 .tab-bar{display:flex;border-bottom:2px solid var(--border);margin-bottom:16px;}
-.tab-btn{background:none;border:none;border-bottom:2px solid transparent;color:var(--text3);font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:8px 16px;cursor:pointer;margin-bottom:-2px;transition:all .12s;}
+.tab-btn{background:none;border:none;border-bottom:2px solid transparent;color:var(--text3);font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:8px 16px;cursor:pointer;margin-bottom:-2px;transition:all .12s;}
 .tab-btn:hover{color:var(--navy);}
 .tab-btn.active{color:var(--purple);border-bottom-color:var(--purple);}
 .tab-panel{display:none;}.tab-panel.active{display:block;}
@@ -173,16 +173,16 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
 .task-section{background:var(--white);border:1.5px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:10px;box-shadow:0 1px 3px rgba(26,36,65,.04);}
 .task-sec-hdr{padding:10px 16px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;background:var(--surface2);border-bottom:1px solid var(--border);}
 .task-sec-hdr:hover{background:var(--surface3);}
-.task-sec-title{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;}
+.task-sec-title{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;}
 .task-sec-meta{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);display:flex;align-items:center;gap:8px;}
 .prog-bar{height:3px;background:var(--border);}
 .prog-fill{height:100%;transition:width .3s;}
 .task-table{width:100%;border-collapse:collapse;}
-.task-table th{background:var(--surface2);font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);padding:7px 12px;text-align:left;border-bottom:1px solid var(--border);}
+.task-table th{background:var(--surface2);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);padding:7px 12px;text-align:left;border-bottom:1px solid var(--border);}
 .task-table td{padding:7px 12px;border-bottom:1px solid var(--border);font-size:12px;vertical-align:middle;color:var(--text);}
 .task-table tr:last-child td{border-bottom:none;}
 .task-table tr:hover td{background:var(--surface2);}
-.status-sel{background:transparent;border:none;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;cursor:pointer;outline:none;padding:2px 4px;border-radius:3px;}
+.status-sel{background:transparent;border:none;font-size:11px;font-weight:700;cursor:pointer;outline:none;padding:2px 4px;border-radius:3px;}
 .s-ns{color:var(--text3);}.s-ip{color:#d97706;}.s-done{color:#16a34a;}.s-bl{color:#dc2626;}
 .owner-sel{background:var(--surface2);border:1.5px solid var(--border);border-radius:4px;color:var(--text);font-size:11px;padding:3px 6px;cursor:pointer;outline:none;}
 .owner-sel:focus{border-color:var(--purple);}
@@ -194,27 +194,27 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
 
 /* SERVICES CHECKBOXES */
 .services-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:12px;}
-.svc-check{display:flex;align-items:center;gap:7px;padding:7px 10px;background:var(--surface2);border:1.5px solid var(--border);border-radius:5px;cursor:pointer;transition:all .12s;user-select:none;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text2);}
+.svc-check{display:flex;align-items:center;gap:7px;padding:7px 10px;background:var(--surface2);border:1.5px solid var(--border);border-radius:5px;cursor:pointer;transition:all .12s;user-select:none;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text2);}
 .svc-check:hover{border-color:var(--purple);color:var(--purple);}
 .svc-check input{accent-color:var(--purple);width:14px;height:14px;cursor:pointer;}
 .svc-check.checked{background:var(--purple-dim);border-color:var(--purple-mid);color:var(--purple);}
 
 /* CONTRACT TYPE TOGGLE */
 .contract-toggle{display:flex;gap:8px;margin-bottom:12px;}
-.ct-option{flex:1;padding:8px;border:1.5px solid var(--border);border-radius:5px;cursor:pointer;text-align:center;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text2);background:var(--surface2);transition:all .12s;user-select:none;}
+.ct-option{flex:1;padding:8px;border:1.5px solid var(--border);border-radius:5px;cursor:pointer;text-align:center;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text2);background:var(--surface2);transition:all .12s;user-select:none;}
 .ct-option:hover{border-color:var(--purple);}
 .ct-option.selected-direct{background:#e8f5e9;border-color:#4caf50;color:#2e7d32;}
 .ct-option.selected-sub{background:#fff3e0;border-color:#ff9800;color:#e65100;}
 
 /* SUBCONTRACTORS */
 .sub-card{background:var(--white);border:1.5px solid var(--border);border-radius:8px;padding:14px;box-shadow:0 1px 3px rgba(26,36,65,.04);}
-.sub-name{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;color:var(--navy);}
+.sub-name{font-size:16px;font-weight:700;color:var(--navy);}
 .sub-trade{font-size:11px;color:var(--purple);font-weight:600;margin-bottom:8px;}
 .sub-info{font-size:11px;color:var(--text2);line-height:1.7;}
-.booking-chip{font-size:9px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:.04em;padding:2px 6px;border-radius:3px;background:var(--purple-dim);color:var(--purple);border:1px solid var(--purple-mid);display:inline-block;margin:2px 2px 0 0;}
+.booking-chip{font-size:9px;font-weight:700;letter-spacing:.04em;padding:2px 6px;border-radius:3px;background:var(--purple-dim);color:var(--purple);border:1px solid var(--purple-mid);display:inline-block;margin:2px 2px 0 0;}
 .booking-chip.clash{background:#fee2e2;color:#dc2626;border-color:#fca5a5;}
 .alloc-table{width:100%;border-collapse:collapse;}
-.alloc-table th{background:var(--surface2);font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);padding:8px 12px;text-align:left;border-bottom:1.5px solid var(--border);border-right:1px solid var(--border);}
+.alloc-table th{background:var(--surface2);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);padding:8px 12px;text-align:left;border-bottom:1.5px solid var(--border);border-right:1px solid var(--border);}
 .alloc-table td{padding:9px 12px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);font-size:12px;vertical-align:middle;color:var(--text);}
 .alloc-table tr:hover td{background:var(--surface2);}
 .clash-alert{background:#fee2e2;border:1.5px solid #fca5a5;border-radius:6px;padding:9px 14px;font-size:12px;color:#dc2626;margin-bottom:11px;display:flex;align-items:center;gap:8px;}
@@ -225,43 +225,43 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
 .modal{background:var(--white);border:1.5px solid var(--border);border-top:3px solid var(--purple);border-radius:8px;width:100%;max-width:760px;padding:26px;position:relative;box-shadow:0 8px 32px rgba(26,36,65,.16);}
 .modal.stand-modal{border-top-color:var(--blue);}
 .modal.elec-modal{border-top-color:var(--elec);}
-.modal-title{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;margin-bottom:20px;color:var(--purple);}
+.modal-title{font-size:20px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;margin-bottom:20px;color:var(--purple);}
 .modal-title.blue-title{color:#2563eb;}
 .modal-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--text3);font-size:18px;cursor:pointer;width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:4px;transition:all .12s;}
 .modal-close:hover{color:var(--navy);background:var(--surface3);}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
 .form-full{grid-column:1/-1;}
 .form-group{display:flex;flex-direction:column;gap:5px;}
-.form-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);}
+.form-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);}
 .form-input,.form-select,.form-textarea{background:var(--surface2);border:1.5px solid var(--border);border-radius:5px;color:var(--text);font-family:'Barlow',sans-serif;font-size:13px;padding:8px 10px;transition:border-color .12s;outline:none;}
 .form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--purple);background:#fff;}
 .form-select option{background:#fff;}
 .form-textarea{resize:vertical;min-height:55px;}
 .dates-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:7px;margin-bottom:12px;}
 .date-ig{display:flex;flex-direction:column;gap:5px;}
-.date-lbl{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 5px;border-radius:3px;text-align:center;color:#fff;}
-.form-sec{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);border-top:1.5px solid var(--border);padding-top:14px;margin:6px 0 12px;}
+.date-lbl{font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 5px;border-radius:3px;text-align:center;color:#fff;}
+.form-sec{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);border-top:1.5px solid var(--border);padding-top:14px;margin:6px 0 12px;}
 
 /* MISC */
-.pin-btn{height:64px;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.12);border-radius:8px;color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;cursor:pointer;transition:background .12s;}
+.pin-btn{height:64px;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.12);border-radius:8px;color:#fff;font-size:22px;font-weight:700;cursor:pointer;transition:background .12s;}
 .pin-btn:hover{background:rgba(255,255,255,.16);}
 .search-row{display:flex;gap:8px;margin-bottom:14px;align-items:center;}
 .search-input{background:var(--white);border:1.5px solid var(--border);border-radius:5px;color:var(--text);font-family:'Barlow',sans-serif;font-size:13px;padding:8px 12px;outline:none;width:200px;transition:border-color .12s;box-shadow:0 1px 2px rgba(26,36,65,.04);}
 .search-input:focus{border-color:var(--purple);}
 .search-input::placeholder{color:var(--text3);}
-.filter-sel{background:var(--white);border:1.5px solid var(--border);border-radius:5px;color:var(--text);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:8px 10px;outline:none;cursor:pointer;}
+.filter-sel{background:var(--white);border:1.5px solid var(--border);border-radius:5px;color:var(--text);font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:8px 10px;outline:none;cursor:pointer;}
 .filter-sel:focus{border-color:var(--purple);}
 .notes-area{background:var(--surface2);border:1.5px solid var(--border);border-radius:6px;padding:12px;font-size:13px;color:var(--text);min-height:100px;line-height:1.6;width:100%;resize:vertical;font-family:'Barlow',sans-serif;outline:none;transition:border-color .12s;}
 .notes-area:focus{border-color:var(--purple);background:#fff;}
 .empty-state{text-align:center;padding:50px 20px;color:var(--text3);}
 .empty-ico{font-size:36px;margin-bottom:10px;}
-.empty-title{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px;color:var(--text2);}
+.empty-title{font-size:15px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px;color:var(--text2);}
 .empty-sub{font-size:12px;}
 .sec-hdr-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
-.sec-hdr-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);}
+.sec-hdr-label{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);}
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
 .tt-grid{display:grid;grid-template-columns:1fr 110px 110px;gap:6px 8px;margin-bottom:10px;align-items:center;}
-.tt-hdr{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);padding:2px 0;}
+.tt-hdr{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);padding:2px 0;}
 .tt-lbl{font-size:12px;color:var(--text2);padding:4px 2px;}
 .tt-in{padding:6px 8px !important;font-size:12px !important;}
 ::-webkit-scrollbar{width:6px;height:6px;}
@@ -271,17 +271,17 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
 
 /* ── PRESENCE INDICATORS ────────────────────────────────────────── */
 .presence-bar{display:flex;align-items:center;gap:5px;margin-right:4px;}
-.presence-dot{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;color:#fff;cursor:default;border:2px solid rgba(255,255,255,.2);transition:transform .15s;position:relative;flex-shrink:0;}
+.presence-dot{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:11px;color:#fff;cursor:default;border:2px solid rgba(255,255,255,.2);transition:transform .15s;position:relative;flex-shrink:0;}
 .presence-dot:hover{transform:scale(1.15);}
 .presence-dot .presence-tooltip{position:absolute;bottom:-28px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.8);color:#fff;font-size:10px;padding:3px 7px;border-radius:4px;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .15s;z-index:100;}
 .presence-dot:hover .presence-tooltip{opacity:1;}
 
 /* ── ADMIN PANEL ─────────────────────────────────────────────────── */
 .admin-section{background:var(--white);border:1.5px solid var(--border);border-radius:8px;padding:18px 20px;margin-bottom:16px;}
-.admin-section-title{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--navy);margin-bottom:14px;padding-bottom:8px;border-bottom:1.5px solid var(--border);}
+.admin-section-title{font-weight:800;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--navy);margin-bottom:14px;padding-bottom:8px;border-bottom:1.5px solid var(--border);}
 .admin-member-row{display:grid;grid-template-columns:32px 1fr 120px 120px auto;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);}
 .admin-member-row:last-child{border-bottom:none;}
-.admin-avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:12px;color:#fff;}
+.admin-avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;color:#fff;}
 .activity-bar{background:var(--surface2);border-radius:8px;padding:14px 16px;margin-bottom:10px;display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:start;}
 .activity-stat{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;}
 @media(max-width:768px){
@@ -294,8 +294,8 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
 .todo-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:22px;}
 .todo-card{background:var(--white);border:1.5px solid var(--border);border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(26,36,65,.06);}
 .todo-card-hdr{display:flex;align-items:center;gap:8px;padding:11px 14px 10px;border-bottom:1.5px solid var(--border);background:var(--surface2);}
-.todo-avatar{width:28px;height:28px;border-radius:50%;background:var(--purple);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;color:#fff;flex-shrink:0;}
-.todo-name{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--navy);}
+.todo-avatar{width:28px;height:28px;border-radius:50%;background:var(--purple);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;color:#fff;flex-shrink:0;}
+.todo-name{font-weight:800;font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--navy);}
 .todo-count{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;color:var(--text3);}
 .todo-body{padding:8px 0;max-height:320px;overflow-y:auto;}
 .todo-item{display:grid;grid-template-columns:1fr auto;gap:6px;padding:7px 14px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .1s;}
@@ -443,7 +443,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
   background:none;
   border:none;
   color:var(--purple);
-  font-family:'Barlow Condensed',sans-serif;
+  
   font-weight:700;
   font-size:13px;
   letter-spacing:.06em;
@@ -459,7 +459,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
   background:none;
   border:none;
   color:var(--purple);
-  font-family:'Barlow Condensed',sans-serif;
+  
   font-weight:700;
   font-size:13px;
   letter-spacing:.06em;
@@ -475,32 +475,32 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
 #field-screen{position:fixed;inset:0;z-index:9998;display:none;flex-direction:column;background:var(--navy);}
 #field-screen.active{display:flex;}
 .field-topbar{height:52px;background:var(--navy);border-bottom:3px solid var(--elec);display:flex;align-items:center;padding:0 16px;gap:12px;flex-shrink:0;}
-.field-logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;color:#fff;letter-spacing:.05em;}
+.field-logo{font-weight:900;font-size:20px;color:#fff;letter-spacing:.05em;}
 .field-logo span{color:var(--elec);}
-.field-badge{background:var(--elec);color:#fff;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:3px;}
+.field-badge{background:var(--elec);color:#fff;font-weight:700;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:3px;}
 .field-body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:16px;}
-.field-month-hdr{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:22px;letter-spacing:.04em;text-transform:uppercase;color:#fff;display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+.field-month-hdr{font-weight:800;font-size:22px;letter-spacing:.04em;text-transform:uppercase;color:#fff;display:flex;align-items:center;gap:12px;margin-bottom:14px;}
 .field-cal-nav{background:rgba(255,255,255,.12);border:none;color:#fff;width:30px;height:30px;border-radius:50%;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
 .field-cal-nav:hover{background:rgba(255,255,255,.22);}
 .field-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:24px;}
-.field-cal-dow{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);text-align:center;padding:4px 0;}
-.field-cal-day{aspect-ratio:1;border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:default;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:rgba(255,255,255,.35);position:relative;}
+.field-cal-dow{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);text-align:center;padding:4px 0;}
+.field-cal-day{aspect-ratio:1;border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:default;font-size:13px;font-weight:700;color:rgba(255,255,255,.35);position:relative;}
 .field-cal-day.has-job{background:var(--purple);color:#fff;cursor:pointer;box-shadow:0 2px 8px rgba(105,36,111,.4);}
 .field-cal-day.has-job:hover{background:var(--purple-lt);}
 .field-cal-day.today-day{outline:2px solid rgba(255,255,255,.4);outline-offset:-2px;}
 .field-cal-day .dot-row{display:flex;gap:2px;position:absolute;bottom:3px;}
 .field-cal-dot{width:5px;height:5px;border-radius:50%;}
-.field-jobs-hdr{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:16px;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:12px;}
+.field-jobs-hdr{font-weight:800;font-size:16px;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:12px;}
 .field-job-card{background:rgba(255,255,255,.06);border:1.5px solid rgba(8,145,178,.3);border-left:4px solid var(--elec);border-radius:8px;padding:14px 16px;margin-bottom:12px;cursor:pointer;transition:background .15s;}
 .field-job-card:hover,.field-job-card:active{background:rgba(255,255,255,.1);}
-.field-job-name{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:18px;color:#fff;margin-bottom:3px;}
+.field-job-name{font-weight:800;font-size:18px;color:#fff;margin-bottom:3px;}
 .field-job-meta{font-size:12px;color:rgba(255,255,255,.5);margin-bottom:8px;}
 .field-job-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;}
 .field-detail-overlay{position:fixed;inset:0;z-index:10000;background:var(--navy);overflow-y:auto;-webkit-overflow-scrolling:touch;display:none;}
 .field-detail-overlay.active{display:block;}
 .field-detail-inner{padding:16px;max-width:600px;margin:0 auto;}
 .field-section{background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.1);border-radius:8px;padding:14px 16px;margin-bottom:14px;}
-.field-section-title{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--elec);margin-bottom:10px;}
+.field-section-title{font-weight:800;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--elec);margin-bottom:10px;}
 .field-row{display:flex;justify-content:space-between;align-items:flex-start;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.06);}
 .field-row:last-child{border-bottom:none;}
 .field-row-label{font-size:11px;color:rgba(255,255,255,.45);font-weight:600;text-transform:uppercase;letter-spacing:.06em;flex-shrink:0;margin-right:12px;}
@@ -509,7 +509,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
 .field-task-row:last-child{border-bottom:none;}
 .field-task-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
 .field-task-name{font-size:12px;color:rgba(255,255,255,.8);flex:1;}
-.field-task-status{font-size:10px;font-weight:700;font-family:'Barlow Condensed',sans-serif;letter-spacing:.06em;text-transform:uppercase;}
+.field-task-status{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;}
 .field-sub-row{display:flex;align-items:center;gap:8px;padding:5px 0;}
 .field-notes-box{font-size:13px;color:rgba(255,255,255,.75);line-height:1.6;white-space:pre-wrap;}
 @media(max-width:768px){
@@ -524,14 +524,14 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
 <div id="pin-screen" style="display:none;position:fixed;inset:0;background:var(--navy);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px">
   <div style="display:flex;align-items:center;gap:0;margin-bottom:8px">
     <div style="background:var(--purple);padding:10px 14px;border-radius:4px 0 0 4px">
-      <span style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:28px;color:#fff;letter-spacing:.05em">ONCO</span>
+      <span style="font-weight:900;font-size:28px;color:#fff;letter-spacing:.05em">ONCO</span>
     </div>
     <div style="background:#fff;padding:10px 10px;border-radius:0 4px 4px 0">
-      <span style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:28px;color:var(--purple)">X</span>
+      <span style="font-weight:900;font-size:28px;color:var(--purple)">X</span>
     </div>
   </div>
-  <div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5)">Operations Hub</div>
-  <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-top:8px">Enter PIN</div>
+  <div style="font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5)">Operations Hub</div>
+  <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-top:8px">Enter PIN</div>
   <div style="display:flex;gap:10px" id="pin-dots">
     <div style="width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,.3);transition:background .15s" id="pd-0"></div>
     <div style="width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,.3);transition:background .15s" id="pd-1"></div>
@@ -563,7 +563,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
     <div class="field-badge">Field View</div>
     <div style="margin-left:auto;display:flex;align-items:center;gap:8px">
       <span id="field-name-display" style="font-size:12px;color:rgba(255,255,255,.5);font-family:'Barlow',sans-serif"></span>
-      <button onclick="lockField()" style="background:none;border:1.5px solid rgba(255,255,255,.2);color:rgba(255,255,255,.5);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:.08em;padding:4px 10px;border-radius:4px;cursor:pointer">🔒 Lock</button>
+      <button onclick="lockField()" style="background:none;border:1.5px solid rgba(255,255,255,.2);color:rgba(255,255,255,.5);font-weight:700;font-size:11px;letter-spacing:.08em;padding:4px 10px;border-radius:4px;cursor:pointer">🔒 Lock</button>
     </div>
   </div>
   <div class="field-body" id="field-body">
@@ -662,7 +662,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
       <button class="cal-nav" onclick="calPrev()" id="cal-prev-btn">←</button>
       <div class="cal-month" id="cal-lbl"></div>
       <button class="cal-nav" onclick="calNext()" id="cal-next-btn">→</button>
-      <button onclick="toggleCalView()" id="cal-view-btn" style="margin-left:8px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;padding:0 12px;height:30px;border-radius:4px;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:.08em;text-transform:uppercase">Year View</button>
+      <button onclick="toggleCalView()" id="cal-view-btn" style="margin-left:8px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;padding:0 12px;height:30px;border-radius:4px;cursor:pointer;font-weight:700;font-size:11px;letter-spacing:.08em;text-transform:uppercase">Year View</button>
       <div class="legend">
         <div class="legend-item"><div class="legend-dot" style="background:var(--purple)"></div>Show</div>
         <div class="legend-item"><div class="legend-dot" style="background:var(--blue)"></div>Stand</div>
@@ -678,7 +678,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
       </div>
     </div>
     <div class="cal-filters">
-      <span style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-right:4px">Filter:</span>
+      <span style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-right:4px">Filter:</span>
       <button class="filter-toggle on-show" id="ft-shows" onclick="toggleF('shows')">Shows</button>
       <button class="filter-toggle on-stand" id="ft-stands" onclick="toggleF('stands')">Stands</button>
       <button class="filter-toggle on-elec" id="ft-elecs" onclick="toggleF('elecs')">Electrics</button>
@@ -814,9 +814,9 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
       <div class="form-sec">Build Timetable</div>
       <div style="font-size:11px;color:var(--text3);margin-bottom:10px">Enter times as HH:MM (24hr)</div>
       <div style="display:grid;grid-template-columns:1fr 120px 120px;gap:8px;margin-bottom:8px">
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);padding:4px 0">Activity</div>
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);padding:4px 0">From</div>
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);padding:4px 0">To</div>
+        <div style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);padding:4px 0">Activity</div>
+        <div style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);padding:4px 0">From</div>
+        <div style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);padding:4px 0">To</div>
       </div>
       <div class="tt-grid">
         <div class="tt-hdr">Activity</div><div class="tt-hdr">From</div><div class="tt-hdr">To</div>
@@ -1005,7 +1005,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
     <div class="form-sec">Invoice Status</div>
     <label style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:var(--surface2);border:1.5px solid var(--border);border-radius:5px;cursor:pointer;margin-bottom:14px">
       <input type="checkbox" id="u-paid" style="accent-color:var(--open);width:16px;height:16px">
-      <span style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text2)">Invoice Paid</span>
+      <span style="font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text2)">Invoice Paid</span>
     </label>
     <div class="form-group" style="margin-bottom:18px"><label class="form-label">Notes</label><textarea class="form-textarea" id="u-notes" rows="2" placeholder="Any notes…"></textarea></div>
     <div style="display:flex;gap:8px;justify-content:flex-end">
@@ -1238,7 +1238,7 @@ async function loadAllData(){
       <div style="font-size:36px">⚠️</div>
       <div style="font-size:18px;font-weight:700;color:#dc2626">Connection Failed</div>
       <div style="font-size:13px;color:#555;max-width:380px;text-align:center">${err.message}</div>
-      <button onclick="location.reload()" style="padding:10px 24px;background:#69246F;color:#fff;border:none;border-radius:6px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;cursor:pointer">Retry</button>
+      <button onclick="location.reload()" style="padding:10px 24px;background:#69246F;color:#fff;border:none;border-radius:6px;font-weight:700;font-size:14px;cursor:pointer">Retry</button>
     </div>`);
   }
 }
@@ -1250,7 +1250,7 @@ function showLoader(msg){
     el=document.createElement('div');el.id='app-loader';
     el.style.cssText='position:fixed;inset:0;background:rgba(26,36,65,.65);z-index:9997;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)';
     el.innerHTML=`<div style="background:#fff;border-radius:10px;padding:28px 36px;text-align:center;min-width:260px;box-shadow:0 20px 60px rgba(0,0,0,.3)">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;color:#69246F;margin-bottom:2px">ONCO X</div>
+      <div style="font-weight:900;font-size:22px;color:#69246F;margin-bottom:2px">ONCO X</div>
       <div id="ld-msg" style="font-size:12px;color:#9395a8;margin-bottom:14px">${msg}</div>
       <div style="height:3px;background:#e2e4ec;border-radius:2px;overflow:hidden">
         <div id="ld-bar" style="height:100%;width:0%;background:#69246F;border-radius:2px;transition:width .25s"></div>
@@ -1780,12 +1780,12 @@ function fieldShowDate(k){
   const ov=document.getElementById('field-detail-overlay');
   ov.innerHTML=`
     <div class="field-topbar" style="position:sticky;top:0;z-index:10">
-      <button onclick="fieldCloseJob()" style="background:none;border:none;color:rgba(255,255,255,.6);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:.06em;cursor:pointer;text-transform:uppercase">← Back</button>
+      <button onclick="fieldCloseJob()" style="background:none;border:none;color:rgba(255,255,255,.6);font-weight:700;font-size:13px;letter-spacing:.06em;cursor:pointer;text-transform:uppercase">← Back</button>
       <div style="flex:1"></div>
-      <button onclick="lockField()" style="background:none;border:1.5px solid rgba(255,255,255,.2);color:rgba(255,255,255,.5);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:.08em;padding:4px 10px;border-radius:4px;cursor:pointer">🔒 Lock</button>
+      <button onclick="lockField()" style="background:none;border:1.5px solid rgba(255,255,255,.2);color:rgba(255,255,255,.5);font-weight:700;font-size:11px;letter-spacing:.08em;padding:4px 10px;border-radius:4px;cursor:pointer">🔒 Lock</button>
     </div>
     <div style="padding:16px;max-width:600px;margin:0 auto">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:#fff;margin-bottom:4px">${dateLabel}</div>
+      <div style="font-size:22px;font-weight:900;color:#fff;margin-bottom:4px">${dateLabel}</div>
       <div style="font-size:12px;color:rgba(255,255,255,.4);margin-bottom:20px">${jobs.length} jobs on this day — select one to view</div>
       ${jobs.map(r=>{
         const myAlloc=FIELD_SUB_ID?APP.allocs.find(a=>a.subId===FIELD_SUB_ID&&a.recId===r.id):null;
@@ -1794,7 +1794,7 @@ function fieldShowDate(k){
           <div class="field-job-meta">📍 ${r.venue||'—'} &nbsp;·&nbsp; ${r.jobNum||'—'}</div>
           <div class="field-job-chips" style="margin-top:8px">${dChips(r)}</div>
           ${myAlloc&&myAlloc.role?`<div style="margin-top:6px;font-size:11px;color:rgba(255,255,255,.5)">Your role: <span style="color:var(--elec);font-weight:600">${myAlloc.role}</span></div>`:''}
-          <div style="margin-top:8px;font-size:11px;color:var(--elec);font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:.06em;text-transform:uppercase">Tap to view →</div>
+          <div style="margin-top:8px;font-size:11px;color:var(--elec);font-weight:700;letter-spacing:.06em;text-transform:uppercase">Tap to view →</div>
         </div>`;
       }).join('')}
     </div>`;
@@ -1812,13 +1812,13 @@ function fieldOpenJob(id){
   const sdot=st=>{const cols={Completed:'#22c55e','In Progress':'#eab308',Blocked:'#ef4444','Not Started':'rgba(255,255,255,.2)'};return`<div class="field-task-dot" style="background:${cols[st]||'rgba(255,255,255,.2)'}"></div>`;};
   const slbl=st=>{const cols={Completed:'#22c55e','In Progress':'#eab308',Blocked:'#ef4444','Not Started':'rgba(255,255,255,.3)'};return`<span class="field-task-status" style="color:${cols[st]||'rgba(255,255,255,.3)'}">${st}</span>`;};
   let html=`<div class="field-topbar" style="position:sticky;top:0;z-index:10">
-    <button onclick="fieldCloseJob()" style="background:none;border:none;color:rgba(255,255,255,.6);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:.06em;cursor:pointer;text-transform:uppercase">← Back</button>
+    <button onclick="fieldCloseJob()" style="background:none;border:none;color:rgba(255,255,255,.6);font-weight:700;font-size:13px;letter-spacing:.06em;cursor:pointer;text-transform:uppercase">← Back</button>
     <div style="flex:1"></div>
-    <button onclick="lockField()" style="background:none;border:1.5px solid rgba(255,255,255,.2);color:rgba(255,255,255,.5);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:.08em;padding:4px 10px;border-radius:4px;cursor:pointer">🔒 Lock</button>
+    <button onclick="lockField()" style="background:none;border:1.5px solid rgba(255,255,255,.2);color:rgba(255,255,255,.5);font-weight:700;font-size:11px;letter-spacing:.08em;padding:4px 10px;border-radius:4px;cursor:pointer">🔒 Lock</button>
   </div>
   <div style="padding:16px;max-width:600px;margin:0 auto">
   <div style="margin-bottom:16px">
-    <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:#fff;line-height:1">${r.name}</div>
+    <div style="font-size:28px;font-weight:900;color:#fff;line-height:1">${r.name}</div>
     <div style="font-size:12px;color:rgba(255,255,255,.4);margin-top:4px">${r.jobNum||''} · ${r.venue||'—'} · ${r.organiser||'—'}</div>
     <div style="margin-top:10px">${dChips(r)}</div>
   </div>`;
@@ -1835,7 +1835,7 @@ function fieldOpenJob(id){
   </div>`;
   if(allAllocs.length){html+=`<div class="field-section"><div class="field-section-title">Team on this Job (${allAllocs.length})</div>
     ${allAllocs.map(a=>{const s=APP.subs.find(x=>x.id===a.subId);const me=a.subId===FIELD_SUB_ID;
-    return`<div class="field-sub-row"><div style="width:28px;height:28px;border-radius:50%;background:${me?'var(--elec)':'rgba(255,255,255,.15)'};display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:12px;color:#fff;flex-shrink:0">${(s?.name||'?')[0].toUpperCase()}</div>
+    return`<div class="field-sub-row"><div style="width:28px;height:28px;border-radius:50%;background:${me?'var(--elec)':'rgba(255,255,255,.15)'};display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;color:#fff;flex-shrink:0">${(s?.name||'?')[0].toUpperCase()}</div>
     <div><div style="font-size:13px;color:#fff;font-weight:600">${s?.name||'Unknown'}${me?' (you)':''}</div><div style="font-size:11px;color:rgba(255,255,255,.4)">${a.role||s?.trade||''}</div></div></div>`;}).join('')}
   </div>`;}
   if(r.notes){html+=`<div class="field-section"><div class="field-section-title">Notes from ONCO X</div><div class="field-notes-box">${r.notes}</div></div>`;}
@@ -2353,7 +2353,7 @@ function renderDash(){
   document.getElementById('dash-week').innerHTML=week.length?week.map(r=>recCard(r)).join(''):`<div class="empty-state"><div class="empty-ico">📭</div><div class="empty-title">Nothing this week</div></div>`;
   document.getElementById('dash-up').innerHTML=in30.length?in30.sort((a,b)=>earliest(a)-earliest(b)).slice(0,8).map(r=>{
     const days=Math.round((earliest(r)-today)/86400000);
-    return`<div class="record-card ${r.type}-card" onclick="openProj('${r.id}')"><div class="card-top"><div><div class="card-meta"><span class="job-id">${r.jobNum||''}</span>${tPill(r.type)}${cBadge(r.contractType)}</div><div class="card-name">${r.name}</div><div class="card-venue">${r.venue||''}</div></div><span style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;color:var(--purple)">${days}d</span></div>${dChips(r)}</div>`;
+    return`<div class="record-card ${r.type}-card" onclick="openProj('${r.id}')"><div class="card-top"><div><div class="card-meta"><span class="job-id">${r.jobNum||''}</span>${tPill(r.type)}${cBadge(r.contractType)}</div><div class="card-name">${r.name}</div><div class="card-venue">${r.venue||''}</div></div><span style="font-size:15px;font-weight:800;color:var(--purple)">${days}d</span></div>${dChips(r)}</div>`;
   }).join(''):`<div class="empty-state"><div class="empty-ico">🗓️</div><div class="empty-title">Nothing coming up</div><div class="empty-sub">Add shows & stands to get started</div></div>`;
   renderTeamTodos();
 }
@@ -2405,7 +2405,7 @@ function renderYearCal(){
     const dim=new Date(calY,m+1,0).getDate();
     const firstDow=(new Date(calY,m,1).getDay()+6)%7;
     html+=`<div style="background:rgba(255,255,255,.06);border-radius:6px;padding:10px">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:#fff;margin-bottom:6px">${MONTHS[m]}</div>
+      <div style="font-weight:800;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:#fff;margin-bottom:6px">${MONTHS[m]}</div>
       <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:1px">
         ${['M','T','W','T','F','S','S'].map(d=>`<div style="font-size:8px;color:rgba(255,255,255,.3);text-align:center;padding:1px 0">${d}</div>`).join('')}
         ${Array(firstDow).fill('<div></div>').join('')}
@@ -2902,11 +2902,11 @@ function renderUpgradesPanel(showId){
     return`<div style="background:var(--white);border:1.5px solid var(--border);border-left:4px solid var(--blue);border-radius:8px;padding:14px 16px;margin-bottom:10px;box-shadow:0 1px 3px rgba(26,36,65,.05)">
       <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px">
         <div>
-          <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;color:var(--navy)">${u.exhibitor||'Unnamed Exhibitor'}</div>
+          <div style="font-size:16px;font-weight:700;color:var(--navy)">${u.exhibitor||'Unnamed Exhibitor'}</div>
           <div style="font-size:11px;color:var(--text3);margin-top:2px">Stand ${u.standNum||'—'} &nbsp;·&nbsp; ${u.contactName||'—'} &nbsp;·&nbsp; ${u.contactEmail||''}</div>
         </div>
         <div style="display:flex;gap:6px;align-items:center">
-          <span style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;${invClass};background:${u.invoicePaid?'#dcfce7':'#fef9c3'};border:1px solid ${u.invoicePaid?'#bbf7d0':'#fde68a'};padding:2px 8px;border-radius:3px">${invStatus}</span>
+          <span style="font-size:10px;font-weight:700;${invClass};background:${u.invoicePaid?'#dcfce7':'#fef9c3'};border:1px solid ${u.invoicePaid?'#bbf7d0':'#fde68a'};padding:2px 8px;border-radius:3px">${invStatus}</span>
           <button class="btn btn-ghost btn-sm" onclick="openEditUpgrade('${u.id}')">Edit</button>
           <button class="btn btn-danger btn-sm" onclick="deleteUpgradeAndRefresh('${u.id}','${showId}')">✕</button>
         </div>
@@ -2993,8 +2993,8 @@ function renderSubs(){
   document.getElementById('sub-roster').innerHTML=subs.length?subs.map(s=>{
     const sa=allocs.filter(a=>a.subId===s.id),hc=clashes.some(c=>c.subId===s.id);
     const _now=new Date();
-    const _slaBadge=s.slaSigned==='yes'?(s.slaExpiry&&new Date(s.slaExpiry)<_now?'<span style="font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px;background:#fee2e2;color:#dc2626;font-family:'Barlow Condensed',sans-serif">SLA Expired</span>':'<span style="font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px;background:#dcfce7;color:#16a34a;font-family:'Barlow Condensed',sans-serif">SLA ✓</span>'):s.slaSigned==='no'?'<span style="font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px;background:#fee2e2;color:#dc2626;font-family:'Barlow Condensed',sans-serif">No SLA</span>':'';
-    const _insBadge=s.insStatus==='yes'?(s.insExpiry&&new Date(s.insExpiry)<_now?'<span style="font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px;background:#fee2e2;color:#dc2626;font-family:'Barlow Condensed',sans-serif">Ins Expired</span>':'<span style="font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px;background:#dcfce7;color:#16a34a;font-family:'Barlow Condensed',sans-serif">Ins ✓</span>'):s.insStatus==='no'?'<span style="font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px;background:#fef3c7;color:#d97706;font-family:'Barlow Condensed',sans-serif">No Ins</span>':s.insStatus==='expired'?'<span style="font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px;background:#fee2e2;color:#dc2626;font-family:'Barlow Condensed',sans-serif">Ins Expired</span>':'';
+    const _slaBadge=s.slaSigned==='yes'?(s.slaExpiry&&new Date(s.slaExpiry)<_now?'<span style="font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px;background:#fee2e2;color:#dc2626">SLA Expired</span>':'<span style="font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px;background:#dcfce7;color:#16a34a">SLA ✓</span>'):s.slaSigned==='no'?'<span style="font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px;background:#fee2e2;color:#dc2626">No SLA</span>':'';
+    const _insBadge=s.insStatus==='yes'?(s.insExpiry&&new Date(s.insExpiry)<_now?'<span style="font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px;background:#fee2e2;color:#dc2626">Ins Expired</span>':'<span style="font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px;background:#dcfce7;color:#16a34a">Ins ✓</span>'):s.insStatus==='no'?'<span style="font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px;background:#fef3c7;color:#d97706">No Ins</span>':s.insStatus==='expired'?'<span style="font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px;background:#fee2e2;color:#dc2626">Ins Expired</span>':'';
     return`<div class="sub-card" style="${hc?'border-color:#fca5a5;':''}">
       <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:4px">
         <div><div class="sub-name">${s.name}</div><div class="sub-trade">${s.trade||''}</div>
