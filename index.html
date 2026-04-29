@@ -1283,7 +1283,19 @@ async function loadAllData(){
     APP.elecs=recs.filter(r=>r.type==='elec').map(dbToRec);
 
     setLoaderPct(35,'Loading tasks…');
-    const tasks=await sbGet('tasks','order=sort_order.asc&limit=10000');
+    // Fetch ALL tasks — Supabase caps at 1000 by default so we use Range header
+    let tasks=[];
+    let from=0;const pageSize=1000;
+    while(true){
+      const r=await fetch(SUPA_URL+'/rest/v1/tasks?order=sort_order.asc',{
+        headers:{...hdrs(),Range:`${from}-${from+pageSize-1}`,'Range-Unit':'items'}
+      });
+      const page=await r.json();
+      if(!Array.isArray(page)||page.length===0)break;
+      tasks=[...tasks,...page];
+      if(page.length<pageSize)break;
+      from+=pageSize;
+    }
     APP.tasks={};APP.elecTasks={};
     const recTypeMap=Object.fromEntries(recs.map(r=>[r.id,r.type]));
     tasks.forEach(t=>{
