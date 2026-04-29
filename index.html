@@ -3023,6 +3023,8 @@ async function saveAllTasks(id,isElec){
   }
 
   try{
+    console.log('saveAllTasks: saving',rows.length,'rows for record',id);
+
     // Step 1: Delete existing rows for this record
     const delResp=await fetch(SUPA_URL+'/rest/v1/tasks?record_id=eq.'+encodeURIComponent(id),{
       method:'DELETE',
@@ -3032,11 +3034,13 @@ async function saveAllTasks(id,isElec){
       const t=await delResp.text();
       throw new Error('Delete failed: '+t);
     }
+    console.log('saveAllTasks: delete OK');
 
     // Step 2: Insert new rows in batches of 50
     const batchSize=50;
     for(let i=0;i<rows.length;i+=batchSize){
       const batch=rows.slice(i,i+batchSize);
+      console.log('saveAllTasks: inserting batch',Math.floor(i/batchSize)+1,'of',Math.ceil(rows.length/batchSize),'('+batch.length+' rows)');
       const insResp=await fetch(SUPA_URL+'/rest/v1/tasks',{
         method:'POST',
         headers:hdrs({'Prefer':'return=minimal'}),
@@ -3044,13 +3048,14 @@ async function saveAllTasks(id,isElec){
       });
       if(!insResp.ok){
         const t=await insResp.text();
-        throw new Error('Insert failed (batch '+(i/batchSize+1)+'): '+t);
+        throw new Error('Insert failed (batch '+(Math.floor(i/batchSize)+1)+'): '+t);
       }
+      console.log('saveAllTasks: batch',Math.floor(i/batchSize)+1,'OK');
     }
 
+    console.log('saveAllTasks: ALL DONE — saved',rows.length,'tasks');
     if(btn){btn.disabled=false;btn.textContent='💾 Save Changes';}
     if(msg){msg.style.display='inline';setTimeout(()=>{msg.style.display='none';},3000);}
-    console.log('Saved '+rows.length+' tasks for '+id);
   }catch(e){
     console.error('saveAllTasks failed:',e);
     if(btn){btn.disabled=false;btn.textContent='💾 Save Changes';}
