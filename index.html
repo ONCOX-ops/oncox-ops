@@ -2995,38 +2995,66 @@ async function saveAllTasks(id,isElec){
   const btn=document.getElementById('save-tasks-btn-'+id);
   const msg=document.getElementById('save-tasks-msg-'+id);
   if(btn){btn.disabled=true;btn.textContent='Saving…';}
-  try{
-    const secs=isElec?ELEC_TASK_SECTIONS:TASK_SECTIONS;
-    const store=isElec?APP.elecTasks:APP.tasks;
-    if(!store[id]){if(btn){btn.disabled=false;btn.textContent='💾 Save Changes';}return;}
 
-    // Build rows from ALL sections that have data in memory
-    const rows=[];let order=0;
-    secs.forEach(sec=>{
-      (store[id][sec.id]||[]).forEach(t=>{
-        rows.push({
-          record_id:id,section_id:sec.id,task_name:t.name,
-          status:t.status||'Not Started',owner:t.owner||'',
-          notes:t.notes||'',deadline:t.deadline||null,
-          sort_order:order++
-        });
+  const secs=isElec?ELEC_TASK_SECTIONS:TASK_SECTIONS;
+  const store=isElec?APP.elecTasks:APP.tasks;
+
+  if(!store[id]){
+    if(btn){btn.disabled=false;btn.textContent='💾 Save Changes';}
+    return;
+  }
+
+  // Build rows from memory
+  const rows=[];let order=0;
+  secs.forEach(sec=>{
+    (store[id][sec.id]||[]).forEach(t=>{
+      rows.push({
+        record_id:id, section_id:sec.id, task_name:t.name,
+        status:t.status||'Not Started', owner:t.owner||'',
+        notes:t.notes||'', deadline:t.deadline||null, sort_order:order++
       });
     });
+  });
 
-    if(!rows.length){
-      if(btn){btn.disabled=false;btn.textContent='💾 Save Changes';}
-      return;
+  if(!rows.length){
+    if(btn){btn.disabled=false;btn.textContent='💾 Save Changes';}
+    alert('Nothing to save — no tasks found in memory.');
+    return;
+  }
+
+  try{
+    // Step 1: Delete existing rows for this record
+    const delResp=await fetch(SUPA_URL+'/rest/v1/tasks?record_id=eq.'+encodeURIComponent(id),{
+      method:'DELETE',
+      headers:hdrs({'Prefer':''})
+    });
+    if(!delResp.ok){
+      const t=await delResp.text();
+      throw new Error('Delete failed: '+t);
     }
 
-    // Upsert — on_conflict as URL param, Prefer header for merge
-    await sbQ('tasks?on_conflict=record_id,section_id,task_name','POST',rows,'resolution=merge-duplicates,return=representation');
+    // Step 2: Insert new rows in batches of 50
+    const batchSize=50;
+    for(let i=0;i<rows.length;i+=batchSize){
+      const batch=rows.slice(i,i+batchSize);
+      const insResp=await fetch(SUPA_URL+'/rest/v1/tasks',{
+        method:'POST',
+        headers:hdrs({'Prefer':'return=minimal'}),
+        body:JSON.stringify(batch)
+      });
+      if(!insResp.ok){
+        const t=await insResp.text();
+        throw new Error('Insert failed (batch '+(i/batchSize+1)+'): '+t);
+      }
+    }
 
     if(btn){btn.disabled=false;btn.textContent='💾 Save Changes';}
     if(msg){msg.style.display='inline';setTimeout(()=>{msg.style.display='none';},3000);}
+    console.log('Saved '+rows.length+' tasks for '+id);
   }catch(e){
+    console.error('saveAllTasks failed:',e);
     if(btn){btn.disabled=false;btn.textContent='💾 Save Changes';}
-    alert('Save failed: '+e.message);
-    console.error('saveAllTasks error:',e);
+    alert('Save failed: '+e.message+'\n\nYour changes are still shown on screen. Please try saving again.');
   }
 }
 
