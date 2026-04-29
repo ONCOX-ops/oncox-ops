@@ -1109,7 +1109,10 @@ async function sbQ(path,method='GET',body=null,prefer=''){
   if(body!==null)opts.body=JSON.stringify(body);
   const r=await fetch(SUPA_URL+'/rest/v1/'+path,opts);
   if(!r.ok){const t=await r.text();throw new Error(t);}
-  return r.status===204?null:r.json();
+  if(r.status===204||r.headers.get('content-length')==='0')return null;
+  const text=await r.text();
+  if(!text||!text.trim())return null;
+  return JSON.parse(text);
 }
 const sbGet=(t,q='')=>sbQ(t+(q?'?'+q:''));
 const sbPost=(t,d)=>sbQ(t,'POST',d,'return=representation');
@@ -3016,7 +3019,7 @@ async function saveAllTasks(id,isElec){
     }
 
     // Upsert — on_conflict as URL param, Prefer header for merge
-    await sbQ('tasks?on_conflict=record_id,section_id,task_name','POST',rows,'resolution=merge-duplicates,return=minimal');
+    await sbQ('tasks?on_conflict=record_id,section_id,task_name','POST',rows,'resolution=merge-duplicates,return=representation');
 
     if(btn){btn.disabled=false;btn.textContent='💾 Save Changes';}
     if(msg){msg.style.display='inline';setTimeout(()=>{msg.style.display='none';},3000);}
