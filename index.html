@@ -3015,9 +3015,8 @@ async function saveAllTasks(id,isElec){
       return;
     }
 
-    // Upsert each row individually — safe, never deletes anything
-    // Uses the unique constraint (record_id, section_id, task_name) to merge
-    await sbQ('tasks','POST',rows,'resolution=merge-duplicates,return=minimal');
+    // Upsert — on_conflict as URL param, Prefer header for merge
+    await sbQ('tasks?on_conflict=record_id,section_id,task_name','POST',rows,'resolution=merge-duplicates,return=minimal');
 
     if(btn){btn.disabled=false;btn.textContent='💾 Save Changes';}
     if(msg){msg.style.display='inline';setTimeout(()=>{msg.style.display='none';},3000);}
