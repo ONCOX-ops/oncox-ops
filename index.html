@@ -2980,7 +2980,7 @@ function updElecTask(id,sec,i,field,val){
   const t=all[id][sec][i];if(!t)return;
   t[field]=val;
   _lastUserEdit=Date.now();
-  _patchTask(id,sec,t.name,t);
+  // No individual patch — Save Changes button handles persistence
   if(field==='status'&&APP.currentUser){
     const rec=getAllRecs().find(r=>r.id===id);
     logActivity(APP.currentUser,'task_update',`${val}: ${t.name} on ${rec?.name||id}`);
@@ -2996,22 +2996,35 @@ async function saveAllTasks(id,isElec){
     const secs=isElec?ELEC_TASK_SECTIONS:TASK_SECTIONS;
     const store=isElec?APP.elecTasks:APP.tasks;
     if(!store[id]){if(btn){btn.disabled=false;btn.textContent='💾 Save Changes';}return;}
-    // Delete and rewrite all tasks for this record
-    await sbQ('tasks?record_id=eq.'+encodeURIComponent(id),'DELETE',null,'');
+
+    // Build rows from ALL sections that have data in memory
     const rows=[];let order=0;
     secs.forEach(sec=>{
       (store[id][sec.id]||[]).forEach(t=>{
-        rows.push({record_id:id,section_id:sec.id,task_name:t.name,
+        rows.push({
+          record_id:id,section_id:sec.id,task_name:t.name,
           status:t.status||'Not Started',owner:t.owner||'',
-          notes:t.notes||'',deadline:t.deadline||null,sort_order:order++});
+          notes:t.notes||'',deadline:t.deadline||null,
+          sort_order:order++
+        });
       });
     });
-    if(rows.length)await sbPost('tasks',rows);
+
+    if(!rows.length){
       if(btn){btn.disabled=false;btn.textContent='💾 Save Changes';}
+      return;
+    }
+
+    // Upsert each row individually — safe, never deletes anything
+    // Uses the unique constraint (record_id, section_id, task_name) to merge
+    await sbQ('tasks','POST',rows,'resolution=merge-duplicates,return=minimal');
+
+    if(btn){btn.disabled=false;btn.textContent='💾 Save Changes';}
     if(msg){msg.style.display='inline';setTimeout(()=>{msg.style.display='none';},3000);}
   }catch(e){
     if(btn){btn.disabled=false;btn.textContent='💾 Save Changes';}
     alert('Save failed: '+e.message);
+    console.error('saveAllTasks error:',e);
   }
 }
 
@@ -3024,7 +3037,7 @@ function updTask(id,sec,i,field,val){
   const t=all[id][sec][i];if(!t)return;
   t[field]=val;
   _lastUserEdit=Date.now();
-  _patchTask(id,sec,t.name,t);
+  // No individual patch — Save Changes button handles persistence
   if(field==='status'&&APP.currentUser){
     const rec=getAllRecs().find(r=>r.id===id);
     logActivity(APP.currentUser,'task_update',`${val}: ${t.name} on ${rec?.name||id}`);
