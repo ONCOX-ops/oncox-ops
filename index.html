@@ -39,6 +39,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
 .nav-btn:hover{color:rgba(255,255,255,.85);}
 .nav-btn.active{color:#fff;border-bottom-color:var(--lilac);}
 .topbar-right{margin-left:auto;display:flex;align-items:center;gap:8px;padding-right:18px;}
+.tb-actions,.tb-utils{display:flex;align-items:center;gap:8px;}
 
 /* BUTTONS */
 .btn{font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;padding:7px 16px;border-radius:4px;cursor:pointer;border:none;transition:all .15s;}
@@ -340,11 +341,10 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
   .logo-x{font-size:16px;}
   .nav{display:none;}
   .mob-nav{display:block;flex:1;min-width:0;height:40px;background:var(--navy-lt);color:#fff;border:1.5px solid rgba(255,255,255,.28);border-radius:6px;font-family:'Barlow',sans-serif;font-weight:700;font-size:13px;letter-spacing:.03em;padding:0 30px 0 12px;cursor:pointer;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23ffffff' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 11px center;}
-  .topbar-right{margin-left:0;width:100%;padding-right:0;gap:5px;flex-wrap:wrap;}
-  .topbar-right .btn{padding:7px 8px;font-size:10px;flex:1 1 0;min-width:0;white-space:nowrap;}
-  .topbar-right .btn-sm{padding:7px 7px;font-size:10px;}
-  .presence-bar{order:99;flex-basis:100%;}
-  .presence-bar:empty{display:none;}
+  .topbar-right{margin-left:0;width:100%;padding-right:0;gap:6px;flex-wrap:wrap;}
+  .tb-actions,.tb-utils{flex-basis:100%;gap:6px;}
+  .tb-actions .btn,.tb-utils .btn{flex:1 1 0;min-width:0;font-size:10px;padding:8px 4px;white-space:nowrap;height:auto;}
+  .presence-bar{display:none;}
 
   /* Views */
   .view{padding:14px 12px;}
@@ -427,11 +427,6 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
   #a-days-wrap > div{gap:6px;}
   .day-check-lbl{padding:6px 8px;font-size:11px;}
 
-  /* Topbar add buttons — keep visible but compact */
-  .topbar-right > .btn:not(.btn-sm){
-    padding:7px 8px;
-    font-size:10px;
-  }
 
   /* PIN screen — fits small screens */
   .pin-box{padding:24px 20px;margin:0 16px;}
@@ -612,17 +607,21 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
     <option value="templates">Templates</option>
   </select>
   <div class="topbar-right">
-    <button class="btn btn-primary" onclick="openAdd(&#39;show&#39;)">+ Show</button>
-    <button class="btn btn-blue" onclick="openAdd(&#39;stand&#39;)">+ Stand</button>
-    <button class="btn" style="background:var(--elec);color:#fff;" onclick="openAdd(&#39;elec&#39;)">+ Electrics</button>
+    <div class="tb-actions">
+      <button class="btn btn-primary" onclick="openAdd(&#39;show&#39;)">+ Show</button>
+      <button class="btn btn-blue" onclick="openAdd(&#39;stand&#39;)">+ Stand</button>
+      <button class="btn" style="background:var(--elec);color:#fff;" onclick="openAdd(&#39;elec&#39;)">+ Electrics</button>
+    </div>
+    <div class="tb-utils">
+      <button class="btn btn-ghost btn-sm" id="admin-btn" onclick="showView(&#39;admin&#39;)" style="display:none;border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.6)" title="Admin Panel">⚙️ Admin</button>
+      <button class="btn btn-ghost btn-sm" onclick="exportAllData()" style="border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.6)" title="Download full data backup">⬇ Backup</button>
+      <button class="btn btn-ghost btn-sm" onclick="openFieldSettings()" style="border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.6)" title="Field View Settings">👷 Field</button>
+      <button class="btn btn-ghost btn-sm" onclick="lockApp()" style="border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.6)" title="Lock">🔒</button>
+    </div>
     <div class="presence-bar" id="presence-bar"><div class="presence-dot" style="background:#69246F;" title="Chloe">
       C
       <div class="presence-tooltip">Chloe</div>
     </div></div>
-    <button class="btn btn-ghost btn-sm" id="admin-btn" onclick="showView(&#39;admin&#39;)" style="display:none;border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.6)" title="Admin Panel">⚙️ Admin</button>
-    <button class="btn btn-ghost btn-sm" onclick="exportAllData()" style="border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.6)" title="Download full data backup">⬇ Backup</button>
-    <button class="btn btn-ghost btn-sm" onclick="openFieldSettings()" style="border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.6)" title="Field View Settings">👷 Field</button>
-    <button class="btn btn-ghost btn-sm" onclick="lockApp()" style="border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.6)" title="Lock">🔒</button>
   </div>
 </div>
 
