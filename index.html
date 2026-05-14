@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<!-- saved from url=(0224)file:///Users/oncoses/Library/Application%20Support/Claude/local-agent-mode-sessions/ff4cc39a-4772-4788-bf15-14cfc405d523/d415535e-0193-4358-bb8a-2bd1701a4a9b/local_abfca054-8cc8-479a-be00-958bc040695b/outputs/oncox-ops.html -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<!-- ONCOX OPS v2.5 -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -9,9 +10,9 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1A2441">
 <title>ONCO X — Operations Hub</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=&#39;http://www.w3.org/2000/svg&#39; viewBox=&#39;0 0 32 32&#39;%3E%3Crect width=&#39;32&#39; height=&#39;32&#39; rx=&#39;6&#39; fill=&#39;%2369246F&#39;/%3E%3Ctext x=&#39;16&#39; y=&#39;22&#39; text-anchor=&#39;middle&#39; font-family=&#39;Arial Black,sans-serif&#39; font-weight=&#39;900&#39; font-size=&#39;18&#39; fill=&#39;white&#39;%3EX%3C/text%3E%3C/svg%3E">
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns=&#39;http://www.w3.org/2000/svg&#39; viewBox=&#39;0 0 32 32&#39;%3E%3Crect width=&#39;32&#39; height=&#39;32&#39; rx=&#39;6&#39; fill=&#39;%2369246F&#39;/%3E%3Ctext x=&#39;16&#39; y=&#39;22&#39; text-anchor=&#39;middle&#39; font-family=&#39;Arial Black,sans-serif&#39; font-weight=&#39;900&#39; font-size=&#39;18&#39; fill=&#39;white&#39;%3EX%3C/text%3E%3C/svg%3E">
-<link href="./index_files/css2" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2369246F'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Arial Black,sans-serif' font-weight='900' font-size='18' fill='white'%3EX%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2369246F'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Arial Black,sans-serif' font-weight='900' font-size='18' fill='white'%3EX%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Barlow:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
   --purple:#69246F;--purple-dim:rgba(105,36,111,0.08);--purple-mid:rgba(105,36,111,0.18);--purple-lt:#7d2e84;
@@ -554,21 +555,21 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
     <div style="width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,.3);transition:background .15s" id="pd-3"></div>
   </div>
   <div style="display:grid;grid-template-columns:repeat(3,64px);gap:10px;margin-top:6px" id="pin-pad">
-    <button onclick="pinPress(&#39;1&#39;)" class="pin-btn">1</button>
-    <button onclick="pinPress(&#39;2&#39;)" class="pin-btn">2</button>
-    <button onclick="pinPress(&#39;3&#39;)" class="pin-btn">3</button>
-    <button onclick="pinPress(&#39;4&#39;)" class="pin-btn">4</button>
-    <button onclick="pinPress(&#39;5&#39;)" class="pin-btn">5</button>
-    <button onclick="pinPress(&#39;6&#39;)" class="pin-btn">6</button>
-    <button onclick="pinPress(&#39;7&#39;)" class="pin-btn">7</button>
-    <button onclick="pinPress(&#39;8&#39;)" class="pin-btn">8</button>
-    <button onclick="pinPress(&#39;9&#39;)" class="pin-btn">9</button>
-    <button onclick="pinPress(&#39;&#39;)" class="pin-btn" style="opacity:0;cursor:default"></button>
-    <button onclick="pinPress(&#39;0&#39;)" class="pin-btn">0</button>
-    <button onclick="pinPress(&#39;back&#39;)" class="pin-btn">⌫</button>
+    <button onclick="pinPress('1')" class="pin-btn">1</button>
+    <button onclick="pinPress('2')" class="pin-btn">2</button>
+    <button onclick="pinPress('3')" class="pin-btn">3</button>
+    <button onclick="pinPress('4')" class="pin-btn">4</button>
+    <button onclick="pinPress('5')" class="pin-btn">5</button>
+    <button onclick="pinPress('6')" class="pin-btn">6</button>
+    <button onclick="pinPress('7')" class="pin-btn">7</button>
+    <button onclick="pinPress('8')" class="pin-btn">8</button>
+    <button onclick="pinPress('9')" class="pin-btn">9</button>
+    <button onclick="pinPress('')" class="pin-btn" style="opacity:0;cursor:default"></button>
+    <button onclick="pinPress('0')" class="pin-btn">0</button>
+    <button onclick="pinPress('back')" class="pin-btn">⌫</button>
   </div>
-  <div id="pin-error" style="font-size:12px;color:#f87171;min-height:18px;font-family:&#39;Barlow&#39;,sans-serif"></div>
-  <div style="position:absolute;bottom:20px;font-size:11px;color:rgba(255,255,255,.25);font-family:&#39;Barlow&#39;,sans-serif;text-align:center">ONCO X Team PIN &nbsp;·&nbsp; Field PIN available separately</div>
+  <div id="pin-error" style="font-size:12px;color:#f87171;min-height:18px;font-family:'Barlow',sans-serif"></div>
+  <div style="position:absolute;bottom:20px;font-size:11px;color:rgba(255,255,255,.25);font-family:'Barlow',sans-serif;text-align:center">ONCO X Team PIN &nbsp;·&nbsp; Field PIN available separately</div>
 </div>
 
 <!-- ── FIELD VIEW SCREEN ─────────────────────────────────────── -->
@@ -577,7 +578,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
     <div class="field-logo">ONCO<span>X</span></div>
     <div class="field-badge">Field View</div>
     <div style="margin-left:auto;display:flex;align-items:center;gap:8px">
-      <span id="field-name-display" style="font-size:12px;color:rgba(255,255,255,.5);font-family:&#39;Barlow&#39;,sans-serif"></span>
+      <span id="field-name-display" style="font-size:12px;color:rgba(255,255,255,.5);font-family:'Barlow',sans-serif"></span>
       <button onclick="lockField()" style="background:none;border:1.5px solid rgba(255,255,255,.2);color:rgba(255,255,255,.5);font-weight:700;font-size:11px;letter-spacing:.08em;padding:4px 10px;border-radius:4px;cursor:pointer">🔒 Lock</button>
     </div>
   </div>
@@ -594,24 +595,19 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
 <div class="topbar">
   <div class="logo-block"><div class="logo-text">ONCO</div><div class="logo-x">X</div></div>
   <nav class="nav">
-    <button class="nav-btn active" onclick="showView(&#39;dashboard&#39;)">Dashboard</button>
-    <button class="nav-btn" onclick="showView(&#39;calendar&#39;)">Calendar</button>
-    <button class="nav-btn" onclick="showView(&#39;projects&#39;)">Projects</button>
-    <button class="nav-btn" onclick="showView(&#39;subcontractors&#39;)">Subcontractors</button>
-    <button class="nav-btn" onclick="showView(&#39;templates&#39;)">Templates</button>
+    <button class="nav-btn active" onclick="showView('dashboard')">Dashboard</button>
+    <button class="nav-btn" onclick="showView('calendar')">Calendar</button>
+    <button class="nav-btn" onclick="showView('projects')">Projects</button>
+    <button class="nav-btn" onclick="showView('subcontractors')">Subcontractors</button>
+    <button class="nav-btn" onclick="showView('suppliers')">Suppliers</button>
+    <button class="nav-btn" onclick="showView('templates')">Templates</button>
   </nav>
   <div class="topbar-right">
-    <button class="btn btn-primary" onclick="openAdd(&#39;show&#39;)">+ Show</button>
-    <button class="btn btn-blue" onclick="openAdd(&#39;stand&#39;)">+ Stand</button>
-    <button class="btn" style="background:var(--elec);color:#fff;" onclick="openAdd(&#39;elec&#39;)">+ Electrics</button>
-    <div class="presence-bar" id="presence-bar"><div class="presence-dot" style="background:#69246F;" title="Chloe">
-      C
-      <div class="presence-tooltip">Chloe</div>
-    </div><div class="presence-dot" style="background:#0891b2;" title="Callum">
-      C
-      <div class="presence-tooltip">Callum</div>
-    </div></div>
-    <button class="btn btn-ghost btn-sm" id="admin-btn" onclick="showView(&#39;admin&#39;)" style="display:none;border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.6)" title="Admin Panel">⚙️ Admin</button>
+    <button class="btn btn-primary" onclick="openAdd('show')">+ Show</button>
+    <button class="btn btn-blue" onclick="openAdd('stand')">+ Stand</button>
+    <button class="btn" style="background:var(--elec);color:#fff;" onclick="openAdd('elec')">+ Electrics</button>
+    <div class="presence-bar" id="presence-bar"></div>
+    <button class="btn btn-ghost btn-sm" id="admin-btn" onclick="showView('admin')" style="display:none;border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.6)" title="Admin Panel">⚙️ Admin</button>
     <button class="btn btn-ghost btn-sm" onclick="exportAllData()" style="border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.6)" title="Download full data backup">⬇ Backup</button>
     <button class="btn btn-ghost btn-sm" onclick="openFieldSettings()" style="border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.6)" title="Field View Settings">👷 Field</button>
     <button class="btn btn-ghost btn-sm" onclick="lockApp()" style="border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.6)" title="Lock">🔒</button>
@@ -620,373 +616,22 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
 
 <!-- DASHBOARD -->
 <div id="view-dashboard" class="view active">
-  <div id="dash-compliance"><div class="compliance-banner warn">
-    <div class="compliance-banner-hdr">
-      <span style="font-size:16px">🟡</span>
-      <span class="compliance-banner-title" style="color:#d97706">Compliance Alerts — 4 missing</span>
-      <span style="margin-left:auto;font-size:11px;color:var(--text3)">4 issues · click to view profile</span>
-    </div>
-    <div class="compliance-item" onclick="openEditSub(&#39;sub_1777026364178&#39;)">
-      <div class="compliance-item-name">Danny Hay</div>
-      <div class="compliance-item-detail">SLA — No SLA on file</div>
-      <span class="compliance-item-badge badge-missing">MISSING</span>
-    </div><div class="compliance-item" onclick="openEditSub(&#39;sub_1777025968158&#39;)">
-      <div class="compliance-item-name">Jason Parker</div>
-      <div class="compliance-item-detail">SLA — No SLA on file</div>
-      <span class="compliance-item-badge badge-missing">MISSING</span>
-    </div><div class="compliance-item" onclick="openEditSub(&#39;sub_1777290203194&#39;)">
-      <div class="compliance-item-name">Marlon Wade</div>
-      <div class="compliance-item-detail">SLA — No SLA on file</div>
-      <span class="compliance-item-badge badge-missing">MISSING</span>
-    </div><div class="compliance-item" onclick="openEditSub(&#39;sub_1777455248945&#39;)">
-      <div class="compliance-item-name">Paul Carvell</div>
-      <div class="compliance-item-detail">SLA — No SLA on file</div>
-      <span class="compliance-item-badge badge-missing">MISSING</span>
-    </div>
-  </div></div>
-  <div class="dash-grid" id="dash-stats">
-    <div class="stat-card"><div class="stat-label">Total Shows</div><div class="stat-value purple">27</div><div class="stat-sub">active</div></div>
-    <div class="stat-card"><div class="stat-label">Total Stands</div><div class="stat-value blue">4</div><div class="stat-sub">active</div></div>
-    <div class="stat-card" style="--accent:var(--elec)"><div class="stat-label">Electrics</div><div class="stat-value" style="color:var(--elec)">13</div><div class="stat-sub">active</div></div>
-    <div class="stat-card"><div class="stat-label">On Site Today</div><div class="stat-value green">0</div><div class="stat-sub">active records</div></div>
-    <div class="stat-card"><div class="stat-label">Next 30 Days</div><div class="stat-value">8</div><div class="stat-sub">upcoming</div></div></div>
+  <div id="dash-compliance"></div>
+  <div class="dash-grid" id="dash-stats"></div>
   <div class="two-col">
-    <div><div class="sec-hdr-row"><div class="sec-hdr-label">Active This Week</div></div><div id="dash-week"><div class="empty-state"><div class="empty-ico">📭</div><div class="empty-title">Nothing this week</div></div></div></div>
-    <div><div class="sec-hdr-row"><div class="sec-hdr-label">Next 30 Days</div></div><div id="dash-up"><div class="record-card elec-card" onclick="openProj(&#39;r_1777026615203&#39;)"><div class="card-top"><div><div class="card-meta"><span class="job-id">E0169</span><span class="type-pill type-elec">Electrics</span><span class="contract-badge cb-sub">Subcontract</span></div><div class="card-name">ISBA 26</div><div class="card-venue">ICC Wales, Newport</div></div><span style="font-size:15px;font-weight:800;color:var(--purple)">3d</span></div><div class="date-chips"><span class="date-chip chip-build">Build 10 May</span><span class="date-chip chip-open">Open 12 May</span><span class="date-chip chip-openrip">O/Rip 14 May</span></div></div><div class="record-card show-card" onclick="openProj(&#39;r_1777972487673&#39;)"><div class="card-top"><div><div class="card-meta"><span class="job-id">E0164</span><span class="type-pill type-show">Show</span><span class="contract-badge cb-direct">Direct</span></div><div class="card-name">Machine Build North 26</div><div class="card-venue">Concorde Conference Centre, Manchester</div></div><span style="font-size:15px;font-weight:800;color:var(--purple)">4d</span></div><div class="date-chips"><span class="date-chip chip-travel">Travel 11 May</span><span class="date-chip chip-build">Build 12 May</span><span class="date-chip chip-openrip">O/Rip 13 May</span></div></div><div class="record-card show-card" onclick="openProj(&#39;r_1777037360386&#39;)"><div class="card-top"><div><div class="card-meta"><span class="job-id">E0183</span><span class="type-pill type-show">Show</span><span class="contract-badge cb-direct">Direct</span></div><div class="card-name">London Job Show W12</div><div class="card-venue">Westfield Shop Centre, London</div></div><span style="font-size:15px;font-weight:800;color:var(--purple)">6d</span></div><div class="date-chips"><span class="date-chip chip-travel">Travel 13 May</span><span class="date-chip chip-unload">Unload 13 May</span><span class="date-chip chip-build">Build 14 May</span><span class="date-chip chip-nightbuild">Night Bld 13 May</span><span class="date-chip chip-open">Open 15 May</span><span class="date-chip chip-openrip">O/Rip 16 May</span></div></div><div class="record-card elec-card" onclick="openProj(&#39;r_1777314922486&#39;)"><div class="card-top"><div><div class="card-meta"><span class="job-id">E0170</span><span class="type-pill type-elec">Electrics</span><span class="contract-badge cb-sub">Subcontract</span></div><div class="card-name">RCN 26</div><div class="card-venue">ACC, Liverpool</div></div><span style="font-size:15px;font-weight:800;color:var(--purple)">9d</span></div><div class="date-chips"><span class="date-chip chip-build">Build 16 May</span><span class="date-chip chip-open">Open 18 May</span><span class="date-chip chip-openrip">O/Rip 20 May</span></div></div><div class="record-card elec-card" onclick="openProj(&#39;r_1777314984353&#39;)"><div class="card-top"><div><div class="card-meta"><span class="job-id">E0171</span><span class="type-pill type-elec">Electrics</span><span class="contract-badge cb-sub">Subcontract</span></div><div class="card-name">Primary Care 26</div><div class="card-venue">NEC, Birmingham</div></div><span style="font-size:15px;font-weight:800;color:var(--purple)">12d</span></div><div class="date-chips"><span class="date-chip chip-build">Build 19 May</span><span class="date-chip chip-open">Open 20 May</span><span class="date-chip chip-openrip">O/Rip 21 May</span></div></div><div class="record-card elec-card" onclick="openProj(&#39;r_1777315033782&#39;)"><div class="card-top"><div><div class="card-meta"><span class="job-id">E0172</span><span class="type-pill type-elec">Electrics</span><span class="contract-badge cb-sub">Subcontract</span></div><div class="card-name">BCS 26</div><div class="card-venue">GMEX, Manchester</div></div><span style="font-size:15px;font-weight:800;color:var(--purple)">23d</span></div><div class="date-chips"><span class="date-chip chip-build">Build 30 May</span><span class="date-chip chip-open">Open 1 Jun</span><span class="date-chip chip-openrip">O/Rip 3 Jun</span></div></div><div class="record-card stand-card" onclick="openProj(&#39;r_1777315228276&#39;)"><div class="card-top"><div><div class="card-meta"><span class="job-id">TBC</span><span class="type-pill type-stand">Stand</span><span class="contract-badge cb-direct">Direct</span></div><div class="card-name">InTouchNow.ai - Digital Transformation Summit</div><div class="card-venue">Prospero House, London</div></div><span style="font-size:15px;font-weight:800;color:var(--purple)">25d</span></div><div class="date-chips"><span class="date-chip chip-build">Build 1 Jun</span><span class="date-chip chip-openrip">O/Rip 2 Jun</span></div></div><div class="record-card elec-card" onclick="openProj(&#39;r_1777315099070&#39;)"><div class="card-top"><div><div class="card-meta"><span class="job-id">E0173</span><span class="type-pill type-elec">Electrics</span><span class="contract-badge cb-sub">Subcontract</span></div><div class="card-name">DIMH 26</div><div class="card-venue">CBS Arena, Coventry</div></div><span style="font-size:15px;font-weight:800;color:var(--purple)">25d</span></div><div class="date-chips"><span class="date-chip chip-build">Build 1 Jun</span><span class="date-chip chip-open">Open 2 Jun</span><span class="date-chip chip-openrip">O/Rip 3 Jun</span></div></div></div></div>
+    <div><div class="sec-hdr-row"><div class="sec-hdr-label">Active This Week</div></div><div id="dash-week"></div></div>
+    <div><div class="sec-hdr-row"><div class="sec-hdr-label">Next 30 Days</div></div><div id="dash-up"></div></div>
   </div>
   <div class="sec-hdr-row" style="margin-top:24px">
     <div class="sec-hdr-label">Team To-Do — Next 14 Days</div>
     <div style="font-size:11px;color:var(--text3)">Tasks assigned with deadlines in the next 14 days or overdue</div>
   </div>
-  <div class="todo-grid" id="dash-todo"><div class="todo-card">
-      <div class="todo-card-hdr">
-        <div class="todo-avatar" style="background:#69246F">C</div>
-        <div class="todo-name">Callum</div>
-        <div class="todo-count">25 tasks</div>
-      </div>
-      <div class="todo-body"><div class="todo-item overdue" onclick="openProj(&#39;r_1777026615203&#39;)">
-        <div>
-          <div class="todo-item-name">Accommodation Booked</div>
-          <div class="todo-item-proj">E0169 · ISBA 26</div>
-        </div>
-        <div class="todo-item-due">6d overdue</div>
-      </div><div class="todo-item overdue" onclick="openProj(&#39;r_1777037360386&#39;)">
-        <div>
-          <div class="todo-item-name">RAMS</div>
-          <div class="todo-item-proj">E0183 · London Job Show W12</div>
-        </div>
-        <div class="todo-item-due">2d overdue</div>
-      </div><div class="todo-item overdue" onclick="openProj(&#39;r_1777037360386&#39;)">
-        <div>
-          <div class="todo-item-name">Transport Booked</div>
-          <div class="todo-item-proj">E0183 · London Job Show W12</div>
-        </div>
-        <div class="todo-item-due">1d overdue</div>
-      </div><div class="todo-item overdue" onclick="openProj(&#39;r_1777037360386&#39;)">
-        <div>
-          <div class="todo-item-name">Core Services Booked</div>
-          <div class="todo-item-proj">E0183 · London Job Show W12</div>
-        </div>
-        <div class="todo-item-due">1d overdue</div>
-      </div><div class="todo-item overdue" onclick="openProj(&#39;r_1777037360386&#39;)">
-        <div>
-          <div class="todo-item-name">Contractor Booked</div>
-          <div class="todo-item-proj">E0183 · London Job Show W12</div>
-        </div>
-        <div class="todo-item-due">1d overdue</div>
-      </div><div class="todo-item overdue" onclick="openProj(&#39;r_1777037360386&#39;)">
-        <div>
-          <div class="todo-item-name">Exhibitor Orders Booked</div>
-          <div class="todo-item-proj">E0183 · London Job Show W12</div>
-        </div>
-        <div class="todo-item-due">1d overdue</div>
-      </div><div class="todo-item overdue" onclick="openProj(&#39;r_1777037360386&#39;)">
-        <div>
-          <div class="todo-item-name">Site Foreman Name</div>
-          <div class="todo-item-proj">E0183 · London Job Show W12</div>
-        </div>
-        <div class="todo-item-due">1d overdue</div>
-      </div><div class="todo-item overdue" onclick="openProj(&#39;r_1777037360386&#39;)">
-        <div>
-          <div class="todo-item-name">Ordered</div>
-          <div class="todo-item-proj">E0183 · London Job Show W12</div>
-        </div>
-        <div class="todo-item-due">1d overdue</div>
-      </div><div class="todo-item overdue" onclick="openProj(&#39;r_1777037360386&#39;)">
-        <div>
-          <div class="todo-item-name">Delivery to Site Confirmed</div>
-          <div class="todo-item-proj">E0183 · London Job Show W12</div>
-        </div>
-        <div class="todo-item-due">1d overdue</div>
-      </div><div class="todo-item overdue" onclick="openProj(&#39;r_1777037360386&#39;)">
-        <div>
-          <div class="todo-item-name">Ordered</div>
-          <div class="todo-item-proj">E0183 · London Job Show W12</div>
-        </div>
-        <div class="todo-item-due">1d overdue</div>
-      </div><div class="todo-item overdue" onclick="openProj(&#39;r_1777037360386&#39;)">
-        <div>
-          <div class="todo-item-name">Delivery Confirmed</div>
-          <div class="todo-item-proj">E0183 · London Job Show W12</div>
-        </div>
-        <div class="todo-item-due">1d overdue</div>
-      </div><div class="todo-item overdue" onclick="openProj(&#39;r_1777314922486&#39;)">
-        <div>
-          <div class="todo-item-name">Labour Booked</div>
-          <div class="todo-item-proj">E0170 · RCN 26</div>
-        </div>
-        <div class="todo-item-due">1d overdue</div>
-      </div><div class="todo-item overdue" onclick="openProj(&#39;r_1777314922486&#39;)">
-        <div>
-          <div class="todo-item-name">Accommodation Booked</div>
-          <div class="todo-item-proj">E0170 · RCN 26</div>
-        </div>
-        <div class="todo-item-due">1d overdue</div>
-      </div><div class="todo-item overdue" onclick="openProj(&#39;r_1777314922486&#39;)">
-        <div>
-          <div class="todo-item-name">Travel Booked</div>
-          <div class="todo-item-proj">E0170 · RCN 26</div>
-        </div>
-        <div class="todo-item-due">1d overdue</div>
-      </div><div class="todo-item due-soon" onclick="openProj(&#39;r_1777026615203&#39;)">
-        <div>
-          <div class="todo-item-name">Stock Loaded</div>
-          <div class="todo-item-proj">E0169 · ISBA 26</div>
-        </div>
-        <div class="todo-item-due">Tomorrow</div>
-      </div><div class="todo-item due-soon" onclick="openProj(&#39;r_1777314984353&#39;)">
-        <div>
-          <div class="todo-item-name">Labour Booked</div>
-          <div class="todo-item-proj">E0171 · Primary Care 26</div>
-        </div>
-        <div class="todo-item-due">Tomorrow</div>
-      </div><div class="todo-item due-soon" onclick="openProj(&#39;r_1777314984353&#39;)">
-        <div>
-          <div class="todo-item-name">Travel Booked</div>
-          <div class="todo-item-proj">E0171 · Primary Care 26</div>
-        </div>
-        <div class="todo-item-due">Tomorrow</div>
-      </div><div class="todo-item due-ok" onclick="openProj(&#39;r_1777037360386&#39;)">
-        <div>
-          <div class="todo-item-name">P&amp;L Updated pre site</div>
-          <div class="todo-item-proj">E0183 · London Job Show W12</div>
-        </div>
-        <div class="todo-item-due">4d</div>
-      </div><div class="todo-item due-ok" onclick="openProj(&#39;r_1777037360386&#39;)">
-        <div>
-          <div class="todo-item-name">Transport Booked</div>
-          <div class="todo-item-proj">E0183 · London Job Show W12</div>
-        </div>
-        <div class="todo-item-due">4d</div>
-      </div><div class="todo-item due-ok" onclick="openProj(&#39;r_1777026615203&#39;)">
-        <div>
-          <div class="todo-item-name">Invoice Amount Updated On Xero</div>
-          <div class="todo-item-proj">E0169 · ISBA 26</div>
-        </div>
-        <div class="todo-item-due">8d</div>
-      </div><div class="todo-item due-ok" onclick="openProj(&#39;r_1777314922486&#39;)">
-        <div>
-          <div class="todo-item-name">Stock Loaded</div>
-          <div class="todo-item-proj">E0170 · RCN 26</div>
-        </div>
-        <div class="todo-item-due">8d</div>
-      </div><div class="todo-item due-ok" onclick="openProj(&#39;r_1777314984353&#39;)">
-        <div>
-          <div class="todo-item-name">Stock Loaded</div>
-          <div class="todo-item-proj">E0171 · Primary Care 26</div>
-        </div>
-        <div class="todo-item-due">11d</div>
-      </div><div class="todo-item due-ok" onclick="openProj(&#39;r_1777315033782&#39;)">
-        <div>
-          <div class="todo-item-name">Labour Booked</div>
-          <div class="todo-item-proj">E0172 · BCS 26</div>
-        </div>
-        <div class="todo-item-due">13d</div>
-      </div><div class="todo-item due-ok" onclick="openProj(&#39;r_1777315033782&#39;)">
-        <div>
-          <div class="todo-item-name">Accommodation Booked</div>
-          <div class="todo-item-proj">E0172 · BCS 26</div>
-        </div>
-        <div class="todo-item-due">13d</div>
-      </div><div class="todo-item due-ok" onclick="openProj(&#39;r_1777315033782&#39;)">
-        <div>
-          <div class="todo-item-name">Travel Booked</div>
-          <div class="todo-item-proj">E0172 · BCS 26</div>
-        </div>
-        <div class="todo-item-due">13d</div>
-      </div></div>
-    </div><div class="todo-card">
-      <div class="todo-card-hdr">
-        <div class="todo-avatar" style="background:#0891b2">C</div>
-        <div class="todo-name">Chloe</div>
-        <div class="todo-count">5 tasks</div>
-      </div>
-      <div class="todo-body"><div class="todo-item overdue" onclick="openProj(&#39;r_1777037360386&#39;)">
-        <div>
-          <div class="todo-item-name">Block Drawings Completed</div>
-          <div class="todo-item-proj">E0183 · London Job Show W12</div>
-        </div>
-        <div class="todo-item-due">1d overdue</div>
-      </div><div class="todo-item due-soon" onclick="openProj(&#39;r_1777037360386&#39;)">
-        <div>
-          <div class="todo-item-name">Issued to Site Team</div>
-          <div class="todo-item-proj">E0183 · London Job Show W12</div>
-        </div>
-        <div class="todo-item-due">Today</div>
-      </div><div class="todo-item due-soon" onclick="openProj(&#39;r_1777037360386&#39;)">
-        <div>
-          <div class="todo-item-name">Deposit Invoice</div>
-          <div class="todo-item-proj">E0183 · London Job Show W12</div>
-        </div>
-        <div class="todo-item-due">Tomorrow</div>
-      </div><div class="todo-item due-ok" onclick="openProj(&#39;r_1777026615203&#39;)">
-        <div>
-          <div class="todo-item-name">Invoice Sent</div>
-          <div class="todo-item-proj">E0169 · ISBA 26</div>
-        </div>
-        <div class="todo-item-due">8d</div>
-      </div><div class="todo-item due-ok" onclick="openProj(&#39;r_1777315276321&#39;)">
-        <div>
-          <div class="todo-item-name">Invoice Raised</div>
-          <div class="todo-item-proj">E0174 · Flood &amp; Coast 26</div>
-        </div>
-        <div class="todo-item-due">8d</div>
-      </div></div>
-    </div><div class="todo-card">
-      <div class="todo-card-hdr">
-        <div class="todo-avatar" style="background:#16a34a">L</div>
-        <div class="todo-name">Lily</div>
-        <div class="todo-count">4 tasks</div>
-      </div>
-      <div class="todo-body"><div class="todo-item overdue" onclick="openProj(&#39;r_1777037360386&#39;)">
-        <div>
-          <div class="todo-item-name">Create Build Schedule</div>
-          <div class="todo-item-proj">E0183 · London Job Show W12</div>
-        </div>
-        <div class="todo-item-due">2d overdue</div>
-      </div><div class="todo-item overdue" onclick="openProj(&#39;r_1777037360386&#39;)">
-        <div>
-          <div class="todo-item-name">Accommodation</div>
-          <div class="todo-item-proj">E0183 · London Job Show W12</div>
-        </div>
-        <div class="todo-item-due">1d overdue</div>
-      </div><div class="todo-item due-ok" onclick="openProj(&#39;r_1777037360386&#39;)">
-        <div>
-          <div class="todo-item-name">Service Desk Folder</div>
-          <div class="todo-item-proj">E0183 · London Job Show W12</div>
-        </div>
-        <div class="todo-item-due">4d</div>
-      </div><div class="todo-item due-ok" onclick="openProj(&#39;r_1777037360386&#39;)">
-        <div>
-          <div class="todo-item-name">Final Pre Site Checks</div>
-          <div class="todo-item-proj">E0183 · London Job Show W12</div>
-        </div>
-        <div class="todo-item-due">4d</div>
-      </div></div>
-    </div><div class="todo-card">
-      <div class="todo-card-hdr">
-        <div class="todo-avatar" style="background:#d97706">A</div>
-        <div class="todo-name">Adam</div>
-        
-      </div>
-      <div class="todo-body"><div class="todo-empty">All clear ✓</div></div>
-    </div><div class="todo-card">
-      <div class="todo-card-hdr">
-        <div class="todo-avatar" style="background:#2563eb">R</div>
-        <div class="todo-name">Ryan</div>
-        <div class="todo-count">14 tasks</div>
-      </div>
-      <div class="todo-body"><div class="todo-item due-ok" onclick="openProj(&#39;r_1777037360386&#39;)">
-        <div>
-          <div class="todo-item-name">Stock Load List</div>
-          <div class="todo-item-proj">E0183 · London Job Show W12</div>
-        </div>
-        <div class="todo-item-due">4d</div>
-      </div><div class="todo-item due-ok" onclick="openProj(&#39;r_1777037360386&#39;)">
-        <div>
-          <div class="todo-item-name">Paperwork Ready</div>
-          <div class="todo-item-proj">E0183 · London Job Show W12</div>
-        </div>
-        <div class="todo-item-due">4d</div>
-      </div><div class="todo-item due-ok" onclick="openProj(&#39;r_1777314922486&#39;)">
-        <div>
-          <div class="todo-item-name">Loadlist Ready</div>
-          <div class="todo-item-proj">E0170 · RCN 26</div>
-        </div>
-        <div class="todo-item-due">5d</div>
-      </div><div class="todo-item due-ok" onclick="openProj(&#39;r_1777314922486&#39;)">
-        <div>
-          <div class="todo-item-name">Paperwork Packed and Ready</div>
-          <div class="todo-item-proj">E0170 · RCN 26</div>
-        </div>
-        <div class="todo-item-due">5d</div>
-      </div><div class="todo-item due-ok" onclick="openProj(&#39;r_1777314984353&#39;)">
-        <div>
-          <div class="todo-item-name">Loadlist Ready</div>
-          <div class="todo-item-proj">E0171 · Primary Care 26</div>
-        </div>
-        <div class="todo-item-due">6d</div>
-      </div><div class="todo-item due-ok" onclick="openProj(&#39;r_1777314984353&#39;)">
-        <div>
-          <div class="todo-item-name">Paperwork Packed and Ready</div>
-          <div class="todo-item-proj">E0171 · Primary Care 26</div>
-        </div>
-        <div class="todo-item-due">7d</div>
-      </div><div class="todo-item due-ok" onclick="openProj(&#39;r_1777026615203&#39;)">
-        <div>
-          <div class="todo-item-name">ALL Orders Finalised (including Onsite)</div>
-          <div class="todo-item-proj">E0169 · ISBA 26</div>
-        </div>
-        <div class="todo-item-due">8d</div>
-      </div><div class="todo-item due-ok" onclick="openProj(&#39;r_1777315033782&#39;)">
-        <div>
-          <div class="todo-item-name">Paperwork Received</div>
-          <div class="todo-item-proj">E0172 · BCS 26</div>
-        </div>
-        <div class="todo-item-due">8d</div>
-      </div><div class="todo-item due-ok" onclick="openProj(&#39;r_1777315033782&#39;)">
-        <div>
-          <div class="todo-item-name">PO Received</div>
-          <div class="todo-item-proj">E0172 · BCS 26</div>
-        </div>
-        <div class="todo-item-due">8d</div>
-      </div><div class="todo-item due-ok" onclick="openProj(&#39;r_1777315033782&#39;)">
-        <div>
-          <div class="todo-item-name">Floorplan Received</div>
-          <div class="todo-item-proj">E0172 · BCS 26</div>
-        </div>
-        <div class="todo-item-due">8d</div>
-      </div><div class="todo-item due-ok" onclick="openProj(&#39;r_1777315099070&#39;)">
-        <div>
-          <div class="todo-item-name">Paperwork Received</div>
-          <div class="todo-item-proj">E0173 · DIMH 26</div>
-        </div>
-        <div class="todo-item-due">11d</div>
-      </div><div class="todo-item due-ok" onclick="openProj(&#39;r_1777315099070&#39;)">
-        <div>
-          <div class="todo-item-name">PO Received</div>
-          <div class="todo-item-proj">E0173 · DIMH 26</div>
-        </div>
-        <div class="todo-item-due">11d</div>
-      </div><div class="todo-item due-ok" onclick="openProj(&#39;r_1777315099070&#39;)">
-        <div>
-          <div class="todo-item-name">Floorplan Received</div>
-          <div class="todo-item-proj">E0173 · DIMH 26</div>
-        </div>
-        <div class="todo-item-due">11d</div>
-      </div><div class="todo-item due-ok" onclick="openProj(&#39;r_1777314922486&#39;)">
-        <div>
-          <div class="todo-item-name">ALL Orders Finalised (including Onsite)</div>
-          <div class="todo-item-proj">E0170 · RCN 26</div>
-        </div>
-        <div class="todo-item-due">14d</div>
-      </div></div>
-    </div></div>
+  <div class="todo-grid" id="dash-todo"></div>
 </div>
 
 <!-- ADMIN VIEW -->
 <div id="view-admin" class="view">
-  <button class="mob-dash-back" onclick="showView(&#39;dashboard&#39;)">← Dashboard</button>
+  <button class="mob-dash-back" onclick="showView('dashboard')">← Dashboard</button>
   
   <div class="sec-hdr-row" style="margin-bottom:20px">
     <div class="sec-hdr-label">Admin Panel</div>
@@ -1030,7 +675,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
 
 <!-- CALENDAR -->
 <div id="view-calendar" class="view">
-  <button class="mob-dash-back" onclick="showView(&#39;dashboard&#39;)">← Dashboard</button>
+  <button class="mob-dash-back" onclick="showView('dashboard')">← Dashboard</button>
   <div class="cal-wrap">
     <div class="cal-header">
       <button class="cal-nav" onclick="calPrev()" id="cal-prev-btn">←</button>
@@ -1053,9 +698,9 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
     </div>
     <div class="cal-filters">
       <span style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-right:4px">Filter:</span>
-      <button class="filter-toggle on-show" id="ft-shows" onclick="toggleF(&#39;shows&#39;)">Shows</button>
-      <button class="filter-toggle on-stand" id="ft-stands" onclick="toggleF(&#39;stands&#39;)">Stands</button>
-      <button class="filter-toggle on-elec" id="ft-elecs" onclick="toggleF(&#39;elecs&#39;)">Electrics</button>
+      <button class="filter-toggle on-show" id="ft-shows" onclick="toggleF('shows')">Shows</button>
+      <button class="filter-toggle on-stand" id="ft-stands" onclick="toggleF('stands')">Stands</button>
+      <button class="filter-toggle on-elec" id="ft-elecs" onclick="toggleF('elecs')">Electrics</button>
     </div>
     <div class="cal-scroll" id="cal-scroll"><table class="cal-table" id="cal-table"></table></div>
   </div>
@@ -1082,9 +727,9 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
       <option value="active">Active</option>
       <option value="archived">Archived</option>
     </select>
-    <button class="btn btn-primary btn-sm" onclick="openAdd(&#39;show&#39;)" style="margin-left:auto">+ Show</button>
-    <button class="btn btn-blue btn-sm" onclick="openAdd(&#39;stand&#39;)">+ Stand</button>
-    <button class="btn btn-sm" style="background:var(--elec);color:#fff;" onclick="openAdd(&#39;elec&#39;)">+ Electrics</button>
+    <button class="btn btn-primary btn-sm" onclick="openAdd('show')" style="margin-left:auto">+ Show</button>
+    <button class="btn btn-blue btn-sm" onclick="openAdd('stand')">+ Stand</button>
+    <button class="btn btn-sm" style="background:var(--elec);color:#fff;" onclick="openAdd('elec')">+ Electrics</button>
   </div>
   <div class="proj-layout">
     <div class="proj-sidebar" id="proj-sidebar"></div>
@@ -1096,7 +741,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
 
 <!-- SUBCONTRACTORS -->
 <div id="view-subcontractors" class="view">
-  <button class="mob-dash-back" onclick="showView(&#39;dashboard&#39;)">← Dashboard</button>
+  <button class="mob-dash-back" onclick="showView('dashboard')">← Dashboard</button>
   <div class="search-row">
     <input class="search-input" type="text" placeholder="Search subs…" oninput="renderSubs()">
     <button class="btn btn-primary btn-sm" onclick="openAddSub()" style="margin-left:auto">+ Subcontractor</button>
@@ -1104,8 +749,8 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
   </div>
   <div id="clash-banners"></div>
   <div class="tab-bar" style="margin-bottom:16px">
-    <button class="tab-btn active" id="sub-tab-roster" onclick="swSubTab(&#39;roster&#39;)">Roster &amp; Allocations</button>
-    <button class="tab-btn" id="sub-tab-cal" onclick="swSubTab(&#39;cal&#39;)">Availability Calendar</button>
+    <button class="tab-btn active" id="sub-tab-roster" onclick="swSubTab('roster')">Roster &amp; Allocations</button>
+    <button class="tab-btn" id="sub-tab-cal" onclick="swSubTab('cal')">Availability Calendar</button>
   </div>
   <div id="sub-panel-roster">
     <div style="display:grid;grid-template-columns:1fr 1.6fr;gap:16px;align-items:start">
@@ -1120,7 +765,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
 
 <!-- TEMPLATES VIEW -->
 <div id="view-templates" class="view">
-  <button class="mob-dash-back" onclick="showView(&#39;dashboard&#39;)">← Dashboard</button>
+  <button class="mob-dash-back" onclick="showView('dashboard')">← Dashboard</button>
   <div class="search-row">
     <input class="search-input" type="text" id="tpl-search" placeholder="Search templates…" oninput="renderTemplates()">
     <button class="btn btn-primary btn-sm" onclick="openAddTemplate()" style="margin-left:auto">+ Template</button>
@@ -1133,7 +778,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
 <div class="modal-overlay" id="modal-tpl">
   <div class="modal" id="modal-tpl-inner">
     <div class="modal-title" id="modal-tpl-title">Add Template</div>
-    <button class="modal-close" onclick="closeModal(&#39;modal-tpl&#39;)">✕</button>
+    <button class="modal-close" onclick="closeModal('modal-tpl')">✕</button>
     <div class="form-grid">
       <div class="form-group form-full"><label class="form-label">Template Name *</label><input class="form-input" id="t-name" placeholder="e.g. Stand Build H&amp;S RAMS"></div>
       <div class="form-group"><label class="form-label">Category *</label>
@@ -1153,8 +798,63 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
     </div>
     <div style="display:flex;gap:8px;justify-content:flex-end;align-items:center">
       <button class="btn btn-danger btn-sm" id="btn-del-tpl" onclick="deleteTemplateFromModal()" style="display:none;margin-right:auto">Delete</button>
-      <button class="btn btn-ghost" onclick="closeModal(&#39;modal-tpl&#39;)">Cancel</button>
+      <button class="btn btn-ghost" onclick="closeModal('modal-tpl')">Cancel</button>
       <button class="btn btn-primary" onclick="saveTemplate()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- SUPPLIERS VIEW -->
+<div id="view-suppliers" class="view">
+  <button class="mob-dash-back" onclick="showView('dashboard')">← Dashboard</button>
+  <div class="search-row">
+    <input class="search-input" type="text" id="sup-search" placeholder="Search suppliers, contacts, categories…" oninput="renderSuppliers()">
+    <button class="btn btn-primary btn-sm" onclick="openAddSupplier()" style="margin-left:auto">+ Supplier</button>
+    <button class="btn btn-ghost btn-sm" onclick="openSupCatManager()">Manage Categories</button>
+  </div>
+  <div id="sup-cat-filters" style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px"></div>
+  <div id="sup-list"></div>
+</div>
+
+<!-- MODAL: Add/Edit Supplier -->
+<div class="modal-overlay" id="modal-sup">
+  <div class="modal" id="modal-sup-inner">
+    <div class="modal-title" id="modal-sup-title">Add Supplier</div>
+    <button class="modal-close" onclick="closeModal('modal-sup')">✕</button>
+    <div class="form-grid">
+      <div class="form-group form-full"><label class="form-label">Company Name *</label><input class="form-input" id="sup-company" placeholder="e.g. Premier Carpets Ltd"></div>
+      <div class="form-group"><label class="form-label">Category *</label>
+        <select class="form-select" id="sup-cat"></select>
+      </div>
+      <div class="form-group"><label class="form-label">Website</label><input class="form-input" id="sup-website" placeholder="https://…"></div>
+      <div class="form-group form-full"><label class="form-label">Notes</label><textarea class="form-textarea" id="sup-notes" rows="2" placeholder="Optional — account ref, lead times, terms, etc."></textarea></div>
+    </div>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--navy);margin:14px 0 10px;padding-top:12px;border-top:1.5px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+      <span>Contacts</span>
+      <button class="btn btn-ghost btn-sm" type="button" onclick="addSupContactRow()">+ Add Contact</button>
+    </div>
+    <div id="sup-contacts"></div>
+    <div style="display:flex;gap:8px;justify-content:flex-end;align-items:center;margin-top:14px">
+      <button class="btn btn-danger btn-sm" id="btn-del-sup" onclick="deleteSupplierFromModal()" style="display:none;margin-right:auto">Delete</button>
+      <button class="btn btn-ghost" onclick="closeModal('modal-sup')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveSupplier()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Supplier Category Manager -->
+<div class="modal-overlay" id="modal-sup-cats">
+  <div class="modal" id="modal-sup-cats-inner" style="max-width:440px">
+    <div class="modal-title">Manage Supplier Categories</div>
+    <button class="modal-close" onclick="closeModal('modal-sup-cats')">✕</button>
+    <div style="font-size:12px;color:var(--text2);margin-bottom:12px">Add, rename or remove categories. Renaming updates every supplier in that category. A category in use can't be deleted until its suppliers are moved.</div>
+    <div id="sup-cat-list" style="display:grid;gap:8px;margin-bottom:14px"></div>
+    <div style="display:flex;gap:8px;align-items:center;padding-top:12px;border-top:1.5px solid var(--border)">
+      <input class="form-input" id="sup-cat-new" placeholder="New category name" style="flex:1">
+      <button class="btn btn-primary btn-sm" onclick="addSupCat()">Add</button>
+    </div>
+    <div style="display:flex;justify-content:flex-end;margin-top:14px">
+      <button class="btn btn-ghost" onclick="closeModal('modal-sup-cats')">Done</button>
     </div>
   </div>
 </div>
@@ -1163,7 +863,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
 <div class="modal-overlay" id="modal-rec">
   <div class="modal" id="modal-rec-inner">
     <div class="modal-title" id="modal-rec-title">Add Show</div>
-    <button class="modal-close" onclick="closeModal(&#39;modal-rec&#39;)">✕</button>
+    <button class="modal-close" onclick="closeModal('modal-rec')">✕</button>
 
     <div class="form-grid">
       <div class="form-group"><label class="form-label">Job Number</label><input class="form-input" id="f-job" placeholder="E0200"></div>
@@ -1180,10 +880,10 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
 
     <div class="form-sec">Contract Type</div>
     <div class="contract-toggle">
-      <div class="ct-option selected-direct" id="ct-direct" onclick="selectContract(&#39;direct&#39;)">
+      <div class="ct-option selected-direct" id="ct-direct" onclick="selectContract('direct')">
         ✅ Direct with ONCO X<br><span style="font-size:10px;font-weight:400;text-transform:none;letter-spacing:0">Awarded directly by organiser</span>
       </div>
-      <div class="ct-option" id="ct-sub" onclick="selectContract(&#39;subcontract&#39;)">
+      <div class="ct-option" id="ct-sub" onclick="selectContract('subcontract')">
         🔗 Subcontract<br><span style="font-size:10px;font-weight:400;text-transform:none;letter-spacing:0">We are working under another contractor</span>
       </div>
     </div>
@@ -1208,8 +908,8 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
     <div id="f-show-extra" style="display:none">
       <div class="form-sec">Show Spec Details</div>
       <div class="form-grid">
-        <div class="form-group"><label class="form-label">Event Manager</label><input class="form-input" id="f-eventmgr" placeholder="e.g. Callum O&#39;Neill"></div>
-        <div class="form-group"><label class="form-label">Created By / Owner</label><input class="form-input" id="f-createdby" placeholder="e.g. Lily-Mai O&#39;Neill"></div>
+        <div class="form-group"><label class="form-label">Event Manager</label><input class="form-input" id="f-eventmgr" placeholder="e.g. Callum O'Neill"></div>
+        <div class="form-group"><label class="form-label">Created By / Owner</label><input class="form-input" id="f-createdby" placeholder="e.g. Lily-Mai O'Neill"></div>
         <div class="form-group"><label class="form-label">Estimated Shell Sqm</label><input class="form-input" id="f-shellsqm" placeholder="e.g. 330m"></div>
         <div class="form-group"><label class="form-label">Show Open Dates (text)</label><input class="form-input" id="f-opendates" placeholder="e.g. Tuesday 3rd – Wednesday 4th March 2026"></div>
         <div class="form-group"><label class="form-label">No. of Service Desks</label><input class="form-input" id="f-servicedesks" placeholder="e.g. 1"></div>
@@ -1279,7 +979,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
     </div>
     <div style="display:flex;gap:8px;justify-content:flex-end;align-items:center">
       <button class="btn btn-danger btn-sm" id="btn-del-rec" onclick="deleteRec()" style="display:none;margin-right:auto">Delete</button>
-      <button class="btn btn-ghost" onclick="closeModal(&#39;modal-rec&#39;)">Cancel</button>
+      <button class="btn btn-ghost" onclick="closeModal('modal-rec')">Cancel</button>
       <button class="btn btn-primary" id="btn-save-rec" onclick="saveRec()">Save</button>
     </div>
   </div>
@@ -1289,7 +989,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
 <div class="modal-overlay" id="modal-elec">
   <div class="modal elec-modal">
     <div class="modal-title" id="modal-elec-title" style="color:var(--elec)">Add Electrics Project</div>
-    <button class="modal-close" onclick="closeModal(&#39;modal-elec&#39;)">✕</button>
+    <button class="modal-close" onclick="closeModal('modal-elec')">✕</button>
     <div class="form-grid">
       <div class="form-group"><label class="form-label">Job Number</label><input class="form-input" id="e-job" placeholder="E0200"></div>
       <div class="form-group"><label class="form-label">Status</label>
@@ -1304,10 +1004,10 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
     </div>
     <div class="form-sec">Contract Type</div>
     <div class="contract-toggle">
-      <div class="ct-option selected-direct" id="ect-direct" onclick="selectElecContract(&#39;direct&#39;)">
+      <div class="ct-option selected-direct" id="ect-direct" onclick="selectElecContract('direct')">
         ✅ Direct with ONCO X<br><span style="font-size:10px;font-weight:400;text-transform:none;letter-spacing:0">Awarded directly by organiser</span>
       </div>
-      <div class="ct-option" id="ect-sub" onclick="selectElecContract(&#39;subcontract&#39;)">
+      <div class="ct-option" id="ect-sub" onclick="selectElecContract('subcontract')">
         🔗 Subcontract<br><span style="font-size:10px;font-weight:400;text-transform:none;letter-spacing:0">Working under another contractor</span>
       </div>
     </div>
@@ -1325,7 +1025,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
     <div class="form-group" style="margin-bottom:20px"><textarea class="form-textarea" id="e-notes" rows="2" placeholder="Any notes…"></textarea></div>
     <div style="display:flex;gap:8px;justify-content:flex-end;align-items:center">
       <button class="btn btn-danger btn-sm" id="btn-del-elec" onclick="deleteElec()" style="display:none;margin-right:auto">Delete</button>
-      <button class="btn btn-ghost" onclick="closeModal(&#39;modal-elec&#39;)">Cancel</button>
+      <button class="btn btn-ghost" onclick="closeModal('modal-elec')">Cancel</button>
       <button class="btn" style="background:var(--elec);color:#fff" onclick="saveElec()">Save</button>
     </div>
   </div>
@@ -1336,7 +1036,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
 <div class="modal-overlay" id="modal-field-settings">
   <div class="modal" style="max-width:420px">
     <div class="modal-title">👷 Field View Settings</div>
-    <button class="modal-close" onclick="closeModal(&#39;modal-field-settings&#39;)">✕</button>
+    <button class="modal-close" onclick="closeModal('modal-field-settings')">✕</button>
     <p style="font-size:12px;color:var(--text3);margin-bottom:16px;line-height:1.6">Configure the separate PIN and subcontractor for the Field View. The person with this PIN will only see their allocated jobs.</p>
     <div class="form-grid">
       <div class="form-group form-full">
@@ -1352,7 +1052,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
       </div>
     </div>
     <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px">
-      <button class="btn btn-ghost" onclick="closeModal(&#39;modal-field-settings&#39;)">Cancel</button>
+      <button class="btn btn-ghost" onclick="closeModal('modal-field-settings')">Cancel</button>
       <button class="btn btn-primary" onclick="applyFieldSettings()">Save Field Settings</button>
     </div>
   </div>
@@ -1361,7 +1061,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
 <div class="modal-overlay" id="modal-sub">
   <div class="modal" style="max-width:480px">
     <div class="modal-title" id="modal-sub-title">Add Subcontractor</div>
-    <button class="modal-close" onclick="closeModal(&#39;modal-sub&#39;)">✕</button>
+    <button class="modal-close" onclick="closeModal('modal-sub')">✕</button>
     <div class="form-grid">
       <div class="form-group form-full"><label class="form-label">Full Name</label><input class="form-input" id="s-name" placeholder="Name"></div>
       <div class="form-group"><label class="form-label">Trade / Skill</label><input class="form-input" id="s-trade" placeholder="e.g. Electrician"></div>
@@ -1370,7 +1070,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
       <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="s-email" type="email" placeholder="email@…"></div>
       <div class="form-group form-full"><label class="form-label">Notes</label><textarea class="form-textarea" id="s-notes" rows="2"></textarea></div>
     </div>
-    <div style="font-family:&#39;Barlow Condensed&#39;,sans-serif;font-weight:800;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--navy);margin:14px 0 10px;padding-top:12px;border-top:1.5px solid var(--border)">Compliance</div>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--navy);margin:14px 0 10px;padding-top:12px;border-top:1.5px solid var(--border)">Compliance</div>
     <div class="form-grid">
       <div class="form-group"><label class="form-label">SLA Signed?</label>
         <select class="form-select" id="s-sla-signed">
@@ -1395,7 +1095,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
     </div>
     <div style="display:flex;gap:8px;justify-content:flex-end;align-items:center">
       <button class="btn btn-danger btn-sm" id="btn-del-sub" onclick="deleteSubFromModal()" style="display:none;margin-right:auto">Delete</button>
-      <button class="btn btn-ghost" onclick="closeModal(&#39;modal-sub&#39;)">Cancel</button>
+      <button class="btn btn-ghost" onclick="closeModal('modal-sub')">Cancel</button>
       <button class="btn btn-primary" onclick="saveSub()">Save</button>
     </div>
   </div>
@@ -1405,7 +1105,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
 <div class="modal-overlay" id="modal-alloc">
   <div class="modal" style="max-width:500px">
     <div class="modal-title">Allocate Subcontractor</div>
-    <button class="modal-close" onclick="closeModal(&#39;modal-alloc&#39;)">✕</button>
+    <button class="modal-close" onclick="closeModal('modal-alloc')">✕</button>
     <div class="form-grid">
       <div class="form-group form-full"><label class="form-label">Subcontractor</label><select class="form-select" id="a-sub"></select></div>
       <div class="form-group form-full"><label class="form-label">Show / Stand</label><select class="form-select" id="a-rec" onchange="populateAllocDays()"></select></div>
@@ -1423,7 +1123,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
         <input class="form-input" id="a-labour-conf" type="number" min="0" placeholder="e.g. 3" style="width:100px"></div>
     </div>
     <div style="display:flex;gap:8px;justify-content:flex-end">
-      <button class="btn btn-ghost" onclick="closeModal(&#39;modal-alloc&#39;)">Cancel</button>
+      <button class="btn btn-ghost" onclick="closeModal('modal-alloc')">Cancel</button>
       <button class="btn btn-primary" onclick="saveAlloc()">Allocate</button>
     </div>
   </div>
@@ -1433,7 +1133,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
 <div class="modal-overlay" id="modal-upgrade">
   <div class="modal stand-modal" style="max-width:580px">
     <div class="modal-title blue-title">Stand Upgrade</div>
-    <button class="modal-close" onclick="closeModal(&#39;modal-upgrade&#39;)">✕</button>
+    <button class="modal-close" onclick="closeModal('modal-upgrade')">✕</button>
     <div class="form-grid">
       <div class="form-group form-full"><label class="form-label">Exhibitor / Company Name</label><input class="form-input" id="u-exhibitor" placeholder="e.g. Acme Ltd"></div>
       <div class="form-group"><label class="form-label">Stand Number</label><input class="form-input" id="u-stand" placeholder="e.g. A12"></div>
@@ -1451,7 +1151,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
     </label>
     <div class="form-group" style="margin-bottom:18px"><label class="form-label">Notes</label><textarea class="form-textarea" id="u-notes" rows="2" placeholder="Any notes…"></textarea></div>
     <div style="display:flex;gap:8px;justify-content:flex-end">
-      <button class="btn btn-ghost" onclick="closeModal(&#39;modal-upgrade&#39;)">Cancel</button>
+      <button class="btn btn-ghost" onclick="closeModal('modal-upgrade')">Cancel</button>
       <button class="btn btn-blue" onclick="saveUpgradeModal()">Save Upgrade</button>
     </div>
   </div>
@@ -1521,7 +1221,7 @@ const sbDel=(t,id)=>sbQ(t+'?id=eq.'+encodeURIComponent(id),'DELETE',null,'');
 const sbDelWhere=(t,c,v)=>sbQ(t+'?'+c+'=eq.'+encodeURIComponent(v),'DELETE',null,'');
 
 // In-memory app state
-let APP={records:[],elecs:[],tasks:{},elecTasks:{},upgrades:[],subs:[],allocs:[],templates:[],tplFilter:'all',pin:'1701',loaded:false,currentUser:'',userPins:{}};
+let APP={records:[],elecs:[],tasks:{},elecTasks:{},upgrades:[],subs:[],allocs:[],templates:[],tplFilter:'all',suppliers:[],supplierCats:[],supFilter:'all',pin:'1701',loaded:false,currentUser:'',userPins:{}};
 
 // ── MULTI-USER PIN SYSTEM ─────────────────────────────────────────────────────
 const TEAM_PINS={Chloe:'1701',Callum:'2106',Lily:'2709',Adam:'0309',Ryan:'0604'};
@@ -1734,6 +1434,11 @@ async function loadAllData(){
       const ps=s.find(x=>x.key==='pin');if(ps)APP.pin=ps.value;
       const tp=s.find(x=>x.key==='templates');
       if(tp&&tp.value){try{APP.templates=JSON.parse(tp.value)||[];}catch(e){APP.templates=[];}}
+      const sp=s.find(x=>x.key==='suppliers');
+      if(sp&&sp.value){try{APP.suppliers=JSON.parse(sp.value)||[];}catch(e){APP.suppliers=[];}}
+      const sc=s.find(x=>x.key==='supplier_cats');
+      if(sc&&sc.value){try{APP.supplierCats=JSON.parse(sc.value)||[];}catch(e){APP.supplierCats=[];}}
+      if(!APP.supplierCats||!APP.supplierCats.length)APP.supplierCats=['Flooring','Furniture','Graphics'];
     }catch(e){}
 
     setLoaderPct(100,'Ready!');APP.loaded=true;
@@ -1876,13 +1581,14 @@ function showView(n){
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('view-'+n).classList.add('active');
-  const m={dashboard:0,calendar:1,projects:2,subcontractors:3,templates:4};
+  const m={dashboard:0,calendar:1,projects:2,subcontractors:3,suppliers:4,templates:5};
   if(m[n]!==undefined)document.querySelectorAll('.nav-btn')[m[n]]?.classList.add('active');
   CV=n;
   if(n==='dashboard')renderDash();
   if(n==='calendar')renderCal();
   if(n==='projects')renderProjects();
   if(n==='subcontractors')renderSubs();
+  if(n==='suppliers')renderSuppliers();
   if(n==='templates')renderTemplates();
   if(n==='admin')setTimeout(renderAdminPanel,200);
 }
@@ -4376,6 +4082,236 @@ async function deleteTemplateFromModal(){
   renderTemplates();
 }
 
+// ── SUPPLIERS DIRECTORY ──────────────────────────────────────────────────────
+let ESup=null;
+
+function supCats(){
+  if(!APP.supplierCats||!APP.supplierCats.length)APP.supplierCats=['Flooring','Furniture','Graphics'];
+  return APP.supplierCats;
+}
+
+async function persistSuppliers(){
+  try{await sbUpsert('settings',{key:'suppliers',value:JSON.stringify(APP.suppliers||[])});}
+  catch(e){alert('Save failed — please try again.\n\n'+e.message);}
+}
+async function persistSupCats(){
+  try{await sbUpsert('settings',{key:'supplier_cats',value:JSON.stringify(APP.supplierCats||[])});}
+  catch(e){alert('Save failed — please try again.\n\n'+e.message);}
+}
+
+function renderSuppliers(){
+  const list=APP.suppliers||[];
+  const cats=supCats();
+  const search=(document.getElementById('sup-search')?.value||'').toLowerCase().trim();
+  const filter=APP.supFilter||'all';
+
+  // Category filter chips
+  const fEl=document.getElementById('sup-cat-filters');
+  if(fEl){
+    const counts={};cats.forEach(c=>counts[c]=0);
+    list.forEach(s=>{if(counts[s.category]!==undefined)counts[s.category]++;});
+    const chip=(val,label,n)=>`<button class="filter-toggle ${filter===val?'on-show':''}" onclick="setSupFilter('${val.replace(/'/g,"\\'")}')">${escHtml(label)} <span style="opacity:.6;margin-left:3px">${n}</span></button>`;
+    fEl.innerHTML=chip('all','All',list.length)+cats.map(c=>chip(c,c,counts[c]||0)).join('');
+  }
+
+  // Filter + search
+  const filtered=list.filter(s=>{
+    if(filter!=='all'&&s.category!==filter)return false;
+    if(!search)return true;
+    const hay=[s.company,s.category,s.notes,s.website,...(s.contacts||[]).flatMap(c=>[c.name,c.role,c.email,c.phone])]
+      .filter(Boolean).join(' ').toLowerCase();
+    return hay.includes(search);
+  });
+
+  filtered.sort((a,b)=>{
+    const ci=cats.indexOf(a.category)-cats.indexOf(b.category);
+    if(ci!==0)return ci;
+    return (a.company||'').localeCompare(b.company||'');
+  });
+
+  const wrap=document.getElementById('sup-list');
+  if(!wrap)return;
+  if(!filtered.length){
+    wrap.innerHTML=`<div class="empty-state"><div class="empty-ico">🏭</div><div class="empty-title">${list.length?'No matches':'No suppliers yet'}</div><div style="font-size:12px;color:var(--text3);margin-top:4px">${list.length?'Try a different search or filter.':'Click + Supplier to add your first one.'}</div></div>`;
+    return;
+  }
+
+  wrap.innerHTML=filtered.map(s=>{
+    const contacts=(s.contacts||[]).filter(c=>c&&(c.name||c.email||c.phone));
+    const contactRow=(c,isMain)=>{
+      const bits=[];
+      if(c.email)bits.push(`<a href="mailto:${escHtml(c.email)}" style="color:var(--blue);text-decoration:none">${escHtml(c.email)}</a>`);
+      if(c.phone)bits.push(`<a href="tel:${escHtml((c.phone||'').replace(/\s+/g,''))}" style="color:var(--blue);text-decoration:none">${escHtml(c.phone)}</a>`);
+      return `<div style="font-size:12px;color:var(--text2);margin-top:3px">
+        ${isMain?'<span class="status-badge badge-confirmed" style="margin-right:6px">Main</span>':''}
+        <strong style="color:var(--navy)">${escHtml(c.name||'—')}</strong>${c.role?` <span style="color:var(--text3)">· ${escHtml(c.role)}</span>`:''}
+        ${bits.length?`<div style="margin-top:1px">${bits.join(' &nbsp;·&nbsp; ')}</div>`:''}
+      </div>`;
+    };
+    return `<div class="record-card" style="cursor:default;padding:14px 16px">
+      <div style="display:flex;align-items:flex-start;gap:14px">
+        <div style="flex-shrink:0;width:40px;height:40px;border-radius:6px;background:var(--blue-dim);color:#2563eb;display:flex;align-items:center;justify-content:center;font-size:18px;border:1px solid rgba(114,168,219,.4)">🏭</div>
+        <div style="flex:1;min-width:0">
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:2px">
+            <div style="font-size:15px;font-weight:700;color:var(--navy)">${escHtml(s.company)}</div>
+            <span class="svc-chip">${escHtml(s.category||'—')}</span>
+            ${s.website?`<a href="${escHtml(s.website)}" target="_blank" rel="noopener" style="font-size:11px;color:var(--blue);text-decoration:none">Website ↗</a>`:''}
+          </div>
+          ${contacts.length?contacts.map((c,i)=>contactRow(c,i===0)).join(''):'<div style="font-size:12px;color:var(--text3);font-style:italic;margin-top:3px">No contacts added</div>'}
+          ${s.notes?`<div style="font-size:11px;color:var(--text3);margin-top:5px;font-style:italic">${escHtml(s.notes)}</div>`:''}
+        </div>
+        <div style="flex-shrink:0">
+          <button class="btn btn-ghost btn-sm" onclick="openEditSupplier('${s.id}')">Edit</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function setSupFilter(v){APP.supFilter=v;renderSuppliers();}
+
+function supContactRowHtml(c){
+  c=c||{};
+  return `<div class="sup-contact-row" style="display:grid;grid-template-columns:1fr 1fr auto;gap:8px;margin-bottom:8px;padding:10px;background:var(--surface2);border:1px solid var(--border);border-radius:6px">
+    <input class="form-input sup-c-name" placeholder="Contact name" value="${escHtml(c.name||'')}">
+    <input class="form-input sup-c-role" placeholder="Role (e.g. Sales Rep)" value="${escHtml(c.role||'')}">
+    <button class="btn btn-danger btn-sm" type="button" onclick="this.closest('.sup-contact-row').remove()" title="Remove contact">✕</button>
+    <input class="form-input sup-c-email" type="email" placeholder="Email" value="${escHtml(c.email||'')}">
+    <input class="form-input sup-c-phone" placeholder="Phone" value="${escHtml(c.phone||'')}" style="grid-column:span 2">
+  </div>`;
+}
+function addSupContactRow(c){
+  document.getElementById('sup-contacts').insertAdjacentHTML('beforeend',supContactRowHtml(c));
+}
+function readSupContacts(){
+  return [...document.querySelectorAll('#sup-contacts .sup-contact-row')].map(r=>({
+    name:r.querySelector('.sup-c-name').value.trim(),
+    role:r.querySelector('.sup-c-role').value.trim(),
+    email:r.querySelector('.sup-c-email').value.trim(),
+    phone:r.querySelector('.sup-c-phone').value.trim()
+  })).filter(c=>c.name||c.role||c.email||c.phone);
+}
+
+function fillSupCatSelect(selected){
+  const sel=document.getElementById('sup-cat');
+  if(!sel)return;
+  sel.innerHTML=supCats().map(c=>`<option value="${escHtml(c)}">${escHtml(c)}</option>`).join('');
+  if(selected&&supCats().includes(selected))sel.value=selected;
+}
+
+function openAddSupplier(){
+  ESup=null;
+  document.getElementById('modal-sup-title').textContent='Add Supplier';
+  document.getElementById('btn-del-sup').style.display='none';
+  document.getElementById('sup-company').value='';
+  fillSupCatSelect();
+  document.getElementById('sup-website').value='';
+  document.getElementById('sup-notes').value='';
+  document.getElementById('sup-contacts').innerHTML='';
+  addSupContactRow();
+  openModal('modal-sup');
+}
+
+function openEditSupplier(id){
+  const s=(APP.suppliers||[]).find(x=>x.id===id);if(!s)return;
+  ESup=id;
+  document.getElementById('modal-sup-title').textContent='Edit Supplier';
+  document.getElementById('btn-del-sup').style.display='block';
+  document.getElementById('sup-company').value=s.company||'';
+  fillSupCatSelect(s.category);
+  document.getElementById('sup-website').value=s.website||'';
+  document.getElementById('sup-notes').value=s.notes||'';
+  const cont=document.getElementById('sup-contacts');
+  cont.innerHTML='';
+  const cs=(s.contacts&&s.contacts.length)?s.contacts:[{}];
+  cs.forEach(c=>addSupContactRow(c));
+  openModal('modal-sup');
+}
+
+async function saveSupplier(){
+  const company=document.getElementById('sup-company').value.trim();
+  if(!company){alert('Company name required');return;}
+  let website=document.getElementById('sup-website').value.trim();
+  if(website&&!/^https?:\/\//i.test(website))website='https://'+website;
+  const sup={
+    id:ESup||('sup_'+Date.now()),
+    company,
+    category:document.getElementById('sup-cat').value||(supCats()[0]||'Other'),
+    website,
+    notes:document.getElementById('sup-notes').value.trim(),
+    contacts:readSupContacts(),
+    updatedAt:new Date().toISOString(),
+    updatedBy:APP.currentUser||''
+  };
+  if(!APP.suppliers)APP.suppliers=[];
+  if(ESup){APP.suppliers=APP.suppliers.map(x=>x.id===ESup?sup:x);}
+  else{APP.suppliers.push(sup);}
+  closeModal('modal-sup');
+  await persistSuppliers();
+  renderSuppliers();
+}
+
+async function deleteSupplierFromModal(){
+  if(!ESup||!confirm('Delete this supplier?'))return;
+  APP.suppliers=(APP.suppliers||[]).filter(x=>x.id!==ESup);
+  closeModal('modal-sup');
+  await persistSuppliers();
+  renderSuppliers();
+}
+
+// ── Supplier category manager ──
+function openSupCatManager(){renderSupCatList();document.getElementById('sup-cat-new').value='';openModal('modal-sup-cats');}
+
+function renderSupCatList(){
+  const el=document.getElementById('sup-cat-list');
+  if(!el)return;
+  const cats=supCats();
+  const counts={};cats.forEach(c=>counts[c]=0);
+  (APP.suppliers||[]).forEach(s=>{if(counts[s.category]!==undefined)counts[s.category]++;});
+  el.innerHTML=cats.map((c,i)=>`<div style="display:flex;gap:6px;align-items:center">
+    <input class="form-input" value="${escHtml(c)}" id="supcat-in-${i}" style="flex:1">
+    <button class="btn btn-ghost btn-sm" onclick="renameSupCat(${i})">Rename</button>
+    <button class="btn btn-danger btn-sm" onclick="deleteSupCat(${i})" title="${counts[c]?counts[c]+' supplier(s) use this':'Delete'}">✕</button>
+    <span style="font-size:10px;color:var(--text3);min-width:54px;text-align:right">${counts[c]||0} in use</span>
+  </div>`).join('')||'<div style="font-size:12px;color:var(--text3)">No categories yet — add one below.</div>';
+}
+
+async function addSupCat(){
+  const inp=document.getElementById('sup-cat-new');
+  const name=inp.value.trim();
+  if(!name)return;
+  if(supCats().some(c=>c.toLowerCase()===name.toLowerCase())){alert('That category already exists.');return;}
+  APP.supplierCats.push(name);
+  inp.value='';
+  await persistSupCats();
+  renderSupCatList();renderSuppliers();
+}
+
+async function renameSupCat(i){
+  const cats=supCats();
+  const oldName=cats[i];
+  const newName=document.getElementById('supcat-in-'+i).value.trim();
+  if(!newName){alert('Category name cannot be empty.');renderSupCatList();return;}
+  if(newName===oldName)return;
+  if(cats.some((c,j)=>j!==i&&c.toLowerCase()===newName.toLowerCase())){alert('That category already exists.');renderSupCatList();return;}
+  APP.supplierCats[i]=newName;
+  (APP.suppliers||[]).forEach(s=>{if(s.category===oldName)s.category=newName;});
+  await persistSupCats();
+  await persistSuppliers();
+  renderSupCatList();renderSuppliers();
+}
+
+async function deleteSupCat(i){
+  const cats=supCats();
+  const name=cats[i];
+  const inUse=(APP.suppliers||[]).filter(s=>s.category===name).length;
+  if(inUse){alert(`Can't delete "${name}" — ${inUse} supplier(s) still use it. Move them to another category first.`);return;}
+  if(!confirm(`Delete category "${name}"?`))return;
+  APP.supplierCats.splice(i,1);
+  await persistSupCats();
+  renderSupCatList();renderSuppliers();
+}
+
 // Day-type metadata
 const DAY_TYPES=[
   {key:'travel',    label:'Travel',     field:'travel',    cls:'chip-travel'},
@@ -4704,12 +4640,6 @@ function openModal(id){document.getElementById(id).classList.add('open');}
 function closeModal(id){document.getElementById(id).classList.remove('open');}
 document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open');}));
 
-</script><div id="app-loader" style="position: fixed; inset: 0px; background: rgba(26, 36, 65, 0.65); z-index: 9997; display: none; align-items: center; justify-content: center; backdrop-filter: blur(4px);"><div style="background:#fff;border-radius:10px;padding:28px 36px;text-align:center;min-width:260px;box-shadow:0 20px 60px rgba(0,0,0,.3)">
-      <div style="font-weight:900;font-size:22px;color:#69246F;margin-bottom:2px">ONCO X</div>
-      <div id="ld-msg" style="font-size:12px;color:#9395a8;margin-bottom:14px">Ready!</div>
-      <div style="height:3px;background:#e2e4ec;border-radius:2px;overflow:hidden">
-        <div id="ld-bar" style="height: 100%; width: 100%; background: rgb(105, 36, 111); border-radius: 2px; transition: width 0.25s;"></div>
-      </div></div></div>
-
-
-</body></html>
+</script>
+</body>
+</html>
